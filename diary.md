@@ -20,9 +20,14 @@
 
 
 
-## Week
+## Week 2
 
 ### 06/02/2017
 * OPS: Add PDF of OPS first draft
 * Add initial labels and milestones to GitHub repository
 * Create OPS completion issue
+
+### 08/02/2017
+* OPS: Add references to bibliography (1,2)
+  * background subtraction: https://hal.inria.fr/inria-00545478/document
+  * Pyramid: https://www.comsol.nl/blogs/explaining-the-peppers-ghost-illusion-with-ray-optics/

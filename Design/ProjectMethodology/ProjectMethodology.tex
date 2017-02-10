@@ -71,17 +71,19 @@ To successfully use FDD for this project, I will have to make several adaptation
 
 \end{itemize}
 
-\section{Additional processes}
-To ensure good quality code, I plan to incorporate several additional processes alongside using FDD.
+\newpage
+
+\section{Process details}
+To ensure good quality code, I plan to incorporate several processes already used in FDD and other Agile methodologies.
 
 \subsection{Test Driven Development(TDD)}
-TDD will allow my project to ensure that the code is written with the unit, and system, functionality in mind. By writing the tests for the code first, I can be sure that the correct functionality is implemented and I have tests in place to ensure that if a depending part of the code base changes, a test will fail and alert me to the problem. As I am using GitHub for this project, I hope to pair potentially pair this with CI tool for running tests such as Jenkins \cite{jenkins}. Jenkins will be able to run my tests automatically on every pull request I create to ensure that the code base is running correctly before being merged with the master branch.
+TDD will help ensure that code is written with the unit, and system, test functionality in mind. By writing the tests for the code first, I can be sure that the correct functionality is implemented and it meets the criteria of the feautre. Furthermore, testing will ensure that if a depending part of the code base changes, a test will fail and alert me to the problem. As I am using GitHub for this project, I hope to potentially pair this with CI tool for running tests such as Jenkins \cite{jenkins}. Jenkins will be able to run my tests automatically on every pull request I create. This will ensure that the code base is running correctly before being merged with the master branch.
 
 \subsection{Coding standards}
-By introducing coding standards, code readability and consistency will be improved. Furthermore, many accepted standards exist for languages already and Jenkins has tools that allow you to check both style and syntax for errors as well as coding standards. An example of this for python is Pylint \cite{pylint}.
+By introducing coding standards, code readability and consistency will be improved. Furthermore, many accepted standards exist for languages already and Jenkins has tools that allow you to check both style and syntax for errors as well as coding standards. An example of this for python is Pylint \cite{pylint}. When run on python code, Pylint will produce a number of error, or warnings, showing where and how the code breaks the PEP 8 standard Pylint checks against \cite{pep8}. PEP 8 is produced by python themselves and therefore I believe it to be a sensible choice of coding standard to follow.
 
 \subsection{Refactoring}
-Refactoring will allow be a process that could potentially take place as frequently as after, or during, every feature. To ensure the quality and readability of the code, it is good practice to change or improve the way the code is written without changing the functionality. Refactoring, will often lead to a better more understandable code base and when paired with TDD, will be easy to do as the test can ensure that the functionality of the refactored code still adheres to the criteria of tests. Refactoring will take place as part of the TDD process using Red-Green-Refactor.
+Refactoring will be a process that could potentially take place as frequently as after, or during, every feature. To ensure the quality and readability of the code, it is good practice to change or improve the way the code is written without changing the functionality. Refactoring, will often lead to a better more understandable code base thanks to the improved readability of the code. When paired with TDD, refactoring will be easy to do as the test can ensure that the functionality of the refactored code still adheres to the criteria of tests. Refactoring will take place as part of the TDD process using Red-Green-Refactor.
 
 
 \nocite{*} % include everything from the bibliography, irrespective of whether it has been referenced.

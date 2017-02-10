@@ -1,6 +1,8 @@
 \documentclass{article}
 
 \usepackage{cite}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
@@ -23,30 +25,33 @@
 \paragraph{Feature Driven Development (FDD) is a plan driven methodology for development in software engineering. FDD has well defined roles, such as Project Manager and Chief Architect, and develops a system by designing and building features. Features are normal single operations or functionalities that are desired by the Domain Expert (Customer). Several features are created during every iteration which is a period of time (normally 1 - 3 weeks) agreed upon at the begining of the project for when the next iteration of the software will be complete. FDD follows a five step plan with the final two steps being carried out repeatedly for each feature in the feature list and multiple times per iteration \cite{FDDandAgile}.}
 
 \begin{enumerate}
-	\item \textbf{Develop an Overall Model}: At the start of a project, an overall model of the system is created with the customer present using customer specific language. This model is designed to form the basis of how the system architecture is likely to be implemented. 
+	\item \textbf{Develop an Overall Model}: At the start of a project, an overall model of the system is created with the Domain Expert present using Domain specific language. This model is designed to form the basis of how the system architecture is likely to be implemented. The model should cover all entities related to the system and will consist of various UML diagrams. FDD also uses colour UML, where different classes are coloured to represent real-world classifications of objects such as, a role in the system or an interval of time.
 	\\
 	\textbf{Roles}: Domain Experts \textbullet{} Chief Programmers \textbullet{} Chief Architect
 	
-	\item \textbf{Build a Feature List}: A feature is a small chunks of functionality that is required for the system to perform as the customer expects. In order to produce a functional system, the customer and chief architecture are designed and added to a long list to be developed over the course of the project. 
+	\item \textbf{Build a Feature List}: A feature is an isolated function that is required for the system to perform as the Domain Expert expects. A Feature should be written in Domain specific language and model a business activity. At this stage, all features are written into a list but have no weighting (prioritisation). Features are designed to take no longer than 2 weeks to develop. Features are written in the form: \\ 
+\textbf{'<action> the <result> <by|for|of|to> a(n) <object>'}
+\\An example of this is: \\
+\textbf{'Display the contents of a shopping basket'}.
 	\\
 	\textbf{Roles}: Domain Experts \textbullet{} Chief Programmers \textbullet{} Chief Architect
 	
-	\item \textbf{Plan by Feature}: An overall development plan regarding teams to be assigned to each feature, feature prioritisation, scheduling of developer teams time and features to be completed in each iteration are is produced. At this stage, the development teams are created, and the features to be developed are distributed amongst the chief programmers. 
+	\item \textbf{Plan by Feature}: An overall development plan regarding teams to be assigned to each feature, feature prioritisation, scheduling of developer teams time and features to be completed in each iteration is produced. At this stage, the development teams are created, and the features to be developed are distributed amongst the chief programmers in charge of those teams. Furthermore, dependencies between features are established to ensure the correct sequence of development for the project.
 	\\
 	\textbf{Roles}: Project Manager \textbullet{} Chief Programmers \textbullet{} Chief Architect
 	
-	\item \textbf{Design by Feature}: A single feature from the 'inbox' of features is selected by the chief programmer and then a design is produced for the implementation of that feature. The overall design for the system will most likely be updated at this point if required.
+\newpage %formats bullet 4/5 onto next page%
+
+	\item \textbf{Design by Feature}: A single feature from the 'inbox' of features is selected by the chief programmer and then a design is produced for the implementation of that feature. The design for the feature will include specific UML diagrams as well as the creation of interfaces and function definitions. The overall design for the system will most likely be updated at this point if required.
 	\\
 	\textbf{Roles}: Chief Programmers \textbullet{} Development team
 	
 	
-	\item \textbf{Build by Feature}: Once the feature has been successfully designed, the classes and methods associated with that feature can be implemented. This is followed by a code inspection and unit testing. Providing this is successful, the change is promoted to the build and become part of the functional testing code base.
+	\item \textbf{Build by Feature}: Once the feature has been successfully designed, the classes and methods associated with that feature can be implemented. This is followed by a code inspection and unit testing. Providing this is successful, the change is promoted to the build and becomes part of the clean code base ready to be shipped in the next iteration.
 	\\
 	\textbf{Roles}: Chief Programmers \textbullet{} Development team
 
 \end{enumerate}
-
-\newpage
 
 \paragraph{FDD is normally considered for larger projects as it provides a framework for distributed development by dividing developers into smaller teams that tackle features one at a time. Furthermore, the up front planning stage is generally indicative of projects that are more stable as, whilst the it can be adapted throughout the process, the overall model is normally added to and the core architecture remains reasonably static.}
 

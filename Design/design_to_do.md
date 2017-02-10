@@ -9,7 +9,7 @@ Items should be checked off as completed.
 * [ ] Summary of research material
 * UML diagrams:
   * [ ] Overall architecture component diagram
-  * [ ] System Use Case
+  * [x] System Use Case
   * [ ] Activity diagrams
   * Class and Object diagrams
     * [ ] Charades game

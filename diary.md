@@ -39,3 +39,7 @@
 * OPS: Submit 'first submission' to blackboard
 * Get LaTeX and BibTeX running on local machine
 * Write first draft of ProjectMethodology document (details of process for development during the project)
+
+### 10/02/2017
+* Review and submit process document to GitHub
+* Write and review Use Case diagram and documentation

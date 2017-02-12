@@ -43,3 +43,7 @@
 ### 10/02/2017
 * Review and submit process document to GitHub
 * Write and review Use Case diagram and documentation
+
+### 12/02/2017
+* Add issues to GitHub for design 
+* Write initial activity diagram for basic system

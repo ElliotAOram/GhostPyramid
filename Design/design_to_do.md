@@ -10,7 +10,7 @@ Items should be checked off as completed.
 * UML diagrams:
   * [ ] Overall architecture component diagram
   * [x] System Use Case
-  * [ ] Activity diagrams
+  * [x] Activity diagram
   * Class and Object diagrams
     * [ ] Charades game
 	* [ ] Image processing

@@ -47,3 +47,11 @@
 ### 12/02/2017
 * Add issues to GitHub for design 
 * Write initial activity diagram for basic system
+
+
+
+
+## Week 3
+
+### 13/02/2017
+* Completed Actvity diagram for full system (Version 1.0)

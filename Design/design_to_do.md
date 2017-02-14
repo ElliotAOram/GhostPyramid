@@ -13,4 +13,4 @@ Items should be checked off as completed.
   * [x] Activity diagram
   * Class and Object diagrams
     * [ ] Charades game
-	* [ ] Image processing
+	* [x] Image processing

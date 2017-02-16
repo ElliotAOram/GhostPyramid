@@ -4,9 +4,7 @@ The design work should include all design deliverables mentioned in the Outline 
 Items should be checked off as completed.
 
 * [x] Technical design for staging area
-* [ ] Feasibility study
 * [x] Process documentation
-* [ ] Summary of research material
 * UML diagrams:
   * [ ] Overall architecture component diagram
   * [x] System Use Case

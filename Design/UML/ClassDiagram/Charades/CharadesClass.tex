@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Draft 0.2}
+\lhead{Draft 0.3}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -28,6 +28,8 @@
 
 \section{Description of Class Diagram}
 \subsection{Game}
+The Game package has been left as a simple single class implementation. This will expand when more features are designed and built for the core game functionality. In essence, this class is designed to control the flow of information in the system. The class will deal with storing the current game state, as well as sending and receiving messages between the Viewers and Actors.
+
 
 \subsection{User}
 The User package models the possible users of the system. There is a User abstract class containing commonalities between the all systems users and then two concrete classes that inherit from this. There are two types of known users in the system the Actor, and the Viewer. 

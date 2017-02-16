@@ -55,3 +55,16 @@
 
 ### 13/02/2017
 * Completed Actvity diagram for full system (Version 1.0)
+
+### 14/02/2017
+* Complete video processing UML class diagram
+
+### 15/02/2017
+* Add initial first draft of staging area design
+
+### 16/02/2017
+* Review and merge staging area design
+* Build objects in visio for component diagram
+* Create system component diagram
+* Review and submit component diagram documentation
+* Create first draft of UML class diagram for Charades Game (Requires review - PR open)

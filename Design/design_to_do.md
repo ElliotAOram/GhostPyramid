@@ -8,7 +8,7 @@ Items should be checked off as completed.
 * [x] Process documentation
 * [ ] Summary of research material
 * UML diagrams:
-  * [ ] Overall architecture component diagram
+  * [x] Overall architecture component diagram
   * [x] System Use Case
   * [x] Activity diagram
   * Class and Object diagrams

@@ -6,7 +6,7 @@ Items should be checked off as completed.
 * [x] Technical design for staging area
 * [x] Process documentation
 * UML diagrams:
-  * [ ] Overall architecture component diagram
+  * [x] Overall architecture component diagram
   * [x] System Use Case
   * [x] Activity diagram
   * Class and Object diagrams

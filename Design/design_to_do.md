@@ -10,5 +10,5 @@ Items should be checked off as completed.
   * [x] System Use Case
   * [x] Activity diagram
   * Class and Object diagrams
-    * [ ] Charades game
+    * [x] Charades game
 	* [x] Image processing

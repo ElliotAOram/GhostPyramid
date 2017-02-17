@@ -68,3 +68,14 @@
 * Create system component diagram
 * Review and submit component diagram documentation
 * Create first draft of UML class diagram for Charades Game (Requires review - PR open)
+
+### 17/02/2017
+* Review and merge Charades game class diagram
+* Build features list
+* Priority / Dependency / Complexity
+* Set up jenkins
+  * Install on windows
+  * Work out issues with admin acc - username autoset to lower case, had to reset jenkins security to force login
+  * Integrate jenkins with github project
+  * Work on rate limit issue - solution: OAuth for git (increase to 5k requests per hour from 60)
+  

@@ -77,5 +77,7 @@
   * Install on windows
   * Work out issues with admin acc - username autoset to lower case, had to reset jenkins security to force login
   * Integrate jenkins with github project
-  * Work on rate limit issue - solution: OAuth for git (increase to 5k requests per hour from 60)
+  * Fix rate limit issue - OAuth for git (increase to 5k requests per hour from 60)
+  * Use Bat notation over sh to allow JenkinsFile to work for Windows
+  * Get Helloworld output from Jenkins
   

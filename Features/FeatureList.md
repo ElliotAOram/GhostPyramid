@@ -1,22 +1,22 @@
-| TNumber       | Description   | Complexity  | Priority |
-| ------------- |:-------------:| -----------:|---------:|
-| 1             |               | -           | -        |
-| 2             |               | -           | -        |
-| 3             |               | -           | -        |
-| 4             |               | -           | -        |
-| 5             |               | -           | -        |
-| 6             |               | -           | -        |
-| 7             |               | -           | -        |
-| 8             |               | -           | -        |
-| 9             |               | -           | -        |
-| 10            |               | -           | -        |
-| 11            |               | -           | -        |
-| 12            |               | -           | -        |
-| 13            |               | -           | -        |
-| 14            |               | -           | -        |
-| 15            |               | -           | -        |
-| 16            |               | -           | -        |
-| 17            |               | -           | -        |
-| 18            |               | -           | -        |
-| 19            |               | -           | -        |
-| 20            |               | -           | -        |
+| Number        | Description                                           | Complexity  | Priority | Dependencies |
+| ------------- |:-----------------------------------------------------:| -----------:|---------:|-------------:|
+| 1             | Capture the video from the extrnal camera             | -           | -        | -            |
+| 2             | Subtract the background from the video feed           | -           | -        | -            |
+| 3             | Duplicate the video feed 4 times                      | -           | -        | -            |
+| 4             | Rotate the video feed around a central origin         | -           | -        | -            |
+| 5             | Output the video feed to a window for display         | -           | -        | -            |
+| 6             | Display the main menu of the application              | -           | -        | -            |
+| 7             | Select the type of User you are (Viewer / Actor)      | -           | -        | -            |
+| 8             | Select phrase as Actor                                | -           | -        | -            |
+| 9             | Select word as Actor                                  | -           | -        | -            |
+| 10            | Display word and genre information on User interface  | -           | -        | -            |
+| 11            | Allow Viewer to guess word                            | -           | -        | -            |
+| 12            | Allow Viewer to guess phrase                          | -           | -        | -            |
+| 13            | Inform Users when the word has been guessed correctly | -           | -        | -            |
+| 14            | Inform Users when phrase has been guessed correctly   | -           | -        | -            |
+| 15            | Build list of possible phrases                        | -           | -        | -            |
+| 16            |                                                       | -           | -        | -            |
+| 17            |                                                       | -           | -        | -            |
+| 18            |                                                       | -           | -        | -            |
+| 19            |                                                       | -           | -        | -            |
+| 20            |                                                       | -           | -        | -            |

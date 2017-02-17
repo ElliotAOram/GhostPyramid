@@ -1,3 +1,7 @@
+# Feature List
+### Version 1.0
+### 17/02/2017
+
 | Number        | Description                                                     | Complexity  | Priority | Dependencies | Prototype |
 | ------------- |:---------------------------------------------------------------:| -----------:|---------:|-------------:|----------:|
 | 1             | Capture the video from the external camera                      | -           | -        | -            | [x]       |

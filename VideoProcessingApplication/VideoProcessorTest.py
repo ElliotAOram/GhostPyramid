@@ -25,7 +25,7 @@ class testCameraCapture(unittest.TestCase):
 
 	###---------------------------------Failure cases---------------------------------###
 	def test_non_int_value_to_begin_capture_function(self):
-		self.vp.begin_capture('Not an int')
+		self.assertRaises(ValueError, self.vp.begin_capture, 'Not an int')
 
 if __name__ == '__main__':
     unittest.main()

@@ -23,14 +23,14 @@ class VideoProcessor:
 
 	'''
 	Ends capturing video from the current video_feed. Sets the video_feed
-	object make to None to avoid misuse
+	object make to None to avoid misuse.
 	'''
 	def end_capture(self):
 		self.video_feed.release()
 		self.video_feed = None
 
 	'''
-	Returns the video_feed currently in use
+	Returns the video_feed currently in use.
 	@return video_feed		:: The current video feed from a camera
 	'''
 	def get_video_feed(self):

@@ -81,3 +81,10 @@
   * Use Bat notation over sh to allow JenkinsFile to work for Windows
   * Get Helloworld output from Jenkins
   
+### 18/02/2017
+* Implement feature 1 and create pull request for feature
+
+
+### 19/02/2017
+* Continued work on Jenkins to try and get python unit tests to run - currently without success
+

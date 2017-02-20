@@ -88,3 +88,12 @@
 ### 19/02/2017
 * Continued work on Jenkins to try and get python unit tests to run - currently without success
 
+### 20/02/2017
+* Resolve feature 1 pylint errors
+* Resolve feature 1 coverage issues
+* Put code from feature 1 into packages
+* Ensure feature 1 tests pass
+* Merge feature 1 to master
+* Fix jenkins build reporting for: tests, coverage and pylint(almost) 
+  * http://bhfsteve.blogspot.co.uk/2012/04/automated-python-unit-testing-code_27.html
+

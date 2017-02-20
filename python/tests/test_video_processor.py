@@ -1,11 +1,13 @@
-import unittest
-from VideoProcessor import VideoProcessor
+from .context import vpa
 
-class testCameraCapture(unittest.TestCase):
+import unittest
+
+class TestCameraCapture(unittest.TestCase):
 
 	###------------------------------setUp and tearDown--------------------------------###
 	def setUp(self):
-		self.vp = VideoProcessor()
+		print str(dir(vpa))
+		self.vp = vpa.VideoProcessor()
 
 	def tearDown(self):
 		self.widget = None

@@ -51,6 +51,3 @@ class TestCameraCapture(unittest.TestCase):
         self.assertRaises(ValueError,
                           self.video_processor.begin_capture,
                           'Not an int')
-
-if __name__ == '__main__':
-    unittest.main()

@@ -25,7 +25,7 @@ class VideoProcessor(object):
         except ValueError:
             raise ValueError('Value provided is not an integer')
 
-        self.video_feed = VideoCapture(device)  
+        self.video_feed = VideoCapture(device)
 
 
     def end_capture(self):

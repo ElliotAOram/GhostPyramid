@@ -43,8 +43,12 @@ class VideoProcessor(object):
         Creats a deep copy of a VideoCapture object and returns it
         @param video    :: The VideoCapture object to be deepcopied
         @return the deepcopy of the VideoCapture
+        @Raises ValueError  :: Raises ValueError on non VideoCapture input
         """
-        return deepcopy(video)
+        if type(video) != type(VideoCapture()):
+            raise ValueError('Parameter is not a video')
+        else:
+            return deepcopy(video)
 
     def populate_video_feed_array(self, video):
         """

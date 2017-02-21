@@ -49,12 +49,16 @@ class VideoProcessor(object):
     def populate_video_feed_array(self, video):
         """
         Adds the video to the video_feed_array until there are four copies present
-        @param video    :: The video to add to the array
+        @param video        :: The video to add to the array
+        @Raises ValueError  :: Raises ValueError on non VideoCapture input
         """
-        if self.video_feed_array is None:
-            self.video_feed_array = []
-        for i in range(0, 4):
-            self.video_feed_array.append(self.copy_video_feed(video))
+        if type(video) != type(VideoCapture()):
+            raise ValueError('Parameter is not a video')
+        else:
+            if self.video_feed_array is None:
+                self.video_feed_array = []
+            for i in range(0, 4):
+                self.video_feed_array.append(self.copy_video_feed(video))
 
     def get_video_feed(self):
         """

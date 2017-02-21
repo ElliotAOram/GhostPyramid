@@ -1,6 +1,18 @@
 """Contains the VideoProcessor class (core application)"""
-from cv2 import VideoCapture
 from copy import deepcopy
+from cv2 import VideoCapture
+
+def copy_video_feed(video):
+    """
+    Creats a deep copy of a VideoCapture object and returns it
+    @param video    :: The VideoCapture object to be deepcopied
+    @return the deepcopy of the VideoCapture
+    @Raises ValueError  :: Raises ValueError on non VideoCapture input
+    """
+    if not isinstance(video, type(VideoCapture())):
+        raise ValueError('Parameter is not a video')
+    else:
+        return deepcopy(video)
 
 
 class VideoProcessor(object):
@@ -38,17 +50,6 @@ class VideoProcessor(object):
         self.video_feed.release()
         self.video_feed = None
 
-    def copy_video_feed(self, video):
-        """
-        Creats a deep copy of a VideoCapture object and returns it
-        @param video    :: The VideoCapture object to be deepcopied
-        @return the deepcopy of the VideoCapture
-        @Raises ValueError  :: Raises ValueError on non VideoCapture input
-        """
-        if type(video) != type(VideoCapture()):
-            raise ValueError('Parameter is not a video')
-        else:
-            return deepcopy(video)
 
     def populate_video_feed_array(self, video):
         """
@@ -56,13 +57,13 @@ class VideoProcessor(object):
         @param video        :: The video to add to the array
         @Raises ValueError  :: Raises ValueError on non VideoCapture input
         """
-        if type(video) != type(VideoCapture()):
+        if  not isinstance(video, type(VideoCapture())):
             raise ValueError('Parameter is not a video')
         else:
             if self.video_feed_array is None:
                 self.video_feed_array = []
-            for i in range(0, 4):
-                self.video_feed_array.append(self.copy_video_feed(video))
+            for _ in range(0, 4):
+                self.video_feed_array.append(copy_video_feed(video))
 
     def get_video_feed(self):
         """

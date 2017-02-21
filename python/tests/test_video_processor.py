@@ -67,8 +67,9 @@ class TestVideoFeedCoping(unittest.TestCase):
         self.video_processor = None
 
     ###---------------------------------Success cases----------------------------------###
-    def test_initial_state_of_video_feed_array(self):
+    def test_initial_state_of_vfa(self):
         """
+        vfa: video_feed_array
         Tests that the video_feed_array is initialised to None
         """
         video_feed_array = self.video_processor.get_video_feed_array()
@@ -96,7 +97,7 @@ class TestVideoFeedCoping(unittest.TestCase):
             self.assertIsInstance(video_feed, type(VideoCapture()))
 
     ###---------------------------------Failure cases----------------------------------###
-    def test_copy_video_feed_with_non_VideoCapture(self):
+    def test_copy_video_with_string(self):
         """
         Test that only an object of type VideoCapture can be a parameter
         of copy_video_feed
@@ -105,7 +106,7 @@ class TestVideoFeedCoping(unittest.TestCase):
                           self.video_processor.copy_video_feed,
                           "Not a video")
 
-    def test_populate_video_feed_array_with_non_VideoCapture(self):
+    def test_populate_vfa_with_string(self):
         """
         Test that only an object of type VideoCapture can be a parameter
         of copy_video_feed

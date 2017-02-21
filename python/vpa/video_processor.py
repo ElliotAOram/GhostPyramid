@@ -10,6 +10,7 @@ class VideoProcessor(object):
 
     def __init__(self):
         self.video_feed = None
+        self.video_feed_array = None
 
 
     def begin_capture(self, device):
@@ -43,3 +44,10 @@ class VideoProcessor(object):
         @return video_feed      :: The current video feed from a camera.
         """
         return self.video_feed
+
+    def get_video_feed_array(self):
+        """
+        Returns the video_feed_array contianing all the processed video feeds.
+        @return video_feed_array
+        """
+        return self.video_feed_array

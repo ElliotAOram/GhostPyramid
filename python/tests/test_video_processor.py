@@ -88,7 +88,8 @@ class TestVideoFeedCoping(unittest.TestCase):
         Test that the video_feed_array is correctly populated
         after a call to the function
         """
-        self.video_processor.populate_video_feed_array()
+        original_video = self.video_processor.get_video_feed()
+        self.video_processor.populate_video_feed_array(original_video)
         video_feed_array = self.video_processor.get_video_feed_array()
         self.assertEqual(4, len(video_feed_array))
         for video_feed in video_feed_array:

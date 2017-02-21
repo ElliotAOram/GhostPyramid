@@ -67,6 +67,13 @@ class TestVideoFeedCoping(unittest.TestCase):
         self.video_processor = None
 
     ###---------------------------------Success cases----------------------------------###
+    def test_initial_state_of_video_feed_array(self):
+        """
+        Tests that the video_feed_array is initialised to None
+        """
+        video_feed_array = self.video_processor.get_video_feed_array()
+        self.assertIsNone(video_feed_array)
+
     def test_copy_video_feed(self):
         """
         Test that the video_feed is copied.

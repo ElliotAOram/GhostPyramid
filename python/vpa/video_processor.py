@@ -1,5 +1,6 @@
 """Contains the VideoProcessor class (core application)"""
 from cv2 import VideoCapture
+from copy import deepcopy
 
 
 class VideoProcessor(object):
@@ -36,6 +37,12 @@ class VideoProcessor(object):
         """
         self.video_feed.release()
         self.video_feed = None
+
+    def copy_video_feed(self, video):
+        """
+        Creats a deep copy of a VideoCapture object and returns it
+        """
+        return deepcopy(video)
 
 
     def get_video_feed(self):

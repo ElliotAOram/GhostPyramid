@@ -82,8 +82,6 @@ class TestVideoFeedCoping(unittest.TestCase):
         original_video = self.video_processor.get_video_feed()
         new_video = self.video_processor.copy_video_feed(original_video)
         self.assertEqual(type(original_video), type(new_video))
-        self.assertEqual(original_video, new_video)
-
 
     def test_populate_video_feed_array(self):
         """

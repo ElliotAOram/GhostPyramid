@@ -105,7 +105,7 @@ class TestVideoFeedCoping(unittest.TestCase):
                           self.video_processor.copy_video_feed,
                           "Not a video")
 
-    def test_populate_video_feed_array_with_non_video(self):
+    def test_populate_video_feed_array_with_non_VideoCapture(self):
         """
         Test that only an object of type VideoCapture can be a parameter
         of copy_video_feed

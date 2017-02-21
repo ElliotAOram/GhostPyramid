@@ -81,7 +81,7 @@ class TestVideoFeedCoping(unittest.TestCase):
         Ensure the type is correct and the video_feed is a deep copy.
         """
         original_video = self.video_processor.get_video_feed()
-        new_video = self.video_processor.copy_video_feed(original_video)
+        new_video = vpa.copy_video_feed(original_video)
         self.assertEqual(type(original_video), type(new_video))
 
     def test_populate_video_feed_array(self):
@@ -103,7 +103,7 @@ class TestVideoFeedCoping(unittest.TestCase):
         of copy_video_feed
         """
         self.assertRaises(ValueError,
-                          self.video_processor.copy_video_feed,
+                          vpa.copy_video_feed,
                           "Not a video")
 
     def test_populate_vfa_with_string(self):

@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.3}
+\lhead{Version 1.3.1}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -62,7 +62,14 @@ The vpa (Video Processor Application) package contains two modules. The first, t
 	\item \textbf{calculate\_image\_positions}: Calculates the co\-ordinates that each image (video frame) should be placed in. The images should be in the top\-middle, bottom\-middle, left\-middle and right\-middle of the screen. The screen length (one require one value for this as the display area is square), image width and image height are parameters of the function. The function will calculate to co-ordinates by finding using half the screen length + or - half the height or width of the image. The function will return a map of lists of tuples containing the co-ordinates. The map will be structured such that: \\
 	\{"position" : [origin tuple, bottom right tuple],\\... \} \\
 	An example of this is: \\
-	\{"top" : [(100,0), (200,50)],\\... \} 
+	\{"top" : [(100,0), (200,50)],\\... \}
+
+	\item \textbf{parse\_int}: Takes an object, python variable, and raises an error if it is not a integer. 	
+	
+	\item \textbf{parse\_positive\_int}: Takes an object, python variable, and raises an error if it is not a positive integer
+
+	\item \textbf{parse\_nonzero\_int}: Takes an object, python variable, and raises an error if it a zero. 
+
 \end{itemize}
 
 

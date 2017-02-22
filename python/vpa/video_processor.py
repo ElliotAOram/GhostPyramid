@@ -1,18 +1,5 @@
 """Contains the VideoProcessor class (core application)"""
-from copy import deepcopy
 from cv2 import VideoCapture
-
-def copy_video_feed(video):
-    """
-    Creats a deep copy of a VideoCapture object and returns it
-    @param video    :: The VideoCapture object to be deepcopied
-    @return the deepcopy of the VideoCapture
-    @Raises ValueError  :: Raises ValueError on non VideoCapture input
-    """
-    if not isinstance(video, type(VideoCapture())):
-        raise ValueError('Parameter is not a video')
-    else:
-        return deepcopy(video)
 
 
 class VideoProcessor(object):
@@ -23,7 +10,6 @@ class VideoProcessor(object):
 
     def __init__(self):
         self.video_feed = None
-        self.video_feed_array = None
 
 
     def begin_capture(self, device):
@@ -51,30 +37,9 @@ class VideoProcessor(object):
         self.video_feed = None
 
 
-    def populate_video_feed_array(self, video):
-        """
-        Adds the video to the video_feed_array until there are four copies present
-        @param video        :: The video to add to the array
-        @Raises ValueError  :: Raises ValueError on non VideoCapture input
-        """
-        if  not isinstance(video, type(VideoCapture())):
-            raise ValueError('Parameter is not a video')
-        else:
-            if self.video_feed_array is None:
-                self.video_feed_array = []
-            for _ in range(0, 4):
-                self.video_feed_array.append(copy_video_feed(video))
-
     def get_video_feed(self):
         """
         Returns the video_feed currently in use.
         @return video_feed      :: The current video feed from a camera.
         """
         return self.video_feed
-
-    def get_video_feed_array(self):
-        """
-        Returns the video_feed_array contianing all the processed video feeds.
-        @return video_feed_array
-        """
-        return self.video_feed_array

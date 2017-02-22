@@ -88,6 +88,11 @@
 ### 19/02/2017
 * Continued work on Jenkins to try and get python unit tests to run - currently without success
 
+
+
+## Week 4
+
+
 ### 20/02/2017
 * Resolve feature 1 pylint errors
 * Resolve feature 1 coverage issues
@@ -97,3 +102,9 @@
 * Fix jenkins build reporting for: tests, coverage and pylint(almost) 
   * http://bhfsteve.blogspot.co.uk/2012/04/automated-python-unit-testing-code_27.html
 
+### 21/02/2017
+* Get jenkins to run from github rather than local - still running builds manually
+* Hotfix for feature 1 design
+* Minor update to feaute dependencies
+* Meeting with Helen to agree feature list and time line
+* Complete Pull request for feature 3 - to be reviewed

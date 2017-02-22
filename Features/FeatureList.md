@@ -6,8 +6,8 @@
 | ------------- |:---------------------------------------------------------------:| -----------------:|---------------:|-------------:|----------:|
 | 1             | Capture the video from the external camera                      | 1                 | 5              | None         | True      |
 | 2             | Subtract the background from the video feed                     | 4                 | 4              | 5            | True      |
-| 3             | Duplicate the video feed 4 times                                | 1                 | 4              | 5            | True      |
-| 4             | Rotate the video feed around a central origin                   | 2                 | 4              | 3            | True      |
+| 3             | Duplicate the video feed 4 times                                | 1                 | 4              | 1            | True      |
+| 4             | Rotate the video feed around a central origin                   | 2                 | 4              | 3,5          | True      |
 | 5             | Output the video feed to a window for display                   | 1                 | 4              | 1            | True      |
 | 6             | Display the main menu of the application                        | 1                 | 1              | None         | False     |
 | 7             | Select the type of User you are (Viewer / Actor)                | 2                 | 3              | 6            | False     |

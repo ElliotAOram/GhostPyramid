@@ -27,30 +27,17 @@
 \section{Description of Class Diagram}
 The video processing will be performed by a single class, the \textbf{VideoProcessor}. The justification for doing this in a single class, is to remove the possibility that the video object will have to passed between classes. In addition the functionality required for video feed manipulation doesn't have many stages so can be easily represented as functions in a single class.
 
-\subsection{Variables}
 \begin{itemize}
 
 	\item \textbf{video\_feed}: The video\_feed variable is of type VideoCapture. This class type holds a video stream and can be imported from OpenCV. To maximise the performance of the system the video object will be a global to the class object to avoid passing into and out of functions. However for test access there will be a get method for the video\_feed.
-
-	\item \textbf{video\_feed\_array}: Holds four copies of the video\_feed that will be displayed on each side of the pyramid in the output window
 	
-\end{itemize}
-
-\subsection{Functions}
-\begin{itemize}
 	\item \textbf{init}: Python constructor for initialising the video\_feed object to None.
 	
 	\item \textbf{begin\_capture}: Function to start the video\_feed with specified device. This function takes an integer (referring to the device number to use - 0 is default) and sets the video\_feed to capture the video from that device. The function has a check to ensure that the parameter is an integer and raises a ValueError is it is not.
 	
 	\item \textbf{end\_capture}: Function to release the camera feed handle and set the video\_feed variable to None.
 	
-	\item \textbf{get\_video\_feed}: Returns the video\_feed object.
-	
-	\item \textbf{copy\_video\_feed}: Creates a deep copy of a video\_feed and returns a new object containing the copy.
-	
-	\item \textbf{populate\_video\_feed\_array}: Calls the copy\_video\_feed 3 times and stores each object in the video\_feed\_array.
-	
-	\item \textbf{get\_video\_feed\_array}: Returns the video\_feed\_array object.
+	\item \textbf{get\_video\_feed}: returns the video\_feed object.   
 
 	\item \textbf{subtractBackground}: The subtractBackground function will be used to ensure that only the Actor is shown in the video feed and the background is removed (set to black (RGB(0,0,0)). Based on research stated in the Outline Project Specification, This will use simple background subtraction or moving average background subtraction. Spike solutions will be carried out during the creation of the prototype to assess if the image processing machine is capable of more complex background subtraction techniques. Furthermore, it will test if simple background subtraction techniques produce the required effect.
 

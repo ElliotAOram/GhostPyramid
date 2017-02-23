@@ -157,7 +157,7 @@ class TestCreateImagePositionDictionary(unittest.TestCase):
         self.assertEqual([60,55  ]  , img_pos["left"][1])
         self.assertEqual([95,90  ]  , img_pos["bottom"][0])
         self.assertEqual([105,100]  , img_pos["bottom"][1])
-        self.assertEqual([140,45  ]  , img_pos["right"][0])
+        self.assertEqual([140,45 ]  , img_pos["right"][0])
         self.assertEqual([150,55 ]  , img_pos["right"][1])
 
     ###---------------------------------Failure cases-----------------------------------###

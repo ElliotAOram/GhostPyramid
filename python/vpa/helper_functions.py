@@ -86,9 +86,9 @@ def calculate_screen_boundaries(width=None, height=None):
     if width < height:
         square_side = width
         displacement = (height - square_side) / 2
-        return [(0,displacement),(width, height-displacement)]
+        return [(0, displacement), (width, height-displacement)]
     else:
-        return [(displacement,0),(width-displacement, height)]
+        return [(displacement, 0), (width-displacement, height)]
 
 
 
@@ -125,10 +125,10 @@ def calculate_image_positions(side_length, width, height):
     second_height = h_side_length+h_image_height
 
 
-    return {"top"   : [[first_width, 0] , [second_width, height]],
+    return {"top"   : [[first_width, 0], [second_width, height]],
             "left"  : [[0, first_height], [width, second_height]],
-            "bottom": [[first_width, side_length-height],[second_width, side_length]],
-            "right" : [[side_length-width, first_height],[side_length, second_height]]
+            "bottom": [[first_width, side_length-height], [second_width, side_length]],
+            "right" : [[side_length-width, first_height], [side_length, second_height]]
            }
 
 def create_image_position_dictionary(screen_width, screen_height, frame_width, frame_height):

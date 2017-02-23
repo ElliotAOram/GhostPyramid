@@ -2,7 +2,7 @@
 import ctypes
 
 ###================================Parser functions========================###
-def parse_int(input):
+def parse_int(parser_input):
     """
     Checks input is an integer
     @param input        :: the input to be checked
@@ -10,33 +10,33 @@ def parse_int(input):
     @return             :: True if input is int
     """
     try:
-        int(input)
+        int(parser_input)
         return True
     except ValueError:
-         raise ValueError('Value provided is not an integer')
+        raise ValueError('Value provided is not an integer')
 
-def parse_positive_int(input):
+def parse_positive_int(parser_input):
     """
     Checks input is an integer and positive
     @param input        :: the input to be checked
     @raises ValueError  :: If non-int or non-positive
     @return             :: True if input is int
     """
-    parse_int(input)
-    if input >= 0:
+    int(parser_input)
+    if parser_input >= 0:
         return True
     else:
         raise ValueError('Value provided is not positive')
 
-def parse_non_zero_int(input):
+def parse_non_zero_int(parser_input):
     """
     Checks input is an integer and non_zero
     @param input        :: the input to be checked
     @raises ValueError  :: If non-int or zero
     @return             :: True if input is int
     """
-    parse_int(input)
-    if input == 0:
+    int(parser_input)
+    if parser_input == 0:
         raise ValueError('Value provided can not be zero')
     else:
         return True
@@ -106,12 +106,10 @@ def calculate_image_positions(side_length, width, height):
                                 "left ": [...]}
     """
     # Parse input
-    parse_non_zero_int(side_length)
-    parse_non_zero_int(width)
-    parse_non_zero_int(height)
-    parse_positive_int(side_length)
-    parse_positive_int(width)
-    parse_positive_int(height)
+    arguements = locals()
+    for _, value in arguements.iteritems():
+        parse_non_zero_int(value)
+        parse_positive_int(value)
 
     # Find half values
     h_image_width = width / 2
@@ -131,7 +129,7 @@ def calculate_image_positions(side_length, width, height):
             "right" : [[side_length-width, first_height], [side_length, second_height]]
            }
 
-def create_image_position_dictionary(screen_width, screen_height, frame_width, frame_height):
+def create_image_position_dict(screen_width, screen_height, frame_width, frame_height):
     """
     Calculates the position dictionary for images given a screen
     size and image size. Applies the displaces changes to the dictionary
@@ -139,9 +137,9 @@ def create_image_position_dictionary(screen_width, screen_height, frame_width, f
     """
     # Parse input
     arguements = locals()
-    for _, v in arguements.iteritems():
-        parse_non_zero_int(v)
-        parse_positive_int(v)
+    for _, value in arguements.iteritems():
+        parse_non_zero_int(value)
+        parse_positive_int(value)
 
     # Feed into functions to calculate display area and image positions
     display_area = calculate_screen_boundaries(screen_width, screen_height)

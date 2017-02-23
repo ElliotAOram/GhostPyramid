@@ -10,29 +10,16 @@ class TestScreenBoundaries(unittest.TestCase):
     """
     ###---------------------------------Success cases----------------------------------###
     def test_width_mt_height(self):
-        """
-        Tests that the correct square is calculate for supplied values were width
-        is more than height.
-        """
         coordinates = vpa.calculate_screen_boundaries(1000, 500)
         self.assertEqual((250, 0), coordinates[0])
         self.assertEqual((750, 500), coordinates[1])
 
     def test_height_mt_width(self):
-        """
-        Tests that the correct square is calculate for supplied values were height
-        is more than width.
-        """
         coordinates = vpa.calculate_screen_boundaries(500, 1000)
         self.assertEqual((0, 250), coordinates[0])
         self.assertEqual((500, 750), coordinates[1])
 
     def test_output_with_no_params(self):
-        """
-        Test that nothing fails when the no parameters are supplied. The actually values
-        can't be tested here as it will dependant on the machnine that it is run on, but
-        type and format can be checked.
-        """
         coordinates = vpa.calculate_screen_boundaries()
         self.assertIsInstance(coordinates[0][0], int)
         self.assertIsInstance(coordinates[0][1], int)
@@ -42,9 +29,6 @@ class TestScreenBoundaries(unittest.TestCase):
     ###---------------------------------Failure cases----------------------------------###
 
     def test_non_int_zero_negative(self):
-        """
-        Ensures that the function produces a value error if integers are not supplied
-        """
         self.assertRaises(ValueError,
                           vpa.calculate_screen_boundaries,
                           "not int",
@@ -67,10 +51,6 @@ class TestCalculateImagePositions(unittest.TestCase):
 
     ###---------------------------------Success cases----------------------------------###
     def test_square_image_size(self):
-        """
-        Test that a square image is placed correctly.
-        This test will check the boundaries of the image.
-        """
         coord_map = vpa.calculate_image_positions(500, 100, 100)
         self.assertEqual([200, 0], coord_map["top"][0])
         self.assertEqual([300, 100], coord_map["top"][1])
@@ -82,10 +62,6 @@ class TestCalculateImagePositions(unittest.TestCase):
         self.assertEqual([500, 300], coord_map["right"][1])
 
     def test_long_width_image_size(self):
-        """
-        Test that a longer width image is placed correctly.
-        This test will check the boundaries of the image.
-        """
         coord_map = vpa.calculate_image_positions(500, 100, 50)
         self.assertEqual([200, 0], coord_map["top"][0])
         self.assertEqual([300, 50], coord_map["top"][1])
@@ -97,10 +73,6 @@ class TestCalculateImagePositions(unittest.TestCase):
         self.assertEqual([500, 275], coord_map["right"][1])
 
     def test_long_height_image_size(self):
-        """
-        Test that a longer height image is placed correctly.
-        This test will check the boundaries of the image.
-        """
         coord_map = vpa.calculate_image_positions(500, 50, 100)
         self.assertEqual([225, 0], coord_map["top"][0])
         self.assertEqual([275, 100], coord_map["top"][1])
@@ -114,9 +86,6 @@ class TestCalculateImagePositions(unittest.TestCase):
 
     ###---------------------------------Failure cases----------------------------------###
     def test_non_int_zero_negative(self):
-        """
-        Ensure function raises a ValueError if screenlength is non int
-        """
         self.assertRaises(ValueError,
                           vpa.calculate_image_positions,
                           "not int", 1, 1)
@@ -148,7 +117,7 @@ class TestCreateImagePositionDictionary(unittest.TestCase):
     """
     ###---------------------------------Success cases----------------------------------###
     def test_create_normal_dictionary(self):
-        img_pos = vpa.create_image_position_dictionary(200, 100, 10, 10)
+        img_pos = vpa.create_image_position_dict(200, 100, 10, 10)
         self.assertEqual([95, 0], img_pos["top"][0])
         self.assertEqual([105, 10], img_pos["top"][1])
         self.assertEqual([50, 45], img_pos["left"][0])
@@ -161,15 +130,15 @@ class TestCreateImagePositionDictionary(unittest.TestCase):
     ###---------------------------------Failure cases-----------------------------------###
     def test_input_non_int_or_zero(self):
         self.assertRaises(ValueError,
-                          vpa.create_image_position_dictionary,
+                          vpa.create_image_position_dict,
                           "not int", 1, 1, 1)
 
         self.assertRaises(ValueError,
-                          vpa.create_image_position_dictionary,
+                          vpa.create_image_position_dict,
                           1, 0, 1, 1)
 
         self.assertRaises(ValueError,
-                          vpa.create_image_position_dictionary,
+                          vpa.create_image_position_dict,
                           1, 1, -1, 1)
 
 
@@ -228,14 +197,12 @@ class TestIntParser(unittest.TestCase):
         self.assertTrue(vpa.parse_int(0))
 
 
+    def test_negative(self):
+        self.assertTrue(vpa.parse_int(-1))
+
     ###---------------------------------Failure cases-----------------------------------###
 
     def test_non_int(self):
         self.assertRaises(ValueError,
                           vpa.parse_int,
                           "Non int")
-
-    def test_negative(self):
-        self.assertRaises(ValueError,
-                          vpa.parse_int,
-                          -1)

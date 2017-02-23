@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.3.1}
+\lhead{Version 1.3.2}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -57,12 +57,17 @@ The vpa (Video Processor Application) package contains two modules. The first, t
 \subsubsection{Functions}
 
 \begin{itemize}
-	\item \textbf{calculate\_displa\_boundaries}: This function take the specified maximum width and height of the display area and creates the largest possible square that will fit. The function then returns the origin and bottom right co-ordinates of the square that will act as the maximum boundaries of the output window. If no values are provided for this function, the screen resolution is used instead.
+	\item \textbf{calculate\_display\_boundaries}: This function take the specified maximum width and height of the display area and creates the largest possible square that will fit. The function then returns the origin and bottom right co-ordinates of the square that will act as the maximum boundaries of the output window. If no values are provided for this function, the screen resolution is used instead.
 	
 	\item \textbf{calculate\_image\_positions}: Calculates the co\-ordinates that each image (video frame) should be placed in. The images should be in the top\-middle, bottom\-middle, left\-middle and right\-middle of the screen. The screen length (one require one value for this as the display area is square), image width and image height are parameters of the function. The function will calculate to co-ordinates by finding using half the screen length + or - half the height or width of the image. The function will return a map of lists of tuples containing the co-ordinates. The map will be structured such that: \\
 	\{"position" : [origin tuple, bottom right tuple],\\... \} \\
 	An example of this is: \\
 	\{"top" : [(100,0), (200,50)],\\... \}
+	
+	\item \textbf{get\_screen\_width\_and\_height}: Function that returns the screen resolution as a tuple (width, height). 
+	
+	\item \textbf{create\_image\_position\_dict}: This is a function that controls the flow of execution. Given screen dimensions and frame dimensions, this function calls calculate\_image\_positions and then applies the displacement from calculate\_display\_boundaries.  
+
 
 	\item \textbf{parse\_int}: Takes an object, python variable, and raises an error if it is not a integer. 	
 	

@@ -132,6 +132,15 @@ class TestCalculateImagePositions(unittest.TestCase):
                           1, 1, -1)
 
 
+class TestGetScreenDimensions(unittest.TestCase):
+    """
+    Ensures that the get_screen_width_and_height functions correctly
+    """
+
+    def test_correct_type_and_format(self):
+        screen_dimension = vpa.get_screen_width_and_height()
+        self.assertisInstance(int, screen_dimension[0])
+        self.assertisInstance(int, screen_dimension[1])
 
 
 ##Input parser function tests

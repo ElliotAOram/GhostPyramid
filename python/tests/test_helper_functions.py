@@ -143,6 +143,39 @@ class TestGetScreenDimensions(unittest.TestCase):
         self.assertIsInstance(screen_dimension[1], int)
 
 
+class TestCreateImagePositionDictionary(unittest.TestCase):
+    """
+    Test the workflow function that strings together the above
+    functions for use in the output_video function
+    """
+    ###---------------------------------Success cases----------------------------------###
+    def test_create_normal_dictionary(self):
+        img_pos = vpa.create_image_position_dictionary(200, 100, 10, 10)
+        self.assertEqual([95,0   ]  , img_pos["top"][0])
+        self.assertEqual([105,10 ]  , img_pos["top"][1])
+        self.assertEqual([50,45  ]  , img_pos["left"][0])
+        self.assertEqual([60,55  ]  , img_pos["left"][1])
+        self.assertEqual([95,90  ]  , img_pos["bottom"][0])
+        self.assertEqual([105,100]  , img_pos["bottom"][1])
+        self.assertEqual([140,45  ]  , img_pos["right"][0])
+        self.assertEqual([150,55 ]  , img_pos["right"][1])
+
+    ###---------------------------------Failure cases-----------------------------------###
+    def test_raises_valueError_on_non_int_or_zero(self):
+        self.assertRaises(ValueError,
+                          vpa.create_image_position_dictionary,
+                          "not int", 1, 1, 1)
+
+        self.assertRaises(ValueError,
+                          vpa.create_image_position_dictionary,
+                          1, 0, 1, 1)
+
+        self.assertRaises(ValueError,
+                          vpa.create_image_position_dictionary,
+                          1, 1, -1, 1)
+
+
+
 ##Input parser function tests
 
 

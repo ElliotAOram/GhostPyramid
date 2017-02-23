@@ -139,8 +139,8 @@ class TestGetScreenDimensions(unittest.TestCase):
 
     def test_correct_type_and_format(self):
         screen_dimension = vpa.get_screen_width_and_height()
-        self.assertisInstance(int, screen_dimension[0])
-        self.assertisInstance(int, screen_dimension[1])
+        self.assertIsInstance(screen_dimension[0], int)
+        self.assertIsInstance(screen_dimension[1], int)
 
 
 ##Input parser function tests

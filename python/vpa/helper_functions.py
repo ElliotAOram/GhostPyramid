@@ -73,13 +73,13 @@ def calculate_screen_boundaries(width=None, height=None):
     else:
         parse_non_zero_int(width)
         parse_positive_int(width)
-        
+
     if height is None:
         height = get_screen_width_and_height()[1]
     else:
         parse_non_zero_int(height)
         parse_positive_int(height)
-    
+
     # Assume width > height (most monitors)
     square_side = height
     displacement = (width - square_side) / 2   # Indent from side/top of screen

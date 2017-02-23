@@ -131,9 +131,30 @@ def calculate_image_positions(side_length, width, height):
             "right" : [[side_length-width, first_height],[side_length, second_height]]
            }
     
+def create_image_position_dictionary(screen_width, screen_height, frame_width, frame_height):
+    """
+    Calculates the position dictionary for images given a screen
+    size and image size. Applies the displaces changes to the dictionary
+    to postion images based on display size.
+    """
+    # Parse input
+    arguements = locals()
+    print str(arguements)
+    for _, v in arguements.iteritems():
+        parse_non_zero_int(v)
+        parse_positive_int(v)
+
+    # Feed into functions to calculate display area and image positions
+    display_area = calculate_screen_boundaries(screen_width, screen_height)
+    display_side_length = abs(display_area[1][1] - display_area[0][1])
+    displacement = max(display_area[0][0], display_area[0][1])
+
+    img_positions = calculate_image_positions(display_side_length,
+                                              frame_width, frame_height)
+
+    # Apply displacement
+    for _, value in img_positions.iteritems():
+        value[0][0] += displacement
+        value[1][0] += displacement
     
-    
-    
-    
-    
-    
+    return img_positions

@@ -38,7 +38,6 @@ class VideoProcessor(object):
         self.video_feed.release()
         self.video_feed = None
 
-
     def output_video(self):
         """
         Outputs all video_feeds to a single output window
@@ -48,18 +47,8 @@ class VideoProcessor(object):
         frame_width = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))
         frame_height = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
 
-        # Feed into functions to calculate display area and image positions
-        display_area = calculate_screen_boundaries(screen_res[0], screen_res[1])
-        display_side_length = abs(display_area[1][1] - display_area[0][1])
-        displacement = max(display_area[0][0], display_area[0][1])
-
-        img_positions = calculate_image_positions(display_side_length,
-                                                  frame_width, frame_height)
-
-        # Apply displacement
-        for _, value in img_positions.iteritems():
-            value[0][0] += displacement
-            value[1][0] += displacement
+        img_positions = create_image_position_dictionary(screen_res[0], screen_res[1],
+                                                         frame_width, frame_height)
 
         while (True):
             _, frame = self.video_feed.read()

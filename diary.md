@@ -108,3 +108,10 @@
 * Minor update to feaute dependencies
 * Meeting with Helen to agree feature list and time line
 * Complete Pull request for feature 3 - to be reviewed
+
+### 22/02/2017
+* Forced to revert feature 3 due incorrect understanding of image representation in python OpenCV
+* Design complete for feature 5k
+* Tests for helper functions created and passing
+* Tomorrow need to write `process_and_output_video` function 
+  * stitch together helpers 

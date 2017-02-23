@@ -42,6 +42,17 @@ def parse_non_zero_int(input):
         return True
 
 ###=================================VPA Helper functions=================###
+
+def get_screen_width_and_height():
+    """
+    Returns the screen width and height as a tuple.
+    @return     :: (screen_width, screen_height)
+    """
+    #http://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
+    user32 = ctypes.windll.user32
+    return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
+
+
 def calculate_screen_boundaries(width=None, height=None):
     """
     Calculates the largest possible square and its co-ordinates in a
@@ -56,16 +67,15 @@ def calculate_screen_boundaries(width=None, height=None):
     @raises ValueError  :: If any input is non integer or zero
     """
     #parse input and get default screen size if not provided
-    #http://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
-    user32 = ctypes.windll.user32
+
     if width is None:
-        width = user32.GetSystemMetrics(0)
+        width = get_screen_width_and_height()[0]
     else:
         parse_non_zero_int(width)
         parse_positive_int(width)
         
     if height is None:
-        height = user32.GetSystemMetrics(1)
+        height = get_screen_width_and_height()[1]
     else:
         parse_non_zero_int(height)
         parse_positive_int(height)
@@ -79,6 +89,8 @@ def calculate_screen_boundaries(width=None, height=None):
         return [(0,displacement),(width, height-displacement)]
     else:
         return [(displacement,0),(width-displacement, height)]
+
+
 
 def calculate_image_positions(side_length, width, height):
     """

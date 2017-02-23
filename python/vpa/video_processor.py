@@ -38,7 +38,7 @@ class VideoProcessor(object):
         self.video_feed.release()
         self.video_feed = None
 
-    def output_video(self):
+    def process_and_output_video(self):
         """
         Outputs all video_feeds to a single output window
         """

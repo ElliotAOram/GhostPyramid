@@ -3,4 +3,4 @@ from video_processor import VideoProcessor
 
 VPA = VideoProcessor()
 VPA.begin_capture(0)
-VPA.output_video()
+VPA.process_and_output_video()

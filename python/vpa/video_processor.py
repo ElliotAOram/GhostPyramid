@@ -42,7 +42,8 @@ class VideoProcessor(object):
         """
         Outputs all video_feeds to a single output window
         """
-        #Establish image and monitor dimensions
+        identifiers = ["top", "left", "bottom", "right"]
+        # Establish image and monitor dimensions
         screen_res = get_screen_width_and_height()
         frame_width = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))
         frame_height = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
@@ -50,25 +51,18 @@ class VideoProcessor(object):
         img_positions = create_image_position_dictionary(screen_res[0], screen_res[1],
                                                          frame_width, frame_height)
 
+        #http://stackoverflow.com/questions/17696061/how-to-display-a-full-screen-images-with-python2-7-and-opencv2-4
+        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("Output Window", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+
         while (True):
             _, frame = self.video_feed.read()
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             merged_frame = np.zeros((screen_res[1], screen_res[0], 3), dtype="uint8")
-            merged_frame[img_positions["top"][0][1]:img_positions["top"][1][1],
-                         img_positions["top"][0][0]:img_positions["top"][1][0]] = frame
+            for position_id in identifiers:
+                merged_frame[img_positions[position_id][0][1]:img_positions[position_id][1][1],
+                             img_positions[position_id][0][0]:img_positions[position_id][1][0]] = frame
 
-            merged_frame[img_positions["left"][0][1]:img_positions["left"][1][1],
-                         img_positions["left"][0][0]:img_positions["left"][1][0]] = frame
-
-            merged_frame[img_positions["bottom"][0][1]:img_positions["bottom"][1][1],
-                         img_positions["bottom"][0][0]:img_positions["bottom"][1][0]] = frame
-
-            merged_frame[img_positions["right"][0][1]:img_positions["right"][1][1],
-                         img_positions["right"][0][0]:img_positions["right"][1][0]] = frame
-
-            #http://stackoverflow.com/questions/17696061/how-to-display-a-full-screen-images-with-python2-7-and-opencv2-4
-            cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)
-            cv2.setWindowProperty("Output Window", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
             cv2.imshow("Output Window", merged_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

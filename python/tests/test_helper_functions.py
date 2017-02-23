@@ -74,14 +74,14 @@ class TestCalculateImagePositions(unittest.TestCase):
         This test will check the boundaries of the image.
         """
         coord_map = vpa.calculate_image_positions(500, 100, 100)
-        self.assertEqual((200,0)    , coord_map["top"][0])
-        self.assertEqual((300,100)  , coord_map["top"][1])
-        self.assertEqual((0,200)    , coord_map["left"][0])
-        self.assertEqual((100,300)  , coord_map["left"][1])
-        self.assertEqual((200,400)  , coord_map["bottom"][0])
-        self.assertEqual((300,500)  , coord_map["bottom"][1])
-        self.assertEqual((400,200)  , coord_map["right"][0])
-        self.assertEqual((500,300)  , coord_map["right"][1])
+        self.assertEqual([200,0  ]  , coord_map["top"][0])
+        self.assertEqual([300,100]  , coord_map["top"][1])
+        self.assertEqual([0,200  ]  , coord_map["left"][0])
+        self.assertEqual([100,300]  , coord_map["left"][1])
+        self.assertEqual([200,400]  , coord_map["bottom"][0])
+        self.assertEqual([300,500]  , coord_map["bottom"][1])
+        self.assertEqual([400,200]  , coord_map["right"][0])
+        self.assertEqual([500,300]  , coord_map["right"][1])
 
     def test_long_width_image_size(self):
         """
@@ -89,14 +89,14 @@ class TestCalculateImagePositions(unittest.TestCase):
         This test will check the boundaries of the image.
         """
         coord_map = vpa.calculate_image_positions(500, 100, 50)
-        self.assertEqual((200,0)    , coord_map["top"][0])
-        self.assertEqual((300,50)   , coord_map["top"][1])
-        self.assertEqual((0,225)    , coord_map["left"][0])
-        self.assertEqual((100,275)  , coord_map["left"][1])
-        self.assertEqual((200,450)  , coord_map["bottom"][0])
-        self.assertEqual((300,500)  , coord_map["bottom"][1])
-        self.assertEqual((400,225)  , coord_map["right"][0])
-        self.assertEqual((500,275)  , coord_map["right"][1])
+        self.assertEqual([200,0  ]  , coord_map["top"][0])
+        self.assertEqual([300,50 ]  , coord_map["top"][1])
+        self.assertEqual([0,225  ]  , coord_map["left"][0])
+        self.assertEqual([100,275]  , coord_map["left"][1])
+        self.assertEqual([200,450]  , coord_map["bottom"][0])
+        self.assertEqual([300,500]  , coord_map["bottom"][1])
+        self.assertEqual([400,225]  , coord_map["right"][0])
+        self.assertEqual([500,275]  , coord_map["right"][1])
 
     def test_long_height_image_size(self):
         """
@@ -104,14 +104,14 @@ class TestCalculateImagePositions(unittest.TestCase):
         This test will check the boundaries of the image.
         """
         coord_map = vpa.calculate_image_positions(500, 50, 100)
-        self.assertEqual((225,0)    , coord_map["top"][0])
-        self.assertEqual((275,100)  , coord_map["top"][1])
-        self.assertEqual((0,200)    , coord_map["left"][0])
-        self.assertEqual((50,300)   , coord_map["left"][1])
-        self.assertEqual((225,400)  , coord_map["bottom"][0])
-        self.assertEqual((275,500)  , coord_map["bottom"][1])
-        self.assertEqual((450,200)  , coord_map["right"][0])
-        self.assertEqual((500,300)  , coord_map["right"][1])
+        self.assertEqual([225,0  ]  , coord_map["top"][0])
+        self.assertEqual([275,100]  , coord_map["top"][1])
+        self.assertEqual([0,200  ]  , coord_map["left"][0])
+        self.assertEqual([50,300 ]  , coord_map["left"][1])
+        self.assertEqual([225,400]  , coord_map["bottom"][0])
+        self.assertEqual([275,500]  , coord_map["bottom"][1])
+        self.assertEqual([450,200]  , coord_map["right"][0])
+        self.assertEqual([500,300]  , coord_map["right"][1])
 
 
     ###---------------------------------Failure cases----------------------------------###

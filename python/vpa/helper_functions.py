@@ -125,10 +125,10 @@ def calculate_image_positions(side_length, width, height):
     second_height = h_side_length+h_image_height
     
     
-    return {"top"   : [(first_width, 0) , (second_width, height)],
-            "left"  : [(0, first_height), (width, second_height)],
-            "bottom": [(first_width, side_length-height),(second_width, side_length)],
-            "right" : [(side_length-width, first_height),(side_length, second_height)]
+    return {"top"   : [[first_width, 0] , [second_width, height]],
+            "left"  : [[0, first_height], [width, second_height]],
+            "bottom": [[first_width, side_length-height],[second_width, side_length]],
+            "right" : [[side_length-width, first_height],[side_length, second_height]]
            }
     
     

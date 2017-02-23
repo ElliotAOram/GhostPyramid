@@ -139,7 +139,6 @@ def create_image_position_dictionary(screen_width, screen_height, frame_width, f
     """
     # Parse input
     arguements = locals()
-    print str(arguements)
     for _, v in arguements.iteritems():
         parse_non_zero_int(v)
         parse_positive_int(v)

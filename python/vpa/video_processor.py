@@ -1,5 +1,7 @@
 """Contains the VideoProcessor class (core application)"""
-from cv2 import VideoCapture
+import cv2
+from helper_functions import create_image_position_dict, get_screen_width_and_height
+import numpy as np
 
 
 class VideoProcessor(object):
@@ -25,7 +27,7 @@ class VideoProcessor(object):
         except ValueError:
             raise ValueError('Value provided is not an integer')
 
-        self.video_feed = VideoCapture(device)
+        self.video_feed = cv2.VideoCapture(device)
 
 
     def end_capture(self):
@@ -36,6 +38,39 @@ class VideoProcessor(object):
         self.video_feed.release()
         self.video_feed = None
 
+    def process_and_output_video(self):
+        """
+        Outputs all video_feeds to a single output window
+        """
+        identifiers = ["top", "left", "bottom", "right"]
+        # Establish image and monitor dimensions
+        screen_res = get_screen_width_and_height()
+        frame_width = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))
+        frame_height = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
+
+        img_positions = create_image_position_dict(screen_res[0], screen_res[1],
+                                                   frame_width, frame_height)
+
+        #http://stackoverflow.com/questions/17696061
+        #/how-to-display-a-full-screen-images-with-python2-7-and-opencv2-4
+        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("Output Window", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+
+        while True:
+            _, frame = self.video_feed.read()
+            #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
+            merged_frame = np.zeros((screen_res[1], screen_res[0], 3), dtype="uint8")
+            for position_id in identifiers:
+                merged_frame[img_positions[position_id][0][1]:
+                             img_positions[position_id][1][1],
+                             img_positions[position_id][0][0]:
+                             img_positions[position_id][1][0]] = frame
+
+            cv2.imshow("Output Window", merged_frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        self.end_capture()
+        cv2.destroyAllWindows()
 
     def get_video_feed(self):
         """

@@ -115,3 +115,9 @@
 * Tests for helper functions created and passing
 * Tomorrow need to write `process_and_output_video` function 
   * stitch together helpers 
+  
+### 23/02/2017
+* Complete feature 5 and create pull request
+
+### 24/02/2017
+* merge feature 5

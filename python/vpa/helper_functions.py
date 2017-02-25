@@ -1,8 +1,9 @@
 """Helper functions for vpa"""
 import ctypes
-from parsers import *
+from parsers import parse_positive_int, parse_non_zero_int
 
-###=================================VPA Helper functions=================###
+RESOLUTIONS = [(1920, 1080), (1280, 720), (960, 540),
+               (640, 480), (320, 240), (424, 240), (320, 180)] # May add more to support mobile
 
 def get_screen_width_and_height():
     """
@@ -124,8 +125,6 @@ def get_ideal_image_resolution(display_length):
     """
     parse_non_zero_int(display_length)
     parse_positive_int(display_length)
-    RESOLUTIONS = [(1920, 1080), (1280, 720), (960, 540),
-                   (640, 480), (320,240), (424, 240), (320, 180)] # May add more to support mobile
     max_image_size = display_length / 3
     max_res = (320, 180)
     for index in range(0, len(RESOLUTIONS)):

@@ -1,8 +1,12 @@
 """Contains the VideoProcessor class (core application)"""
 import cv2
-from helper_functions import *
+from helper_functions import get_screen_width_and_height, calculate_screen_boundaries, \
+                             get_ideal_image_resolution, create_image_position_dict
 import numpy as np
-from parsers import *
+from parsers import parse_positive_int
+
+
+INDENTIFIERS = ["top", "left", "bottom", "right"]
 
 
 class VideoProcessor(object):
@@ -23,11 +27,7 @@ class VideoProcessor(object):
         @param device		:: The integer that corresponds to the device.
         @Raises ValueError 	:: Raises ValueError on non integer input.
         """
-        try:
-            int(device)
-        except ValueError:
-            raise ValueError('Value provided is not an integer')
-
+        parse_positive_int(device)
         self.video_feed = cv2.VideoCapture(device)
 
 
@@ -43,7 +43,6 @@ class VideoProcessor(object):
         """
         Outputs all video_feeds to a single output window
         """
-        identifiers = ["top", "left", "bottom", "right"]
         # Establish image and monitor dimensions
         screen_res = get_screen_width_and_height()
         display_area = calculate_screen_boundaries(screen_res[0], screen_res[1])
@@ -74,15 +73,15 @@ class VideoProcessor(object):
 
         while True:
             _, frame = self.video_feed.read()
-            cropped_frame = frame[crop_range[0]:crop_range[1],crop_range[2]:crop_range[3]]
+            cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             merged_frame = np.zeros((screen_res[1], screen_res[0], 3), dtype="uint8")
 
-            rows,cols = 360,360
-
-            for multipler, position_id in enumerate(identifiers):
-                M = cv2.getRotationMatrix2D((cols/2,rows/2),90*multipler,1)
-                rotated_frame = cv2.warpAffine(cropped_frame,M,(cols,rows))
+            for multipler, position_id in enumerate(INDENTIFIERS):
+                rot_matrix = cv2.getRotationMatrix2D((maximum_img_size/2, maximum_img_size/2),
+                                                     90*multipler, 1)
+                rotated_frame = cv2.warpAffine(cropped_frame, rot_matrix,
+                                               (maximum_img_size, maximum_img_size))
                 merged_frame[img_positions[position_id][0][1]:
                              img_positions[position_id][1][1],
                              img_positions[position_id][0][0]:

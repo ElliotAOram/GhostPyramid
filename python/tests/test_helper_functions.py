@@ -142,6 +142,39 @@ class TestCreateImagePositionDictionary(unittest.TestCase):
                           1, 1, -1, 1)
 
 
+class TestGetIdealImageResolution(unittest.TestCase):
+    """
+    Test the workflow function that strings together the above
+    functions for use in the output_video function
+    """
+    ###---------------------------------Success cases----------------------------------###
+    def test_1080_display_length(self):
+        resolution = vpa.get_ideal_image_resolution(1080)
+        self.assertEqual(resolution, (640, 480))
+
+    def test_larger_than_known(self):
+        resolution = vpa.get_ideal_image_resolution(999999)
+        # Should return largest known display scale
+        self.assertEqual(resolution, (1920, 1080))
+
+    def test_small_display_area(self):
+        resolution = vpa.get_ideal_image_resolution(200)
+        self.assertEqual(resolution, (320, 180))
+
+    ###---------------------------------Failure cases-----------------------------------###
+    def test_input_non_int_or_zero(self):
+        self.assertRaises(ValueError,
+                          vpa.get_ideal_image_resolution,
+                          "not int")
+
+        self.assertRaises(ValueError,
+                          vpa.get_ideal_image_resolution,
+                          0)
+
+        self.assertRaises(ValueError,
+                          vpa.get_ideal_image_resolution,
+                          -1)
+
 
 ##Input parser function tests
 

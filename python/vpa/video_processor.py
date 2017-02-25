@@ -1,7 +1,8 @@
 """Contains the VideoProcessor class (core application)"""
 import cv2
-from helper_functions import create_image_position_dict, get_screen_width_and_height
+from helper_functions import *
 import numpy as np
+from parsers import *
 
 
 class VideoProcessor(object):
@@ -45,11 +46,26 @@ class VideoProcessor(object):
         identifiers = ["top", "left", "bottom", "right"]
         # Establish image and monitor dimensions
         screen_res = get_screen_width_and_height()
-        frame_width = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))
-        frame_height = int(self.video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
+        display_area = calculate_screen_boundaries(screen_res[0], screen_res[1])
 
+        # Scale video feed to the largest resolution that is still valid
+        display_side_length = abs(display_area[1][1] - display_area[0][1])
+        scale_resolution = get_ideal_image_resolution(display_side_length)
+        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, scale_resolution[0])
+        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, scale_resolution[1])
+
+        # Get image position
+        maximum_img_size = display_side_length / 3
         img_positions = create_image_position_dict(screen_res[0], screen_res[1],
-                                                   frame_width, frame_height)
+                                                   maximum_img_size, maximum_img_size)
+
+        # Calculate crop range
+        central_width = scale_resolution[0] / 2
+        central_height = scale_resolution[1] / 2
+        h_image_max = maximum_img_size / 2
+        # [h_start, h_end, v_start, v_end]
+        crop_range = [central_height - h_image_max, central_height + h_image_max,
+                      central_width - h_image_max, central_width + h_image_max]
 
         #http://stackoverflow.com/questions/17696061
         #/how-to-display-a-full-screen-images-with-python2-7-and-opencv2-4
@@ -58,13 +74,19 @@ class VideoProcessor(object):
 
         while True:
             _, frame = self.video_feed.read()
+            cropped_frame = frame[crop_range[0]:crop_range[1],crop_range[2]:crop_range[3]]
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             merged_frame = np.zeros((screen_res[1], screen_res[0], 3), dtype="uint8")
-            for position_id in identifiers:
+
+            rows,cols = 360,360
+
+            for multipler, position_id in enumerate(identifiers):
+                M = cv2.getRotationMatrix2D((cols/2,rows/2),90*multipler,1)
+                rotated_frame = cv2.warpAffine(cropped_frame,M,(cols,rows))
                 merged_frame[img_positions[position_id][0][1]:
                              img_positions[position_id][1][1],
                              img_positions[position_id][0][0]:
-                             img_positions[position_id][1][0]] = frame
+                             img_positions[position_id][1][0]] = rotated_frame
 
             cv2.imshow("Output Window", merged_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):

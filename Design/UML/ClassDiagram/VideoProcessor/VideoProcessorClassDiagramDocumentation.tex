@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.3.2}
+\lhead{Version 1.4.0}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -66,18 +66,22 @@ The vpa (Video Processor Application) package contains two modules. The first, t
 	
 	\item \textbf{get\_screen\_width\_and\_height}: Function that returns the screen resolution as a tuple (width, height). 
 	
-	\item \textbf{create\_image\_position\_dict}: This is a function that controls the flow of execution. Given screen dimensions and frame dimensions, this function calls calculate\_image\_positions and then applies the displacement from calculate\_display\_boundaries.  
+	\item \textbf{create\_image\_position\_dict}: This is a function that controls the flow of execution. Given screen dimensions and frame dimensions, this function calls calculate\_image\_positions and then applies the displacement from calculate\_display\_boundaries.
+	
+	\item \textbf{get\_ideal\_image\_resolution}: Given the length of one side of the square display area, this functions determines the maximum resolution an image should be. Images will be squares and can, at a maximum, be a third of the length of a side of the display area. This function will traverse a list of possible video resolutions and return that resolution as a tuple.
 
+\end{itemize}
 
+\subsection{Parsers}
+\subsubsection{Functions}
+\begin{itemize}
 	\item \textbf{parse\_int}: Takes an object, python variable, and raises an error if it is not a integer. 	
 	
 	\item \textbf{parse\_positive\_int}: Takes an object, python variable, and raises an error if it is not a positive integer
 
-	\item \textbf{parse\_nonzero\_int}: Takes an object, python variable, and raises an error if it a zero. 
-
+	\item \textbf{parse\_nonzero\_int}: Takes an object, python variable, and raises an error if it a zero.
+	
 \end{itemize}
-
-
 
 
 \end{document}

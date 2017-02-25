@@ -1,5 +1,6 @@
 """Helper functions for vpa"""
 import ctypes
+import cv2
 
 ###================================Parser functions========================###
 def parse_int(parser_input):
@@ -155,3 +156,20 @@ def create_image_position_dict(screen_width, screen_height, frame_width, frame_h
         value[1][0] += displacement
 
     return img_positions
+
+def get_ideal_image_resolution(display_length):
+    """
+    Takes the display length and works out the next largest resolution to scale
+    the video to where: display length / 3 > resolution.width && resolution.height
+    """
+    parse_non_zero_int(display_length)
+    parse_positive_int(display_length)
+    RESOLUTIONS = [(1920, 1080), (1280, 720), (960, 540),
+                   (640, 480), (320,240), (424, 240), (320, 180)] # May add more to support mobile
+    max_image_size = display_length / 3
+    max_res = (320, 180)
+    for index in range(0, len(RESOLUTIONS)):
+        if max_image_size >= RESOLUTIONS[index][1]:
+            if RESOLUTIONS[index][1] > max_res[1]:
+                max_res = RESOLUTIONS[index-1]
+    return max_res

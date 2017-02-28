@@ -7,7 +7,7 @@ import numpy as np
 from parsers import parse_positive_int
 
 
-INDENTIFIERS = ["top", "left", "bottom", "right"]
+IDENTIFIERS = ["top", "left", "bottom", "right"]
 
 
 class VideoProcessor(object):
@@ -97,7 +97,7 @@ class VideoProcessor(object):
             cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
 
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
-            for multipler, position_id in enumerate(INDENTIFIERS):
+            for multipler, position_id in enumerate(IDENTIFIERS):
                 merged_frame[img_positions[position_id][0][1]:
                              img_positions[position_id][1][1],
                              img_positions[position_id][0][0]:

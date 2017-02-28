@@ -1,7 +1,7 @@
 """Testing module for VideoProcessor class"""
-import cv2
-import os
 import unittest
+
+import cv2
 
 from .context import vpa
 
@@ -41,7 +41,7 @@ class TestCameraCapture(unittest.TestCase):
 
 class TestScaleVideoFeed(unittest.TestCase):
     """
-    @class TestVideoScaling     :: Tests that the video feed can be scaled based 
+    @class TestVideoScaling     :: Tests that the video feed can be scaled based
                                    on a given resolution
     """
     ###================================setUp and tearDown=============================###

@@ -1,6 +1,6 @@
 """Contains the VideoProcessor class (core application)"""
 import cv2
-from helper_functions import get_screen_resolution, calculate_display_area_properties, \
+from helper_functions import get_screen_resolution, calc_display_area_props, \
                              get_ideal_image_resolution, calculate_image_positions, \
                              calculate_crop_range, rotate_image_anticlockwise
 import numpy as np
@@ -66,8 +66,8 @@ class VideoProcessor(object):
         """
 
         # Get display properties
-        display_length, displacement = calculate_display_area_properties(self.screen_width,
-                                                                         self.screen_height)
+        display_length, displacement = calc_display_area_props(self.screen_width,
+                                                               self.screen_height)
 
         # Scale
         scale_resolution = get_ideal_image_resolution(display_length)
@@ -89,7 +89,7 @@ class VideoProcessor(object):
         merged_frame = np.zeros((self.screen_height, self.screen_width, 3), dtype="uint8")
 
         # Name output window
-        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)          
+        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)
         cv2.setWindowProperty("Output Window", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
 
         while True:

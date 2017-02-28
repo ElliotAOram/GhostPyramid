@@ -22,12 +22,12 @@ class TestScreenBoundaries(unittest.TestCase):
     """
     ###---------------------------------Success cases----------------------------------###
     def test_width_mt_height(self):
-        side, displacement = vpa.calculate_display_area_properties(1000, 500)
+        side, displacement = vpa.calc_display_area_props(1000, 500)
         self.assertEqual(500, side)
         self.assertEqual(250, displacement)
 
     def test_height_mt_width(self):
-        side, displacement = vpa.calculate_display_area_properties(500, 1000)
+        side, displacement = vpa.calc_display_area_props(500, 1000)
         self.assertEqual(500, side)
         self.assertEqual(250, displacement)
 
@@ -35,16 +35,16 @@ class TestScreenBoundaries(unittest.TestCase):
 
     def test_non_int_zero_negative(self):
         self.assertRaises(ValueError,
-                          vpa.calculate_display_area_properties,
+                          vpa.calc_display_area_props,
                           "not int",
                           "not int")
 
         self.assertRaises(ValueError,
-                          vpa.calculate_display_area_properties,
+                          vpa.calc_display_area_props,
                           0, 100)
 
         self.assertRaises(ValueError,
-                          vpa.calculate_display_area_properties,
+                          vpa.calc_display_area_props,
                           100, -1)
 
 
@@ -144,27 +144,34 @@ class TestCalculateCropRange(unittest.TestCase):
     ###---------------------------------Success cases----------------------------------###
     def test_valid_crop_range(self):
         crop_range = vpa.calculate_crop_range((640, 480), 360)
+        self.assertEqual(crop_range[0], 60)
+        self.assertEqual(crop_range[1], 420)
+        self.assertEqual(crop_range[2], 140)
+        self.assertEqual(crop_range[3], 500)
 
     def test_max_img_size_mt_res(self):
-        crop_range = vpa.calculate_crop_range((500,500), 600)
-        
+        crop_range = vpa.calculate_crop_range((500, 500), 600)
+        self.assertEqual(crop_range[0], -50)
+        self.assertEqual(crop_range[1], 550)
+        self.assertEqual(crop_range[2], -50)
+        self.assertEqual(crop_range[3], 550)
 
 
     ###---------------------------------Failure cases-----------------------------------###
     def test_non_int_input(self):
-        self.assertRaises(ValueError, 
+        self.assertRaises(ValueError,
                           vpa.calculate_crop_range,
-                          ("not int","not int"), "not int")
+                          ("not int", "not int"), "not int")
 
     def test_positive_int(self):
         self.assertRaises(ValueError,
                           vpa.calculate_crop_range,
-                          (-1,-1), -1)
+                          (-1, -1), -1)
 
     def test_non_zero_input(self):
         self.assertRaises(ValueError,
                           vpa.calculate_crop_range,
-                          (0,0), 0)
+                          (0, 0), 0)
 
 
 class TestRotateImageClockwise(unittest.TestCase):
@@ -178,11 +185,11 @@ class TestRotateImageClockwise(unittest.TestCase):
 
     def tearDown(self):
         self.frame = None
-        
+
 
     ###---------------------------------Success cases----------------------------------###
     def test_no_rotation(self):
-        rotated_frame = vpa.rotate_image_anticlockwise(self.frame, 200, 0)
+        self.frame = vpa.rotate_image_anticlockwise(self.frame, 200, 0)
         # Assert expected color for modified pixel
         self.assertEqual(self.frame[0:1, 0:1][0][0][0], 255)
         self.assertEqual(self.frame[0:1, 0:1][0][0][1], 0)
@@ -191,7 +198,7 @@ class TestRotateImageClockwise(unittest.TestCase):
         self.assertEqual(self.frame[2:3, 2:3][0][0][0], 0)
         self.assertEqual(self.frame[2:3, 2:3][0][0][1], 0)
         self.assertEqual(self.frame[2:3, 2:3][0][0][2], 0)
-        
+
 
     def test_90_degree_rotation(self):
         self.frame = vpa.rotate_image_anticlockwise(self.frame, 200, 90)

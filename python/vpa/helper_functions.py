@@ -16,7 +16,7 @@ def get_screen_resolution():
     return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
 
 
-def calculate_display_area_properties(width, height):
+def calc_display_area_props(width, height):
     """
     Calculates the largest possible square and its co-ordinates in a
     provided rectangular space. This is used to establish the correct
@@ -129,6 +129,6 @@ def rotate_image_anticlockwise(frame, sq_img_size, degrees):
     @degrees            :: the number of degrees to rotate by (clockwise)
     @return rotated_frame
     """
-    rot_matrix = getRotationMatrix2D((sq_img_size/2, sq_img_size/2),degrees, 1)
-    rotated_frame = warpAffine(frame, rot_matrix,(sq_img_size, sq_img_size))
+    rot_matrix = getRotationMatrix2D((sq_img_size/2, sq_img_size/2), degrees, 1)
+    rotated_frame = warpAffine(frame, rot_matrix, (sq_img_size, sq_img_size))
     return rotated_frame

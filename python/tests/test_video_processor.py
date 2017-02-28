@@ -5,6 +5,26 @@ import cv2
 
 from .context import vpa
 
+class TestInitForVidoeProcessor(unittest.TestCase):
+    """
+    @class TestInitVideoProcessor   :: Test the init functionality of the
+                                       VideoProcessor class
+    """
+    ###--------------------------------Success cases-----------------------------------###
+    def test_no_input(self):
+        video_processor = vpa.VideoProcessor()
+        self.assertIsInstance(video_processor.screen_width, int)
+        self.assertIsInstance(video_processor.screen_height, int)
+
+    def test_width_input(self):
+        video_processor = vpa.VideoProcessor(screen_width=1000)
+        self.assertEqual(video_processor.screen_width, 1000)
+        self.assertIsInstance(video_processor.screen_height, int)
+
+    def test_height_input(self):
+        video_processor = vpa.VideoProcessor(screen_height=1000)
+        self.assertEqual(video_processor.screen_height, 1000)
+        self.assertIsInstance(video_processor.screen_width, int)
 
 class TestCameraCapture(unittest.TestCase):
     """

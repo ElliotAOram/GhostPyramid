@@ -1,7 +1,19 @@
 """Testing module for helper functions"""
 import unittest
+import numpy as np
 
 from .context import vpa
+
+class TestGetScreenDimensions(unittest.TestCase):
+    """
+    Ensures that the get_screen_width_and_height functions correctly
+    """
+
+    def test_correct_type_and_format(self):
+        screen_dimension = vpa.get_screen_resolution()
+        self.assertIsInstance(screen_dimension[0], int)
+        self.assertIsInstance(screen_dimension[1], int)
+
 
 class TestScreenBoundaries(unittest.TestCase):
     """
@@ -10,36 +22,29 @@ class TestScreenBoundaries(unittest.TestCase):
     """
     ###---------------------------------Success cases----------------------------------###
     def test_width_mt_height(self):
-        coordinates = vpa.calculate_screen_boundaries(1000, 500)
-        self.assertEqual((250, 0), coordinates[0])
-        self.assertEqual((750, 500), coordinates[1])
+        side, displacement = vpa.calculate_display_area_properties(1000, 500)
+        self.assertEqual(500, side)
+        self.assertEqual(250, displacement)
 
     def test_height_mt_width(self):
-        coordinates = vpa.calculate_screen_boundaries(500, 1000)
-        self.assertEqual((0, 250), coordinates[0])
-        self.assertEqual((500, 750), coordinates[1])
-
-    def test_output_with_no_params(self):
-        coordinates = vpa.calculate_screen_boundaries()
-        self.assertIsInstance(coordinates[0][0], int)
-        self.assertIsInstance(coordinates[0][1], int)
-        self.assertIsInstance(coordinates[1][0], int)
-        self.assertIsInstance(coordinates[1][1], int)
+        side, displacement = vpa.calculate_display_area_properties(500, 1000)
+        self.assertEqual(500, side)
+        self.assertEqual(250, displacement)
 
     ###---------------------------------Failure cases----------------------------------###
 
     def test_non_int_zero_negative(self):
         self.assertRaises(ValueError,
-                          vpa.calculate_screen_boundaries,
+                          vpa.calculate_display_area_properties,
                           "not int",
                           "not int")
 
         self.assertRaises(ValueError,
-                          vpa.calculate_screen_boundaries,
+                          vpa.calculate_display_area_properties,
                           0, 100)
 
         self.assertRaises(ValueError,
-                          vpa.calculate_screen_boundaries,
+                          vpa.calculate_display_area_properties,
                           100, -1)
 
 
@@ -99,49 +104,6 @@ class TestCalculateImagePositions(unittest.TestCase):
                           1, 1, -1)
 
 
-class TestGetScreenDimensions(unittest.TestCase):
-    """
-    Ensures that the get_screen_width_and_height functions correctly
-    """
-
-    def test_correct_type_and_format(self):
-        screen_dimension = vpa.get_screen_width_and_height()
-        self.assertIsInstance(screen_dimension[0], int)
-        self.assertIsInstance(screen_dimension[1], int)
-
-
-class TestCreateImagePositionDictionary(unittest.TestCase):
-    """
-    Test the workflow function that strings together the above
-    functions for use in the output_video function
-    """
-    ###---------------------------------Success cases----------------------------------###
-    def test_create_normal_dictionary(self):
-        img_pos = vpa.create_image_position_dict(200, 100, 10, 10)
-        self.assertEqual([95, 0], img_pos["top"][0])
-        self.assertEqual([105, 10], img_pos["top"][1])
-        self.assertEqual([50, 45], img_pos["left"][0])
-        self.assertEqual([60, 55], img_pos["left"][1])
-        self.assertEqual([95, 90], img_pos["bottom"][0])
-        self.assertEqual([105, 100], img_pos["bottom"][1])
-        self.assertEqual([140, 45], img_pos["right"][0])
-        self.assertEqual([150, 55], img_pos["right"][1])
-
-    ###---------------------------------Failure cases-----------------------------------###
-    def test_input_non_int_or_zero(self):
-        self.assertRaises(ValueError,
-                          vpa.create_image_position_dict,
-                          "not int", 1, 1, 1)
-
-        self.assertRaises(ValueError,
-                          vpa.create_image_position_dict,
-                          1, 0, 1, 1)
-
-        self.assertRaises(ValueError,
-                          vpa.create_image_position_dict,
-                          1, 1, -1, 1)
-
-
 class TestGetIdealImageResolution(unittest.TestCase):
     """
     Test the workflow function that strings together the above
@@ -174,3 +136,70 @@ class TestGetIdealImageResolution(unittest.TestCase):
         self.assertRaises(ValueError,
                           vpa.get_ideal_image_resolution,
                           -1)
+
+class TestCalculateCropRange(unittest.TestCase):
+    """
+    Test that the crop range is correctly calculated and returned in the expected form
+    """
+    ###---------------------------------Success cases----------------------------------###
+    def test_valid_crop_range(self):
+        crop_range = vpa.calculate_crop_range((640, 480), 360)
+
+    def test_max_img_size_mt_res(self):
+        crop_range = vpa.calculate_crop_range((500,500), 600)
+        
+
+
+    ###---------------------------------Failure cases-----------------------------------###
+    def test_non_int_input(self):
+        self.assertRaises(ValueError, 
+                          vpa.calculate_crop_range,
+                          ("not int","not int"), "not int")
+
+    def test_positive_int(self):
+        self.assertRaises(ValueError,
+                          vpa.calculate_crop_range,
+                          (-1,-1), -1)
+
+    def test_non_zero_input(self):
+        self.assertRaises(ValueError,
+                          vpa.calculate_crop_range,
+                          (0,0), 0)
+
+
+class TestRotateImageClockwise(unittest.TestCase):
+    """
+    Test that an image is correctly rotated through a given angle
+    """
+    ###------------------------------setUp and tearDown--------------------------------###
+    def setUp(self):
+        self.frame = np.zeros((200, 200, 3), dtype="uint8")
+        self.frame[0:2, 0:2] = [255, 0, 0]
+
+    def tearDown(self):
+        self.frame = None
+        
+
+    ###---------------------------------Success cases----------------------------------###
+    def test_no_rotation(self):
+        rotated_frame = vpa.rotate_image_anticlockwise(self.frame, 200, 0)
+        # Assert expected color for modified pixel
+        self.assertEqual(self.frame[0:1, 0:1][0][0][0], 255)
+        self.assertEqual(self.frame[0:1, 0:1][0][0][1], 0)
+        self.assertEqual(self.frame[0:1, 0:1][0][0][2], 0)
+        # Assert colour for non modified pixel
+        self.assertEqual(self.frame[2:3, 2:3][0][0][0], 0)
+        self.assertEqual(self.frame[2:3, 2:3][0][0][1], 0)
+        self.assertEqual(self.frame[2:3, 2:3][0][0][2], 0)
+        
+
+    def test_90_degree_rotation(self):
+        self.frame = vpa.rotate_image_anticlockwise(self.frame, 200, 90)
+        # Assert expected color for modified pixel
+        self.assertEqual(self.frame[199:200, 0:1][0][0][0], 255)
+        self.assertEqual(self.frame[199:200, 0:1][0][0][1], 0)
+        self.assertEqual(self.frame[199:200, 0:1][0][0][2], 0)
+        # Assert colour for non modified pixel
+        self.assertEqual(self.frame[198:199, 198:199][0][0][0], 0)
+        self.assertEqual(self.frame[198:199, 198:199][0][0][1], 0)
+        self.assertEqual(self.frame[198:199, 198:199][0][0][2], 0)

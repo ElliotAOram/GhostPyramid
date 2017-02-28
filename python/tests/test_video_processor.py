@@ -1,7 +1,8 @@
 """Testing module for VideoProcessor class"""
+import cv2
+import os
 import unittest
 
-from cv2 import VideoCapture
 from .context import vpa
 
 
@@ -25,7 +26,7 @@ class TestCameraCapture(unittest.TestCase):
         self.video_processor.begin_capture(0) # Starts capture with zeroth device (webcam)
         video_feed = self.video_processor.get_video_feed()
         self.assertIsNotNone(video_feed)
-        self.assertIsInstance(video_feed, type(VideoCapture()))
+        self.assertIsInstance(video_feed, type(cv2.VideoCapture()))
 
     def test_end_capture_from_webcam(self):
         self.video_processor.begin_capture(0)
@@ -37,3 +38,46 @@ class TestCameraCapture(unittest.TestCase):
         self.assertRaises(ValueError,
                           self.video_processor.begin_capture,
                           'Not an int')
+
+class TestScaleVideoFeed(unittest.TestCase):
+    """
+    @class TestVideoScaling     :: Tests that the video feed can be scaled based 
+                                   on a given resolution
+    """
+    ###================================setUp and tearDown=============================###
+    def setUp(self):
+        self.video_processor = vpa.VideoProcessor()
+        self.video_processor.begin_capture(0)
+
+    def tearDown(self):
+        self.video_processor.end_capture()
+        self.video_processor = None
+
+    ###================================Success cases==================================###
+    def test_up_scale_resolution(self):
+        self.video_processor.scale_video_feed((1920, 1080))
+        video_feed = self.video_processor.get_video_feed()
+        new_scale_width = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
+        new_scale_height = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        self.assertEqual((1920, 1080), (new_scale_width, new_scale_height))
+
+    def test_close_to_resolution(self):
+        self.video_processor.scale_video_feed((1800, 900))
+        video_feed = self.video_processor.get_video_feed()
+        new_scale_width = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
+        new_scale_height = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        self.assertEqual((1920, 1080), (new_scale_width, new_scale_height))
+
+    def test_same_resolution_as_video(self):
+        self.video_processor.scale_video_feed((640, 480))
+        video_feed = self.video_processor.get_video_feed()
+        new_scale_width = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
+        new_scale_height = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        self.assertEqual((640, 480), (new_scale_width, new_scale_height))
+
+    def test_scale_down_resolution(self):
+        self.video_processor.scale_video_feed((320, 180))
+        video_feed = self.video_processor.get_video_feed()
+        new_scale_width = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)
+        new_scale_height = video_feed.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)
+        self.assertEqual((320, 180), (new_scale_width, new_scale_height))

@@ -33,21 +33,21 @@ def calc_display_area_props(width, height):
     parse_positive_int(height)
 
     # Assume width > height (most monitors)
-    square_side = height
-    displacement = (width - square_side) / 2   # Indent from side/top of screen
+    display_length = height
+    displacement = (width - display_length) / 2   # Indent from side/top of screen
     if width < height:
-        square_side = width
-        displacement = (height - square_side) / 2
+        display_length = width
+        displacement = (height - display_length) / 2
 
-    return square_side, displacement
+    return display_length, displacement
 
 
 
-def calculate_image_positions(side_length, width, height):
+def calculate_image_positions(display_length, width, height):
     """
     Calculates the positions (origin, bottom right) for each image in the
     output window.
-    @param side_length      :: Length of one side of the display area.
+    @param display_length   :: Length of one side of the display area.
                                Area assumed to be square
     @param width            :: Width of the image
     @param height           :: Height of the image
@@ -65,7 +65,7 @@ def calculate_image_positions(side_length, width, height):
     # Find half values
     h_image_width = width / 2
     h_image_height = height / 2
-    h_side_length = side_length / 2
+    h_side_length = display_length / 2
 
     # Define markers
     first_width = h_side_length-h_image_width
@@ -76,8 +76,8 @@ def calculate_image_positions(side_length, width, height):
 
     return {"top"   : [[first_width, 0], [second_width, height]],
             "left"  : [[0, first_height], [width, second_height]],
-            "bottom": [[first_width, side_length-height], [second_width, side_length]],
-            "right" : [[side_length-width, first_height], [side_length, second_height]]
+            "bottom": [[first_width, display_length-height], [second_width, display_length]],
+            "right" : [[display_length-width, first_height], [display_length, second_height]]
            }
 
 

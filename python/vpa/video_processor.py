@@ -1,7 +1,8 @@
 """Contains the VideoProcessor class (core application)"""
 import cv2
-from helper_functions import get_screen_width_and_height, calculate_screen_boundaries, \
-                             get_ideal_image_resolution, create_image_position_dict
+from helper_functions import get_screen_resolution, calculate_display_area_properties, \
+                             get_ideal_image_resolution, calculate_image_positions, \
+                             calculate_crop_range, rotate_image_anticlockwise
 import numpy as np
 from parsers import parse_positive_int
 
@@ -15,8 +16,18 @@ class VideoProcessor(object):
                                input capture to video output.
     """
 
-    def __init__(self):
+    def __init__(self, screen_width=None, screen_height=None):
         self.video_feed = None
+
+        if screen_width is None:
+            self.screen_width = get_screen_resolution()[0]
+        else:
+            self.screen_width = screen_width
+
+        if screen_height is None:
+            self.screen_height = get_screen_resolution()[1]
+        else:
+            self.screen_height = screen_height
 
 
     def begin_capture(self, device):
@@ -39,59 +50,67 @@ class VideoProcessor(object):
         self.video_feed.release()
         self.video_feed = None
 
+
+    def scale_video_feed(self, desired_resolution):
+        """
+        scales the video_feed to the desired resolution
+        @param desired_resolution    :: The resolution desired for the video_feed
+        """
+        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, desired_resolution[0])
+        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, desired_resolution[1])
+
+
     def process_and_output_video(self):
         """
         Outputs all video_feeds to a single output window
         """
-        # Establish image and monitor dimensions
-        screen_res = get_screen_width_and_height()
-        display_area = calculate_screen_boundaries(screen_res[0], screen_res[1])
 
-        # Scale video feed to the largest resolution that is still valid
-        display_side_length = abs(display_area[1][1] - display_area[0][1])
-        scale_resolution = get_ideal_image_resolution(display_side_length)
-        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, scale_resolution[0])
-        self.video_feed.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, scale_resolution[1])
+        # Get display properties
+        display_length, displacement = calculate_display_area_properties(self.screen_width,
+                                                                         self.screen_height)
+
+        # Scale
+        scale_resolution = get_ideal_image_resolution(display_length)
+        self.scale_video_feed(scale_resolution)
 
         # Get image position
-        maximum_img_size = display_side_length / 3
-        img_positions = create_image_position_dict(screen_res[0], screen_res[1],
-                                                   maximum_img_size, maximum_img_size)
+        max_img_size = display_length / 3
+        img_positions = calculate_image_positions(display_length, max_img_size, max_img_size)
+
+        # Apply displacement
+        for _, value in img_positions.iteritems():
+            value[0][0] += displacement
+            value[1][0] += displacement
 
         # Calculate crop range
-        central_width = scale_resolution[0] / 2
-        central_height = scale_resolution[1] / 2
-        h_image_max = maximum_img_size / 2
-        # [h_start, h_end, v_start, v_end]
-        crop_range = [central_height - h_image_max, central_height + h_image_max,
-                      central_width - h_image_max, central_width + h_image_max]
+        crop_range = calculate_crop_range(scale_resolution, max_img_size)
 
-        #http://stackoverflow.com/questions/17696061
-        #/how-to-display-a-full-screen-images-with-python2-7-and-opencv2-4
-        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)
+        # Create master frame
+        merged_frame = np.zeros((self.screen_height, self.screen_width, 3), dtype="uint8")
+
+        # Name output window
+        cv2.namedWindow("Output Window", cv2.WND_PROP_FULLSCREEN)          
         cv2.setWindowProperty("Output Window", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
 
         while True:
             _, frame = self.video_feed.read()
             cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
-            #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
-            merged_frame = np.zeros((screen_res[1], screen_res[0], 3), dtype="uint8")
 
+            #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             for multipler, position_id in enumerate(INDENTIFIERS):
-                rot_matrix = cv2.getRotationMatrix2D((maximum_img_size/2, maximum_img_size/2),
-                                                     90*multipler, 1)
-                rotated_frame = cv2.warpAffine(cropped_frame, rot_matrix,
-                                               (maximum_img_size, maximum_img_size))
                 merged_frame[img_positions[position_id][0][1]:
                              img_positions[position_id][1][1],
                              img_positions[position_id][0][0]:
-                             img_positions[position_id][1][0]] = rotated_frame
+                             img_positions[position_id][1][0]] = \
+                                rotate_image_anticlockwise(cropped_frame, max_img_size,
+                                                           90*multipler)
 
             cv2.imshow("Output Window", merged_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         self.end_capture()
         cv2.destroyAllWindows()
+
 
     def get_video_feed(self):
         """

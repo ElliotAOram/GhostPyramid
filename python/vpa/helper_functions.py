@@ -1,11 +1,12 @@
 """Helper functions for vpa"""
 import ctypes
+from cv2 import getRotationMatrix2D, warpAffine
 from parsers import parse_positive_int, parse_non_zero_int
 
 RESOLUTIONS = [(1920, 1080), (1280, 720), (960, 540),
                (640, 480), (320, 240), (424, 240), (320, 180)] # May add more to support mobile
 
-def get_screen_width_and_height():
+def get_screen_resolution():
     """
     Returns the screen width and height as a tuple.
     @return     :: (screen_width, screen_height)
@@ -15,32 +16,21 @@ def get_screen_width_and_height():
     return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
 
 
-def calculate_screen_boundaries(width=None, height=None):
+def calculate_display_area_properties(width, height):
     """
     Calculates the largest possible square and its co-ordinates in a
     provided rectangular space. This is used to establish the correct
     display area on a screen
-    @param width        :: default = None - Max width of the screen.
-                           If not provided use screen resolution
-    @param height       :: default = None - Max height of the screen.
-                           If not provided use screen resolution
-    @return             :: Tuple representing the origin and bottom right
-                           hand corner of the display area
+    @param width        :: Width of screen
+    @param height       :: Height of screen
+    @return             :: display_length and displacement from screen edge (0,0)
     @raises ValueError  :: If any input is non integer or zero
     """
     #parse input and get default screen size if not provided
-
-    if width is None:
-        width = get_screen_width_and_height()[0]
-    else:
-        parse_non_zero_int(width)
-        parse_positive_int(width)
-
-    if height is None:
-        height = get_screen_width_and_height()[1]
-    else:
-        parse_non_zero_int(height)
-        parse_positive_int(height)
+    parse_non_zero_int(width)
+    parse_positive_int(width)
+    parse_non_zero_int(height)
+    parse_positive_int(height)
 
     # Assume width > height (most monitors)
     square_side = height
@@ -48,9 +38,8 @@ def calculate_screen_boundaries(width=None, height=None):
     if width < height:
         square_side = width
         displacement = (height - square_side) / 2
-        return [(0, displacement), (width, height-displacement)]
-    else:
-        return [(displacement, 0), (width-displacement, height)]
+
+    return square_side, displacement
 
 
 
@@ -91,32 +80,6 @@ def calculate_image_positions(side_length, width, height):
             "right" : [[side_length-width, first_height], [side_length, second_height]]
            }
 
-def create_image_position_dict(screen_width, screen_height, frame_width, frame_height):
-    """
-    Calculates the position dictionary for images given a screen
-    size and image size. Applies the displaces changes to the dictionary
-    to postion images based on display size.
-    """
-    # Parse input
-    arguements = locals()
-    for _, value in arguements.iteritems():
-        parse_non_zero_int(value)
-        parse_positive_int(value)
-
-    # Feed into functions to calculate display area and image positions
-    display_area = calculate_screen_boundaries(screen_width, screen_height)
-    display_side_length = abs(display_area[1][1] - display_area[0][1])
-    displacement = max(display_area[0][0], display_area[0][1])
-
-    img_positions = calculate_image_positions(display_side_length,
-                                              frame_width, frame_height)
-
-    # Apply displacement
-    for _, value in img_positions.iteritems():
-        value[0][0] += displacement
-        value[1][0] += displacement
-
-    return img_positions
 
 def get_ideal_image_resolution(display_length):
     """
@@ -132,3 +95,40 @@ def get_ideal_image_resolution(display_length):
             if RESOLUTIONS[index][1] > max_res[1]:
                 max_res = RESOLUTIONS[index-1]
     return max_res
+
+
+def calculate_crop_range(scale_resolution, max_img_size):
+    """
+    Calculates the correct cropping range for the image to make it square
+    @param scale_resolution     :: The current resolution of the image
+    @param max_img_size         :: Largest possible size for the image
+    @return a list of value to crop by such that an image is cropped by:
+            img = img[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
+    """
+    parse_non_zero_int(scale_resolution[0])
+    parse_non_zero_int(scale_resolution[1])
+    parse_positive_int(scale_resolution[0])
+    parse_positive_int(scale_resolution[1])
+    parse_non_zero_int(max_img_size)
+    parse_positive_int(max_img_size)
+
+    central_width = scale_resolution[0] / 2
+    central_height = scale_resolution[1] / 2
+    h_image_max = max_img_size / 2
+    # [h_start, h_end, v_start, v_end]
+    return [central_height - h_image_max, central_height + h_image_max,
+            central_width - h_image_max, central_width + h_image_max]
+
+
+def rotate_image_anticlockwise(frame, sq_img_size, degrees):
+    """
+    Rotates a square image clockwise by a given number of degrees.
+    This function will not perform additional object parsing for effeciency.
+    @param frame        :: the frame to manipulate
+    @param sq_img_size  :: the size of the image (imae must be square)
+    @degrees            :: the number of degrees to rotate by (clockwise)
+    @return rotated_frame
+    """
+    rot_matrix = getRotationMatrix2D((sq_img_size/2, sq_img_size/2),degrees, 1)
+    rotated_frame = warpAffine(frame, rot_matrix,(sq_img_size, sq_img_size))
+    return rotated_frame

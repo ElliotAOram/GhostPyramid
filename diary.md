@@ -121,3 +121,29 @@
 
 ### 24/02/2017
 * merge feature 5
+
+### 25/02/2017
+* Design feature 4
+
+### 26/02/2017
+* Implement feature 4
+* Begin work on large scale refactor
+
+
+
+## Week 5
+
+### 27/02/2017
+* Start iteration 2
+* Test applocation using large pyramid and touch screen table
+* Group meeting discussing progress and mid-project demo
+  * Prepare talking points for next group meeting
+
+### 28/02/2017
+* Finish large scale refactoring and udpdate design
+* Merge feature 4
+* Remove vpa_run.py from coverage tests
+  * See feature 4 PR for justification
+* Start spike work on feature 2 (background subtraction) ahead of design phase
+* Consider testing strategy
+  * Most likely similar to rotate (np.array to make custom image)

@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.4.1}
+\lhead{Version 1.5}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -25,27 +25,32 @@
 
 
 \section{Description of Class Diagram}
-The vpa (Video Processor Application) package contains two modules. The first, the \textbf{VideoProcessor} module, contains the \textbf{VideoProcessor} class which is the core of the system that will handle video capture and display. The second module will contain helper functions for the \textbf{VideoProcessor} class that do not require access to the class variables.
+The vpa (Video Processor Application) package contains three modules. The first, the \textbf{VideoProcessor} module, contains the \textbf{VideoProcessor} class which is the core of the system that will handle video capture and display. The second module will contain helper functions for the \textbf{VideoProcessor} class that do not require access to the class variables. The final module, \textbf{Parsers}, contains the object parsers for checking integer input is as expected.
 
 \subsection{VideoProcessor}
 \subsubsection{Variables}
 \begin{itemize}
 
 	\item \textbf{video\_feed}: The video\_feed variable is of type VideoCapture. This class type holds a video stream and can be imported from OpenCV. To maximise the performance of the system the video object will be a global to the class object to avoid passing into and out of functions. However for test access there will be a get method for the video\_feed.
-
+	
+	\item \textbf{background\_colour}: A tuple that holds the (Green, Blue, Red) of the background colour.
+	
+	\item \textbf{threshold}: The threshold for distinguishing if a pixel is part of the background colour.
+	
 	\item \textbf{screen\_width}: variable of type int and stores the physical width of the screen (not resolution).
 	
 	\item \textbf{screen\_height}: variable of type int and stores the physical height of the screen (not resolution).
+
 \end{itemize}
 
 \subsubsection{Functions}
 
 \begin{itemize}
-	\item \textbf{\_\_init\_\_}: Python constructor for initialising the video\_feed object to None. Constructor also takes optional screen\_width and screen\_height for the physical screen dimensions. If these parameters are not given then the screen resolution will be used.
+	\item \textbf{\_\_init\_\_}: Python constructor for initialising the video\_feed object to None. Constructor also takes optional screen\_width and screen\_height for the physical screen dimensions. If these parameters are not given then the screen resolution will be used. The constructor also takes a tuple of Green Red Blue values that represent the background colour of the screen that should be removed and changed to black. In addition the threshold variable is used to state the colours to check that are outside of that range to remove.
 	
 	\item \textbf{begin\_capture}: Function to start the video\_feed with specified device. This function takes an integer (referring to the device number to use - 0 is default) and sets the video\_feed to capture the video from that device. The function has a check to ensure that the parameter is an integer and raises a ValueError is it is not.
 	
-	\item \textbf{end\_capture}: Function to release the camera feed handle and set the video\_feed variable to None.
+	\item \textbf{end\_capture}: Function to release the camera feed handle and set the video\_feed variable to None. 
 	
 	\item \textbf{scale\_video\_feed}: This function will scale the video\_feed variable to the most ideal resolution. The most ideal resolution is calculated by the get\_ideal\_image\_resolution function. 
 	
@@ -53,7 +58,7 @@ The vpa (Video Processor Application) package contains two modules. The first, t
 	
 	\item \textbf{get\_video\_feed}: returns the video\_feed object.   
 
-	\item \textbf{subtractBackground}: The subtractBackground function will be used to ensure that only the Actor is shown in the video feed and the background is removed (set to black (RGB(0,0,0)). Based on research stated in the Outline Project Specification, This will use simple background subtraction or moving average background subtraction. Spike solutions will be carried out during the creation of the prototype to assess if the image processing machine is capable of more complex background subtraction techniques. Furthermore, it will test if simple background subtraction techniques produce the required effect.
+	\item \textbf{subtract\_background}: The subtract\_background function will take the input video\_feed frame by frame and return it after removing the background (set the non-foreground pixels to black). The background will be removed by checking each pixel to see if it is within the threshold of the background\_colour. If it is, it will be changed to black.
 
 \end{itemize}
 

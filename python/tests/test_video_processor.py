@@ -11,20 +11,35 @@ class TestInitForVidoeProcessor(unittest.TestCase):
                                        VideoProcessor class
     """
     ###--------------------------------Success cases-----------------------------------###
-    def test_no_input(self):
-        video_processor = vpa.VideoProcessor()
+    def test_no_width_height_input(self):
+        video_processor = vpa.VideoProcessor(background_colour = (0, 0, 0))
         self.assertIsInstance(video_processor.screen_width, int)
         self.assertIsInstance(video_processor.screen_height, int)
+        self.assertEqual(video_processor.background_colour, (0, 0, 0))
+        self.assertEqual(video_processor.threshold, 5)
 
     def test_width_input(self):
-        video_processor = vpa.VideoProcessor(screen_width=1000)
-        self.assertEqual(video_processor.screen_width, 1000)
+        video_processor = vpa.VideoProcessor(screen_width=1000,
+                                             background_colour=(0, 0, 0))
         self.assertIsInstance(video_processor.screen_height, int)
+        self.assertEqual(video_processor.screen_width, 1000)
 
     def test_height_input(self):
-        video_processor = vpa.VideoProcessor(screen_height=1000)
+        video_processor = vpa.VideoProcessor(screen_height=1000,
+                                             background_colour=(0, 0, 0))
         self.assertEqual(video_processor.screen_height, 1000)
         self.assertIsInstance(video_processor.screen_width, int)
+
+    def test_threshold_input(self):
+        video_processor = vpa.VideoProcessor(background_colour=(0, 0, 0),
+                                             threshold=10)
+        self.assertEqual(video_processor.threshold, 10)
+
+    def test_non_zero_back_colour(self):
+        video_processor = vpa.VideoProcessor(background_colour(200, 100, 50))
+        self.assertEqual(video_processor.background_colour[0], 200)
+        self.assertEqual(video_processor.background_colour[1], 100)
+        self.assertEqual(video_processor.background_colour[2], 50)
 
 class TestCameraCapture(unittest.TestCase):
     """

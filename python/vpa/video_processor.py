@@ -16,8 +16,10 @@ class VideoProcessor(object):
                                input capture to video output.
     """
 
-    def __init__(self, screen_width=None, screen_height=None):
+    def __init__(self, background_colour, screen_width=None,
+                 screen_height=None, threshold=None):
         self.video_feed = None
+        self.background_colour = background_colour
 
         if screen_width is None:
             self.screen_width = get_screen_resolution()[0]
@@ -28,6 +30,11 @@ class VideoProcessor(object):
             self.screen_height = get_screen_resolution()[1]
         else:
             self.screen_height = screen_height
+
+        if threshold is None:
+            self.threshold = 5
+        else:
+            self.threshold = threshold
 
 
     def begin_capture(self, device):

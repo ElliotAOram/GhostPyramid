@@ -36,7 +36,7 @@ class TestInitForVidoeProcessor(unittest.TestCase):
         self.assertEqual(video_processor.threshold, 10)
 
     def test_non_zero_back_colour(self):
-        video_processor = vpa.VideoProcessor(background_colour(200, 100, 50))
+        video_processor = vpa.VideoProcessor(background_colour=(200, 100, 50))
         self.assertEqual(video_processor.background_colour[0], 200)
         self.assertEqual(video_processor.background_colour[1], 100)
         self.assertEqual(video_processor.background_colour[2], 50)
@@ -48,7 +48,7 @@ class TestCameraCapture(unittest.TestCase):
     """
     ###------------------------------setUp and tearDown--------------------------------###
     def setUp(self):
-        self.video_processor = vpa.VideoProcessor()
+        self.video_processor = vpa.VideoProcessor((0,0,0))
 
     def tearDown(self):
         self.video_processor = None
@@ -81,7 +81,7 @@ class TestScaleVideoFeed(unittest.TestCase):
     """
     ###================================setUp and tearDown=============================###
     def setUp(self):
-        self.video_processor = vpa.VideoProcessor()
+        self.video_processor = vpa.VideoProcessor((0,0,0))
         self.video_processor.begin_capture(0)
 
     def tearDown(self):

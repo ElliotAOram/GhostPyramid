@@ -125,3 +125,12 @@ class VideoProcessor(object):
         @return video_feed      :: The current video feed from a camera.
         """
         return self.video_feed
+
+
+    def background_subtraction(self, frame):
+        """
+        Subtract the background colour (within a threshold) from a video frame 
+        @param frame        :: The frame from the video
+        @return the video frame minus the background
+        """
+        return frame

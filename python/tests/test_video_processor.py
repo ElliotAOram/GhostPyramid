@@ -154,14 +154,14 @@ class TestBackgroundSubtraction(unittest.TestCase):
     ###---------------------------------Success cases----------------------------------###
     def test_return_image(self):
         simple_frame = create_simple_frame()
-        video_processor = vpa.VideoProcessor((0, 0, 0))
+        video_processor = vpa.VideoProcessor([0, 0, 0])
         subtracted_frame = video_processor.background_subtraction(simple_frame)
         self.assertIsInstance(subtracted_frame, type(np.array([1])))
 
-    '''def test_no_channel_cross_and_no_variation(self):
+    def test_no_channel_cross_and_no_variation(self):
         simple_frame = create_simple_frame()
-        video_processor = vpa.VideoProcessor((0, 0, 255))
-        subtracted_frame = video_processorbackground_subtraction(simple_frame)
+        video_processor = vpa.VideoProcessor([0, 0, 255])
+        subtracted_frame = video_processor.background_subtraction(simple_frame)
         # Assert expected color for foreground picture
         self.assertEqual(subtracted_frame[100:101, 100:101][0][0][0], 255)
         self.assertEqual(subtracted_frame[100:101, 100:101][0][0][1], 0)
@@ -171,7 +171,7 @@ class TestBackgroundSubtraction(unittest.TestCase):
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][1], 0)
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][2], 0)
 
-    def test_channel_cross_and_no_variation(self):
+    '''def test_channel_cross_and_no_variation(self):
         multi_frame = create_multichannel_frame()
         video_processor = vpa.VideoProcessor((0, 100, 150))
         subtracted_frame = video_processorbackground_subtraction(multi_frame)

@@ -133,4 +133,8 @@ class VideoProcessor(object):
         @param frame        :: The frame from the video
         @return the video frame minus the background
         """
+        for column in range(0, len(frame)):
+            for row in range(0, len(frame[column])):
+                if (frame[column][row] == self.background_colour).all():
+                    frame[column][row] = [0,0,0]
         return frame

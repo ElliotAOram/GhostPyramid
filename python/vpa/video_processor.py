@@ -135,6 +135,6 @@ class VideoProcessor(object):
         """
         for column in range(0, len(frame)):
             for row in range(0, len(frame[column])):
-                if (frame[column][row] == self.background_colour).all():
+                if (abs(frame[column][row] - self.background_colour) <= self.threshold).all():
                     frame[column][row] = [0,0,0]
         return frame

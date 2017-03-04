@@ -133,7 +133,7 @@ def create_simple_frame():
 def create_multichannel_frame():
     multi_frame = np.zeros((200, 200, 3), dtype="uint8")
     multi_frame[0:200, 0:200] = [0, 100, 150]           # Background
-    multi_frame[90:110, 90:100] = [255, 100, 0]         # Foreground
+    multi_frame[90:110, 90:110] = [255, 100, 0]         # Foreground
     return multi_frame
 
 def create_variation_frame(threshold):
@@ -171,10 +171,10 @@ class TestBackgroundSubtraction(unittest.TestCase):
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][1], 0)
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][2], 0)
 
-    '''def test_channel_cross_and_no_variation(self):
+    def test_channel_cross_and_no_variation(self):
         multi_frame = create_multichannel_frame()
-        video_processor = vpa.VideoProcessor((0, 100, 150))
-        subtracted_frame = video_processorbackground_subtraction(multi_frame)
+        video_processor = vpa.VideoProcessor([0, 100, 150])
+        subtracted_frame = video_processor.background_subtraction(multi_frame)
         # Assert expected color for foreground picture
         self.assertEqual(subtracted_frame[100:101, 100:101][0][0][0], 255)
         self.assertEqual(subtracted_frame[100:101, 100:101][0][0][1], 100)
@@ -184,7 +184,7 @@ class TestBackgroundSubtraction(unittest.TestCase):
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][1], 0)
         self.assertEqual(subtracted_frame[2:3, 2:3][0][0][2], 0)
 
-    def test_no_channel_cross_and_variation_5(self):
+    '''def test_no_channel_cross_and_variation_5(self):
         variation_frame = create_variation_frame(5)
         video_processor = vpa.VideoProcessor((0, 0, 255), threshold=5)
         subtracted_frame = video_processorbackground_subtraction(multi_variation)

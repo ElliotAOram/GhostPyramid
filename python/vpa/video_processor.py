@@ -102,6 +102,7 @@ class VideoProcessor(object):
         while True:
             _, frame = self.video_feed.read()
             cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
+            cropped_frame = self.background_subtraction(cropped_frame)
 
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             for multipler, position_id in enumerate(IDENTIFIERS):
@@ -133,8 +134,9 @@ class VideoProcessor(object):
         @param frame        :: The frame from the video
         @return the video frame minus the background
         """
-        for column in range(0, len(frame)):
-            for row in range(0, len(frame[column])):
-                if (abs(frame[column][row] - self.background_colour) <= self.threshold).all():
+        image_border = int(round(len(frame) / 8))
+        for column in range(image_border, len(frame)):
+            for row in range(image_border, len(frame[column]) - image_border):
+                if (abs(frame[column][row][1] - self.background_colour[1]) <= self.threshold).all():
                     frame[column][row] = [0,0,0]
         return frame

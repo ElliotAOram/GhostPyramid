@@ -159,7 +159,7 @@
 * Considered revised background subtraction routine that use a green screen instead of an unknown background
 
 
-### 04/02/2017
+### 04/03/2017
 * Spent much of the morning ironing my new green screen background!
 * Implement code that checks each pixel in the frame and is it is the same as a given background colour (within a threshold)
   then it changes that pixels colour to black
@@ -168,5 +168,5 @@
   * This speed is not acceptable for the end product so I must now consider possible ways to speed up the execution of 
     the background subtraction
     
-### 05/02/2017
+### 05/03/2017
 * Initial research into multithreading / cuda (throwing python threads out to the GPU)

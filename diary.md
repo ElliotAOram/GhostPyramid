@@ -147,3 +147,26 @@
 * Start spike work on feature 2 (background subtraction) ahead of design phase
 * Consider testing strategy
   * Most likely similar to rotate (np.array to make custom image)
+  
+### 01/03/2017
+* Implemented feature 2 with image subtraction approach with relevant tests
+    * While this is a good technique for finding motion, this suffers from the problem
+      that when subtracting one image from another, this will also remove the colour channel from the
+      foreground image as well as the background. for example if the background is completely green and 
+      you subtract this from the original frame, then you lose any green from the object of interest
+
+### 02/03/2017
+* Considered revised background subtraction routine that use a green screen instead of an unknown background
+
+
+### 04/02/2017
+* Spent much of the morning ironing my new green screen background!
+* Implement code that checks each pixel in the frame and is it is the same as a given background colour (within a threshold)
+  then it changes that pixels colour to black
+* This code almost works (takes a bit of fiddlering to get it right when the lighting is not great (many shadows/lighting
+  highlights)) but is currently very ineffecient causes a huge FPS drop to around 5-10fps (est.) 
+  * This speed is not acceptable for the end product so I must now consider possible ways to speed up the execution of 
+    the background subtraction
+    
+### 05/02/2017
+* Initial research into multithreading / cuda (throwing python threads out to the GPU)

@@ -4,6 +4,8 @@ from helper_functions import get_screen_resolution, calc_display_area_props, \
                              get_ideal_image_resolution, calculate_image_positions, \
                              calculate_crop_range, rotate_image_anticlockwise
 import numpy as np
+import threading
+from multiprocessing import Pool
 from parsers import parse_positive_int
 
 
@@ -101,8 +103,31 @@ class VideoProcessor(object):
 
         while True:
             _, frame = self.video_feed.read()
-            cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
-            cropped_frame = self.background_subtraction(cropped_frame)
+            self.cropped_frame = frame[crop_range[0]:crop_range[1], crop_range[2]:crop_range[3]]
+            frame_len = len(self.cropped_frame)
+            t1 = threading.Thread(target=self.background_subtraction,
+                                  args=[0, frame_len / 2, 0, frame_len / 2])
+            t2 = threading.Thread(target=self.background_subtraction,
+                                  args=[frame_len / 2, frame_len, 0, frame_len / 2])
+            t3 = threading.Thread(target=self.background_subtraction, 
+                                  args=[0, frame_len / 2, frame_len / 2, frame_len])
+            t4 = threading.Thread(target=self.background_subtraction,
+                                  args=[frame_len / 2, frame_len, frame_len / 2, frame_len])
+            t1.start()
+            t2.start()
+            t3.start()
+            t4.start()
+            t1.join()
+            t2.join()
+            t3.join()
+            t4.join()
+            '''pool = Pool(2)
+            pool.map(self.background_subtraction, [0, frame_len / 2, 0, 1])
+            pool.map(self.background_subtraction, [frame_len / 2, frame_len, 0, 1])
+            pool.start()
+            pool.join()'''
+            #self.background_subtraction(0, frame_len, 0, frame_len)
+            #cropped_frame = self.background_subtraction(cropped_frame)
 
             #http://docs.opencv.org/3.1.0/d3/df2/tutorial_py_basic_ops.html
             for multipler, position_id in enumerate(IDENTIFIERS):
@@ -110,7 +135,7 @@ class VideoProcessor(object):
                              img_positions[position_id][1][1],
                              img_positions[position_id][0][0]:
                              img_positions[position_id][1][0]] = \
-                                rotate_image_anticlockwise(cropped_frame, max_img_size,
+                                rotate_image_anticlockwise(self.cropped_frame, max_img_size,
                                                            90*multipler)
 
             cv2.imshow("Output Window", merged_frame)
@@ -128,15 +153,15 @@ class VideoProcessor(object):
         return self.video_feed
 
 
-    def background_subtraction(self, frame):
+    def background_subtraction(self, col_start, col_end,
+                               row_start, row_end):
         """
         Subtract the background colour (within a threshold) from a video frame 
         @param frame        :: The frame from the video
         @return the video frame minus the background
         """
-        image_border = int(round(len(frame) / 8))
-        for column in range(image_border, len(frame)):
-            for row in range(image_border, len(frame[column]) - image_border):
-                if (abs(frame[column][row][1] - self.background_colour[1]) <= self.threshold).all():
-                    frame[column][row] = [0,0,0]
-        return frame
+
+        for column in range(col_start, col_end):
+            for row in range(row_start, row_end):
+                if (abs(self.cropped_frame[column][row][1] - self.background_colour[1]) <= self.threshold).all():
+                    self.cropped_frame[column][row] = [0,0,0]

@@ -170,3 +170,24 @@
     
 ### 05/03/2017
 * Initial research into multithreading / cuda (throwing python threads out to the GPU)
+
+## Week 6
+
+### 06/03/2017
+* Continued investigation into speeding up green screen
+* Implement multithreading and multiprocessing
+  * Showed no significant speed increase
+
+### 07/03/2017
+* Final draft of poster for assignment
+* Meeting with Helen deciding to put background subtraction on hold for now
+
+### 08/03/2017
+* Freeze background subtraction investigation (renames on git branch)
+* Set up andriod environment (https://developer.android.com/training/basics/firstapp/creating-project.html)
+
+### 09/03/2017
+* Update design and create UI design for charades game (feature 6)
+* Implement status bar removal for app
+  * https://developer.android.com/training/system-ui/status.html
+  * http://stackoverflow.com/questions/28144657/android-error-attempt-to-invoke-virtual-method-void-android-app-actionbar-on

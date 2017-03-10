@@ -3,4 +3,20 @@
     <string name="splash_message">Select a role for this device</string>
     <string name="str_actor">Actor</string>
     <string name="str_viewer">Viewer</string>
+    <string name="actor_welcome">Welcome Actor</string>
+    <string name="viewer_welcome">Welcome Viewer</string>
+    <string name="actor_instructions">As the Actor you will be given the choice between 5 different
+                                      phrases. Once you select a phrase you will then choose a word
+                                      from the phrase to act out. You will be asked to select a new
+                                      word from the phrase if it guessed correctly or the time for
+                                      the round expires. The round ends when the whole phrase has
+                                      been guessed or the time has expired.</string>
+    <string name="viewer_instructions">As the Viewer you will be shown the topic of the phrase,
+                                       current word in the phrase, number of letters in the phrase
+                                       and the time remaining until the word is revealed. You must
+                                       attempt to guess the word being acted by looking at the
+                                       hologram in front of you. The fast you guess, the more points
+                                       you get!</string>
+    <string name="cont_to_phrase">Continue to phrase selection</string>
+    <string name="please_wait">Please wait for the game to begin...</string>
 </resources>

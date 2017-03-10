@@ -191,3 +191,8 @@
 * Implement status bar removal for app
   * https://developer.android.com/training/system-ui/status.html
   * http://stackoverflow.com/questions/28144657/android-error-attempt-to-invoke-virtual-method-void-android-app-actionbar-on
+
+### 10/03/2017
+* Implement all three interfaces for the app
+* Begin to write UI tests
+  * http://stackoverflow.com/questions/9405561/test-if-a-button-starts-a-new-activity-in-android-junit-pref-without-robotium

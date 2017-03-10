@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.0}
+\lhead{Version 1.1}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -41,10 +41,14 @@ Viewer: The Viewer will have the ability to guess the currently selected word or
 \subsection{Activities}
 Activities are the andriod equivalent of graphical users interfaces. Each activity corresponds to a different screen on the app.
 
-Activity MainMenu: The main menu activity will show the splash screen for the Charades Game.
+\textbf{activity\_main}: The main menu activity will show the splash screen for the Charades Game and give the choice between using the device as an Actor or a Viewer these choice will take you to the actor/viewer\_landing activities respectively.
 
-Activity ActorInterface: The Actor interface will only be shown to the Actor in the the Staging Area, and will allow them to choose the phrase and current word to act out. The Actor will also be informed if the word or phrase they are acting has been guessed correctly. If the word they are acting has been guessed correctly, they will be asked to choose a new word from the remaining un-guessed words in the phrase.
+\textbf{activity\_actor\_landing}: The initial landing screen for the actor device. This screen will display the rules for the actor and display a button to advance to choosing a phrase screen.
 
-Activity ViewerInterface: The Viewer interface will display the current word in the phrase that the viewer is attempting to guess, as well as the genre of the phrase (e.g. book, film, television show, ect.). This interface will give the option to guess either the word or the whole phrase and the page will contain a submit button to submit a guess. The interface will inform the viewer if the guess is correct or not. The interface will instruct the viewer to change places with the actor if they guess the phrase correctly.
+\textbf{activity\_viewer\_landing}: The initial landing screen for the viewer device. This screen will display the rules for the viewer and will only continue to the viewer interface when the actor has chosen a topic (this will be prompted by the server in a later iteration).
+
+\textbf{activity\_actor\_interface}: The Actor interface will only be shown to the Actor in the the Staging Area, and will allow them to choose the phrase and current word to act out. The Actor will also be informed if the word or phrase they are acting has been guessed correctly. If the word they are acting has been guessed correctly, they will be asked to choose a new word from the remaining un-guessed words in the phrase.
+
+\textbf{activity\_viewer\_interface}: The Viewer interface will display the current word in the phrase that the viewer is attempting to guess, as well as the genre of the phrase (e.g. book, film, television show, ect.). This interface will give the option to guess either the word or the whole phrase and the page will contain a submit button to submit a guess. The interface will inform the viewer if the guess is correct or not. The interface will instruct the viewer to change places with the actor if they guess the phrase correctly.
 
 \end{document}

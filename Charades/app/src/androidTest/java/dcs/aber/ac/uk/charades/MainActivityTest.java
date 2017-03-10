@@ -2,6 +2,7 @@ package dcs.aber.ac.uk.charades;
 
 import android.app.Instrumentation;
 import android.support.test.rule.ActivityTestRule;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import org.junit.Rule;
@@ -25,20 +26,19 @@ public class MainActivityTest {
 
 
     @Test
-    public void testExpectedText() {
+    public void testExpectedTextOnActivity() {
         onView(withId(R.id.textedit_select_role)).check(matches(withText("Select a role for this device")));
         onView(withId(R.id.button_to_actor_landing)).check(matches(withText("Actor")));
         onView(withId(R.id.button_to_viewer_landing)).check(matches(withText("Viewer")));
     }
 
-    @Test
-    public void toViewerSplash() throws Exception {
+    private Instrumentation.ActivityMonitor transitionActivity(String className, int buttonId){
         // register next activity that need to be monitored.
-        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ViewerLanding.class.getName(), null, false);
+        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(className, null, false);
 
         // open current activity.
         MainActivity myActivity = (MainActivity) mActivityRule.getActivity();
-        final Button button = (Button) myActivity.findViewById(R.id.button_to_viewer_landing);
+        final Button button = (Button) myActivity.findViewById(buttonId);
         myActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -46,35 +46,29 @@ public class MainActivityTest {
                 button.performClick();
             }
         });
+        return activityMonitor;
+    }
 
-        //Watch for the timeout
-        //example values 5000 if in ms, or 5 if it's in seconds.
-        ViewerLanding nextActivity = (ViewerLanding) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        // next activity is opened and captured.
+
+    @Test
+    public void testTransitionToViewerSplash() throws Exception {
+        Instrumentation.ActivityMonitor actMon =
+                transitionActivity(ViewerLanding.class.getName(), R.id.button_to_viewer_landing);
+
+        ViewerLanding nextActivity =
+                (ViewerLanding) getInstrumentation().waitForMonitorWithTimeout(actMon, 5000);
         assertNotNull(nextActivity);
-        nextActivity .finish();
+        nextActivity.finish();
     }
 
     @Test
-    public void toActorSplash() throws Exception {
+    public void testTransitionToActorSplash() throws Exception {
         // register next activity that need to be monitored.
-        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ActorLanding.class.getName(), null, false);
+        Instrumentation.ActivityMonitor actMon =
+                transitionActivity(ActorLanding.class.getName(), R.id.button_to_actor_landing);
 
-        // open current activity.
-        MainActivity myActivity = (MainActivity) mActivityRule.getActivity();
-        final Button button = (Button) myActivity.findViewById(R.id.button_to_actor_landing);
-        myActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // click button and open next activity.
-                button.performClick();
-            }
-        });
-
-        //Watch for the timeout
-        //example values 5000 if in ms, or 5 if it's in seconds.
-        ActorLanding nextActivity = (ActorLanding) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        // next activity is opened and captured.
+        ActorLanding nextActivity =
+                (ActorLanding) getInstrumentation().waitForMonitorWithTimeout(actMon, 5000);
         assertNotNull(nextActivity);
         nextActivity .finish();
     }

@@ -196,3 +196,14 @@
 * Implement all three interfaces for the app
 * Begin to write UI tests
   * http://stackoverflow.com/questions/9405561/test-if-a-button-starts-a-new-activity-in-android-junit-pref-without-robotium
+
+### 11/03/2017
+* Complete tests and put up Pull request
+
+## Week 7
+
+### 13/03/2017
+* Merge pull request for feature 6
+* Write issue for feature 7
+* Close old milestones to ensure git is up-to-date
+* Remove milestone for Background subtraction issue (feature 2)

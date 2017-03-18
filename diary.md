@@ -207,3 +207,14 @@
 * Write issue for feature 7
 * Close old milestones to ensure git is up-to-date
 * Remove milestone for Background subtraction issue (feature 2)
+
+### 14-16/03/2017
+* Presenting prototype at science week
+
+### 17/03/2017
+* Mid project demo
+* feedback from mid project demo suggests it might be best to focus the project title a bit more - The current does not state the 
+  end goal (Charades game) and is generic
+* The app should be developed as a website instead. There is no real justification for doing an App by cotrast to a website hence 
+  there will need to be a re-design to account for this and additional features should be reorganised to attempt to allow for the 
+  change in the time schedule

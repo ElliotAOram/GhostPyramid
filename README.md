@@ -1,4 +1,4 @@
-# CS39440 Major project: Ghost Pyramid
+# CS39440 Major project: Using the Pepper’s Ghost Pyramid technique to create real-time holograms for a charades style game
 
 # Description
 * The project will use the pepper's ghost pyramid effect to create real-time holograms from a camera feed. 

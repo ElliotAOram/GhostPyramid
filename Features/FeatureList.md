@@ -24,5 +24,6 @@
 | 18            | Establish end game conditions                                   | 3                 | 1              | 16           | False     |
 
 
-Feature 3: This feature was not correct as explained in https://github.com/ElliotAOram/GhostPyramid/pull/34
-Feature 10: Added session feature and changed to website over app
+* Feature 3: This feature was not correct as explained in https://github.com/ElliotAOram/GhostPyramid/pull/34
+
+* Feature 10: Added session feature and changed to website over app

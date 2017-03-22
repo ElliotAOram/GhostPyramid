@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>Charades Game</title>
+</head>
+<body>
+    <h1>Instructions</h1>
+    <p>Session Id: {{session_id}} </p>
+    <p>{{instructions}}</p>
+    
+    {% if actor %}
+    <form action="/actor/phrase/">
+        <input type="submit" name="continue" value="Continue to phrase selection">
+    </form>
+    {% else %}
+    <p>Please wait for the actor to select a phrase</p>
+    {% endif %}
+</body>
+</html>

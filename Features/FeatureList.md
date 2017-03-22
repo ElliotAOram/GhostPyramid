@@ -13,7 +13,7 @@
 | 7             | Select the type of User you are (Viewer / Actor)                | 2                 | 3              | 6            | False     |
 | 8             | Select a phrase as Actor                                        | 2                 | 3              | 7            | False     |
 | 9             | Select a word from the phrase as Actor                          | 2                 | 2              | 8            | False     |
-| 10      |     | Be able to log into a session/room using room code              | 4                 | 3              | 6            | False     |
+| 10            | Be able to log into a session/room using room code              | 4                 | 3              | 6            | False     |
 | 11            | Display word and genre information on Viewer interface          | 3                 | 3              | 9            | False     |
 | 12            | Allow Viewer to guess the current word                          | 2                 | 2              | 11           | False     |
 | 13            | Allow Viewer to guess the phrase                                | 2                 | 3              | 11           | False     |

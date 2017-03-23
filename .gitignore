@@ -210,3 +210,5 @@ build/
 tests/report/
 
 env_charades/
+
+charades/charades/test/reports

@@ -1,3 +1,4 @@
+"""Tests for the index.html and associated view"""
 from selenium import webdriver
 from django.test import LiveServerTestCase
 
@@ -5,10 +6,13 @@ from django.test import LiveServerTestCase
 #https://docs.djangoproject.com/en/1.8/topics/testing/tools/#liveservertestcase
 
 class IndexTests(LiveServerTestCase):
-    
+    """
+    Index.html tests for page elements and button uses
+    """
+
     def setUp(self):
         """
-        Start chrome instance of webdriver 'C:\bin\chromedriver.exe'
+        Start chrome instance of webdriver C:\bin\chromedriver.exe
         """
         self.browser = webdriver.Chrome()
         self.browser.get('http://localhost:8081')
@@ -44,7 +48,7 @@ class IndexTests(LiveServerTestCase):
         current_url = self.browser.current_url
         self.assertTrue(r'localhost:8081/instructions/' in current_url)
         self.assertTrue('user_type=Actor' in current_url)
-        
+
     def test_viewer_button(self):
         """
         Test that the viewer button navigates to the instruction page
@@ -54,5 +58,3 @@ class IndexTests(LiveServerTestCase):
         current_url = self.browser.current_url
         self.assertTrue(r'localhost:8081/instructions/' in current_url)
         self.assertTrue('user_type=Viewer' in current_url)
-        
-        

@@ -17,6 +17,7 @@ from django.contrib import admin
 
 from charades.views import index, instructions
 
+#pylint: disable=invalid-name
 urlpatterns = [
     url(r'^$', index),
     url(r'^admin/', include(admin.site.urls)),

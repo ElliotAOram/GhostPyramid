@@ -19,10 +19,10 @@ def instructions(request):
     if 'user_type' in request.GET:
         user = request.GET['user_type']
         if user == 'Actor':
-            instructions_str = actor_instructions
+            instructions_str = actor_instructions()
             actor = True
         elif user == 'Viewer':
-            instructions_str = viewer_instructions
+            instructions_str = viewer_instructions()
 
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,

@@ -12,7 +12,7 @@ class IndexTests(LiveServerTestCase):
 
     def setUp(self):
         """
-        Start chrome instance of webdriver C:\bin\chromedriver.exe
+        Start chrome instance of webdriver
         """
         self.browser = webdriver.Chrome()
         self.browser.get('http://localhost:8081')

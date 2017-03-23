@@ -40,10 +40,6 @@ INSTALLED_APPS = (
     'django_jenkins',
 )
 
-JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pylint',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -218,3 +218,19 @@
 * The app should be developed as a website instead. There is no real justification for doing an App by cotrast to a website hence 
   there will need to be a re-design to account for this and additional features should be reorganised to attempt to allow for the 
   change in the time schedule
+  
+## Week 8 
+
+### 20/03/2017
+* Set up Django and start following instruction in book: http://djangobook.com/
+
+### 21/03/2017
+* Begin spike solutions for the website
+
+### 22/03/2017
+* Complete design for website instead of App.
+* Remove App UI design in favour of website design
+* Write tests using selenium and LiveServerTestCase (Django) 
+  * https://docs.djangoproject.com/en/1.8/topics/testing/tools/#liveservertestcase
+  * https://pypi.python.org/pypi/selenium
+

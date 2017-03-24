@@ -49,7 +49,7 @@ class InstructionsTests(LiveServerTestCase):
         moves the user to the phrase_selection.html page
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?user_type=Viewer'))
+                                   '/instructions/?user_type=Actor'))
         phrase_sel_button = self.browser.find_element_by_id('phrase_selection_button')
         phrase_sel_button.click()
         current_url = self.browser.current_url

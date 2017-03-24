@@ -234,3 +234,14 @@
   * https://docs.djangoproject.com/en/1.8/topics/testing/tools/#liveservertestcase
   * https://pypi.python.org/pypi/selenium
 
+### 23/03/2017
+* Integrate tests with jenkins build
+* Implement additional code to complete feature 6
+* Merge feature 6
+
+### 24/03/2017
+* Design Feature 7
+* Write tests for feature 7 - selenium
+* Speed up selenium tests by only opening one instance per test class
+  * Fix Errno10054 in selenium by using browser.refresh in teardown()
+* Write tests for feature 7 - core python

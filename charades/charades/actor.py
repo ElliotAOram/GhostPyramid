@@ -36,7 +36,8 @@ class Actor(object):
                                 current_phrase has been set.')
 
         if word_index in self.completed_words:
-            raise RuntimeError('The word at index %d is already in the list of completed words %s.' % (word_index, str(self.completed_words)))
+            raise RuntimeError('The word at index %d is already in the list of \
+                                completed words %s.' % (word_index, str(self.completed_words)))
         if word_index >= len(self.current_phrase_word_list):
             raise RuntimeError('word_index %d is more than last list \
                                 index for current word %s.' % (word_index, self.current_phrase))

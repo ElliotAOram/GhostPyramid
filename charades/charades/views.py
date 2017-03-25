@@ -6,8 +6,8 @@ from viewer import Viewer
 
 
 ##Global variables that will later be added to Game.py
-ACTOR = None
-VIEWERS = []
+actor_user = None
+viewers_list = []
 
 
 def index(request):

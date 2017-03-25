@@ -3,6 +3,9 @@ Module for the Viewer class
 """
 
 class Viewer(object):
+    """
+    The class for the user of type Viewer
+    """
 
     name = 'anonymous'
     points = 0

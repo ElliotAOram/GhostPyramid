@@ -43,17 +43,17 @@ class InstructionsTests(LiveServerTestCase):
         phrase_selection_button = self.browser.find_element_by_id('phrase_selection_button')
         self.assertIsNotNone(phrase_selection_button)
 
-    """def test_actor_button_to_phrase_selection(self):
-        """"""
-        test that the actor button for phrase selection
-        moves the user to the phrase_selection.html page
-        """"""
-        self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?user_type=Actor'))
-        phrase_sel_button = self.browser.find_element_by_id('phrase_selection_button')
-        phrase_sel_button.click()
-        current_url = self.browser.current_url
-        self.assertTrue(r'localhost:8081/select_phrase/' in current_url)"""
+    #def test_actor_button_to_phrase_selection(self):
+    #    """
+    #    test that the actor button for phrase selection
+    #    moves the user to the phrase_selection.html page
+    #    """
+    #    self.browser.get('%s%s' % (self.live_server_url,
+    #                               '/instructions/?user_type=Actor'))
+    #    phrase_sel_button = self.browser.find_element_by_id('phrase_selection_button')
+    #    phrase_sel_button.click()
+    #    current_url = self.browser.current_url
+    #    self.assertTrue(r'localhost:8081/select_phrase/' in current_url)
 
 
     def test_page_elements_viewer(self):

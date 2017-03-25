@@ -3,6 +3,9 @@ import unittest
 from charades.viewer import Viewer
 
 class TestViewer(unittest.TestCase):
+    """
+    Tests the ViewerClass for basic interactions
+    """
 
     def setUp(self):
         self.viewer_obj = Viewer()
@@ -29,4 +32,4 @@ class TestViewer(unittest.TestCase):
         self.assertEqual(self.viewer_obj.name, 'test-name')
 
     def tearDown(self):
-        self.viewer_obj = None
+        del self.viewer_obj

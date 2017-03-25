@@ -1,7 +1,7 @@
 """Tests for the index.html and associated view"""
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-import time
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 
 #https://pypi.python.org/pypi/selenium
 #https://docs.djangoproject.com/en/1.8/topics/testing/tools/#liveservertestcase

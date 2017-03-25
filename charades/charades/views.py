@@ -6,8 +6,8 @@ from viewer import Viewer
 
 
 ##Global variables that will later be added to Game.py
-actor = None
-viewers = []
+ACTOR = None
+VIEWERS = []
 
 
 def index(request):
@@ -29,10 +29,10 @@ def instructions(request):
         if user == 'Actor':
             instructions_str = actor_instructions()
             is_actor = True
-            actor = Actor()
+            ACTOR = Actor()
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
-            viewers.append(Viewer())
+            VIEWERS.append(Viewer())
 
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,

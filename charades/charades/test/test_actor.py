@@ -26,21 +26,21 @@ class TestActor(unittest.TestCase):
 
     def test_set_current_word(self):
         self.actor_obj.set_phrase('test phrase')
-        self.actor_obj.set_current_word(1)
+        self.actor_obj.set_word(1)
         self.assertEqual(self.actor_obj.current_word, 'phrase')
 
     def test_complete_word(self):
         self.actor_obj.set_phrase('test phrase')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()
-        self.assertEquals(self.actor_obj.complted_words, [1])
+        self.assertEquals(self.actor_obj.completed_words, [1])
 
     def test_duplicate_completed_word(self):
         self.actor_obj.set_phrase('test phrase')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()
         self.actor_obj.complete_word()
-        self.assertEquals(self.actor_obj.complted_words, [1])
+        self.assertEquals(self.actor_obj.completed_words, [1])
 
     ###=======================================Failure cases==================================###
 
@@ -60,7 +60,7 @@ class TestActor(unittest.TestCase):
                           self.actor_obj.complete_word)
 
     def test_complete_word_with_no_current_word(self):
-        self.set_phrase('test-phrase')
+        self.actor_obj.set_phrase('test-phrase')
         self.assertRaises(RuntimeError,
                           self.actor_obj.complete_word)
 

@@ -15,18 +15,18 @@ class Actor(object):
         self.current_phrase_word_list = phrase.split()
 
     def set_word(self, word_index):
-        if current_phrase is None:
+        if self.current_phrase is None:
             raise RuntimeError('Can not call set_word before \
                                 current_phrase has been set.')
-        if word_index > len(self.current_phrase_word_list):
+        if word_index >= len(self.current_phrase_word_list):
             raise RuntimeError('word_index %d is more than last list \
-                                index for current word %s.' % (word_index, current_phrase))
+                                index for current word %s.' % (word_index, self.current_phrase))
         else:
-            self.current_word = current_phrase_word_list[word_index]
+            self.current_word = self.current_phrase_word_list[word_index]
             self.current_word_index = word_index
 
     def complete_word(self):
-        if current_word is None:
+        if self.current_word is None:
             raise RuntimeError('complete_word called with no current_word selected.')
-        if current_word_index not in completed_words:
-            completed_words.append(current_word_index)
+        if self.current_word_index not in self.completed_words:
+            self.completed_words.append(self.current_word_index)

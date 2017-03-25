@@ -10,7 +10,7 @@ class Actor(object):
     current_word = None
     current_word_index = None
     completed_words = []
-    
+
     def __init__(self):
         self.current_phrase = None
         self.current_phrase_word_list = None
@@ -34,7 +34,7 @@ class Actor(object):
         if self.current_phrase is None:
             raise RuntimeError('Can not call set_word before \
                                 current_phrase has been set.')
-        
+
         if word_index in self.completed_words:
             raise RuntimeError('The word at index %d is already in the list of completed words %s.' % (word_index, str(self.completed_words)))
         if word_index >= len(self.current_phrase_word_list):

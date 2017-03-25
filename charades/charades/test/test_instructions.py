@@ -7,7 +7,7 @@ class InstructionsTests(LiveServerTestCase):
     """
     Index.html tests for page elements and button uses
     """
-    
+
     @classmethod
     def setUpClass(cls):
         """
@@ -16,7 +16,7 @@ class InstructionsTests(LiveServerTestCase):
         super(InstructionsTests, cls).setUpClass()
         cls.browser = webdriver.Chrome()
         cls.browser.implicitly_wait(10)
-     
+
 
     def test_generic_page_elements(self):
         """
@@ -29,7 +29,7 @@ class InstructionsTests(LiveServerTestCase):
         self.assertEqual('Instructions', page_title)
         session_id = self.browser.find_element_by_id('session_id').text
         self.assertEqual('Session Id: test-room', session_id)
-    
+
     def test_page_elements_actor(self):
         """
         test the elements of the actor page
@@ -42,7 +42,7 @@ class InstructionsTests(LiveServerTestCase):
         self.assertIsNotNone(actor_form)
         phrase_selection_button = self.browser.find_element_by_id('phrase_selection_button')
         self.assertIsNotNone(phrase_selection_button)
-    
+
     '''def test_actor_button_to_phrase_selection(self):
         """
         test that the actor button for phrase selection
@@ -54,8 +54,8 @@ class InstructionsTests(LiveServerTestCase):
         phrase_sel_button.click()
         current_url = self.browser.current_url
         self.assertTrue(r'localhost:8081/select_phrase/' in current_url)'''
-        
-        
+
+
     def test_page_elements_viewer(self):
         """
         test the elements of the viewer page
@@ -69,7 +69,7 @@ class InstructionsTests(LiveServerTestCase):
 
     def tearDown(self):
         self.browser.refresh()
-        
+
     @classmethod
     def tearDownClass(cls):
         """

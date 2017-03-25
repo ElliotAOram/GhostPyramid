@@ -245,3 +245,7 @@
 * Speed up selenium tests by only opening one instance per test class
   * Fix Errno10054 in selenium by using browser.refresh in teardown()
 * Write tests for feature 7 - core python
+
+### 25/03/2017
+* Add implementation for viewer.py and get tests to pass
+* Add implementation for actor.py and get tests to pass

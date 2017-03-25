@@ -1,6 +1,6 @@
 """Testing module for viewer class"""
 import unittest
-from charades import viewer
+from charades.viewer import Viewer
 
 class TestViewer(unittest.TestCase):
 
@@ -9,7 +9,7 @@ class TestViewer(unittest.TestCase):
 
     def test_create_viewer(self):
         self.assertIsNotNone(self.viewer_obj)
-        self.assertIsInstance(self.viewer_obj, type(Viewer))
+        self.assertIsInstance(self.viewer_obj, Viewer)
 
     def test_get_points(self):
         self.assertEqual(self.viewer_obj.points, 0)
@@ -22,11 +22,11 @@ class TestViewer(unittest.TestCase):
         self.assertEqual(self.viewer_obj.points, 35)
 
     def test_get_name(self):
-        self.assertEqual(viewer_obj.name, 'anonymous')
+        self.assertEqual(self.viewer_obj.name, 'anonymous')
 
     def test_set_name(self):
-        viewer_obj.set_name('test-name')
-        self.assertEqual(viewer_obj.name, 'test-name')
+        self.viewer_obj.set_name('test-name')
+        self.assertEqual(self.viewer_obj.name, 'test-name')
 
     def tearDown(self):
         self.viewer_obj = None

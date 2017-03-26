@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.4.1}
+\lhead{Version 1.1}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -32,8 +32,12 @@ This is an additional architecture embedded into the Django website. These class
 \begin{itemize}
 
 	\item \textbf{current\_phrase}: Contains the current phrase that the Actor is attempting to act. Type: String.
+	
+	\item \textbf{current\_phrase\_word\_list}: A list of the words within the phrase. This will be created using the python split() function which separates a string by spaces. This variable will save time having to look up the word each time to display it. Type: string list.
 
 	\item \textbf{current\_word}: Contains the current word in the phrase that is being acted. This is an integer that relates to word. Type: int.
+	
+	\item \textbf{current\_word\_index}: Holds the current index of the word being acted / guessed. Type: int.
 	
 	\item \textbf{completed\_words}: A list of integers representing the words that have been completed. A word is completed when it correctly guessed or time has elapsed. Type: int list.
 	
@@ -42,6 +46,9 @@ This is an additional architecture embedded into the Django website. These class
 \subsubsection{Functions}
 
 \begin{itemize}
+
+	\item \textbf{\_\_init\_\_}: Resets the variables to default values.
+
 	\item \textbf{set\_phrase}: updates the phrase variable with a new string.
 	
 	\item \textbf{set\_word}: updates the word variable with a  new int.
@@ -64,6 +71,9 @@ This is an additional architecture embedded into the Django website. These class
 \subsection{Functions}
 
 \begin{itemize}
+
+	\item \textbf{\_\_init\_\_}: Resets the variables to default values.
+
 	\item \textbf{increment\_points}: increase the points variable by an integer.
 	
 	\item \textbf{set\_name}: updates the name variable with a String.

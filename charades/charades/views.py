@@ -6,7 +6,9 @@ from viewer import Viewer
 
 
 ##Global variables that will later be added to Game.py
+#pylint: disable=invalid-name
 actor_user = None
+#pylint: disable=invalid-name
 viewers_list = []
 
 
@@ -29,6 +31,7 @@ def instructions(request):
         if user == 'Actor':
             instructions_str = actor_instructions()
             is_actor = True
+            #pylint: disable=unused-variable, redefined-outer-name
             actor_user = Actor()
         elif user == 'Viewer':
             instructions_str = viewer_instructions()

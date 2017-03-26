@@ -38,7 +38,11 @@ class TestActor(unittest.TestCase):
         self.actor_obj.complete_word()
         self.assertEquals(self.actor_obj.completed_words, [1])
 
-    def test_comp_word_resets_current_word(self):
+    def test_comp_word_resets_word(self):
+        """
+        Ensures that the complete_word function makes the current_word
+        variable None after a successful completion.
+        """
         self.actor_obj.set_phrase('test phrase')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()

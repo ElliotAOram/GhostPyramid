@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.1}
+\lhead{Version 1.2.0}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -68,7 +68,7 @@ This is an additional architecture embedded into the Django website. These class
 
 \end{itemize}
 
-\subsection{Functions}
+\subsubsection{Functions}
 
 \begin{itemize}
 
@@ -89,12 +89,29 @@ This is an additional architecture embedded into the Django website. These class
 	
 \end{itemize}
 
-\subsection{Functions}
+\subsubsection{Functions}
 \begin{itemize}
 
 	\item \textbf{add\_actor}: Updates the actor variable with a new Actor.
 	
 	\item \textbf{add\_viewer}: Adds a Viewer to the viewer list variable. There will be a check to ensure the same viewer is not being added again as well as ensure the maximum number of viewers is not exceeded.
+	
+\end{itemize}
+
+\subsection{Phrases}
+\subsubsection{Variables}
+\begin{itemize}
+
+	\item \textbf{animals}: All phrases that are animals that can be acted. Type: string list.
+	
+	\item \textbf{sports}: All phrases that are sports that can be acted. Type: string list.
+	
+\end{itemize}
+
+\subsubsection{Functions}
+\begin{itemize}
+	
+	\item \textbf{get\_phrase\_from\_type}: A function that get a number of phrases from a type (string list of phrases). The int is the number to retrieve, the string is the type to get. The string are returned in a string list from the function. The function will raise a RuntimeError if the type is unknown (this will be handled neatly in the web interface upon access).
 	
 \end{itemize}
 

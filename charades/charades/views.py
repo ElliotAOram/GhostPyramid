@@ -29,10 +29,10 @@ def instructions(request):
         if user == 'Actor':
             instructions_str = actor_instructions()
             is_actor = True
-            ACTOR = Actor()
+            actor_user = Actor()
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
-            VIEWERS.append(Viewer())
+            viewers_list.append(Viewer())
 
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,

@@ -4,16 +4,17 @@
     <title>Charades Game</title>
 </head>
 <body>
-    <h1>Instructions</h1>
-    <p>Session Id: {{session_id}} </p>
-    <p>{{instructions}}</p>
+    <h1 class="page_title">Instructions</h1>
+    <p id='session_id'>Session Id: {{session_id}} </p>
+    <p id='instruction_para'>{{instructions}}</p>
     
     {% if actor %}
-    <form action="/actor/phrase/">
-        <input type="submit" name="continue" value="Continue to phrase selection">
+    <form id='phrase_selection' action="/actor/phrase/">
+        <input type="submit" id='phrase_selection_button'
+               name="continue" value="Continue to phrase selection">
     </form>
     {% else %}
-    <p>Please wait for the actor to select a phrase</p>
+    <p id='please_wait_para'>Please wait for the actor to select a phrase</p>
     {% endif %}
 </body>
 </html>

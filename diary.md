@@ -249,3 +249,8 @@
 ### 25/03/2017
 * Add implementation for viewer.py and get tests to pass
 * Add implementation for actor.py and get tests to pass
+
+### 26/03/2017
+* Fix pylint issues for feature 7
+* Update design for feature 7 with minor changes
+* Merge feature 7 

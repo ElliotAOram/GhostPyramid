@@ -9,30 +9,34 @@ class TestPhrases(unittest.TestCase):
 
     ###===========================Success case==========================###
     def test_zero_phrase(self):
-        output = get_phrases_from_type(0, 'ANIMAL')
+        output = get_phrases_from_type(0, 'ANIMALS')
         self.assertEqual(output, [])
 
     def test_one_animal_phrase(self):
-        output = get_phrases_from_type(1, 'ANIMAL')
-        self.assertEqual(output, ['animal'])
+        output = get_phrases_from_type(1, 'ANIMALS')
+        self.assertEqual(len(output), 1)
 
     def test_multi_animal_phrase(self):
-        output = get_phrases_from_type(2, 'ANIMAL')
-        self.assertEqual(output, ['animal', 'animal'])
+        output = get_phrases_from_type(2, 'ANIMALS')
+        self.assertEqual(len(output), 2)
 
     def test_one_sport_phrase(self):
-        output = get_phrases_from_type(1, 'SPORT')
-        self.assertEqual(output, ['sport'])
+        output = get_phrases_from_type(1, 'SPORTS')
+        self.assertEqual(len(output), 1)
 
     def test_multi_sport_phrase(self):
-        output = get_phrases_from_type(2, 'SPORT')
-        self.assertEqual(output, ['sport', 'sport'])
+        output = get_phrases_from_type(2, 'SPORTS')
+        self.assertEqual(len(output), 2)
+
+    def test_max_five(self):
+        output = get_phrases_from_type(7, 'ANIMALS')
+        self.assertEqual(len(output), 5)
 
     ###============================Failure cases========================###
     def test_negative_number(self):
         self.assertRaises(RuntimeError,
                           get_phrases_from_type,
-                          -1, 'ANIMAL')
+                          -1, 'ANIMALS')
 
     def test_unknown_type(self):
         self.assertRaises(RuntimeError,

@@ -30,4 +30,5 @@ def get_phrases_from_type(num_of_items, type):
         while index in used_numbers:
             index = randint(0, len(list) -1)
         phrases.append(list[index])
+        used_numbers.append(index)
     return phrases

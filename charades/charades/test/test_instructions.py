@@ -53,7 +53,7 @@ class InstructionsTests(LiveServerTestCase):
         phrase_sel_button = self.browser.find_element_by_id('phrase_selection_button')
         phrase_sel_button.click()
         current_url = self.browser.current_url
-        self.assertTrue(r'localhost:8081/select_phrase/' in current_url)
+        self.assertTrue(self.live_server_url + '/select_phrase/' in current_url)
 
 
     def test_page_elements_viewer(self):

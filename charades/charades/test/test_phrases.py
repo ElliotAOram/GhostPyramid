@@ -32,6 +32,10 @@ class TestPhrases(unittest.TestCase):
         output = get_phrases_from_type(7, 'ANIMALS')
         self.assertEqual(len(output), 5)
 
+    def test_any_type(self):
+        output = get_phrases_from_type(5, 'ANY')
+        self.assertEqual(len(output), 5)
+
     def test_none_same(self):
         output = get_phrases_from_type(5, 'ANIMALS')
         for idx, current_phrase in enumerate(output):

@@ -48,4 +48,4 @@ def select_phrase(request):
     Gets random phrases from the phrases module using
     get_phrases_from_type
     """
-    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'SPORTS')})
+    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY')})

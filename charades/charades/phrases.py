@@ -5,11 +5,13 @@ ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', 'Monkey']
 
 SPORTS = ['Tennis', 'Football', 'Swimming', 'Rowing', 'Karate', 'Rugby']
 
-TYPES = ['ANIMALS', 'SPORTS']
+TYPES = ['ANIMALS', 'SPORTS', 'ANY']
 
 
 def find_list(type):
     """Return the desire list from the type variable"""
+    if type == 'ANY':
+        return ANIMALS + SPORTS
     return {
         'ANIMALS': ANIMALS,
         'SPORTS': SPORTS,

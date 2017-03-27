@@ -17,7 +17,7 @@ class SelectPhraseTests(LiveServerTestCase):
         cls.browser.implicitly_wait(10)
 
     def test_generic_page_elements(self):
-        self.browser.get('%s%s', (self.live_server_url, '/select_phrase/'))
+        self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
         self.assertTrue('Charades' in self.browser.title)
         page_title = self.browser.find_element_by_class_name('page_title').text
         self.assertEqual('Select Phrase', page_title)
@@ -25,18 +25,17 @@ class SelectPhraseTests(LiveServerTestCase):
         self.assertIsNotNone(form)
 
     def test_phrases_are_not_same(self):
-        self.browser.get('%s%s', (self.live_server_url, '/select_phrase/'))
+        self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
         phrases = []
-        phrases.append(self.browser.find_element_by_id('phrase1').text)
-        phrases.append(self.browser.find_element_by_id('phrase2').text)
-        phrases.append(self.browser.find_element_by_id('phrase3').text)
-        phrases.append(self.browser.find_element_by_id('phrase4').text)
-        phrases.append(self.browser.find_element_by_id('phrase5').text)
+        for i in range(1, 6):
+            phrases.append(self.browser.find_element_by_xpath( \
+                "//form[@id='phrase_selection_form']/input["+str(i)+"]").get_attribute("value"))
         for idx, current_phrase in enumerate(phrases):
             sub_phrases = phrases
             sub_phrases.pop(idx)
             for next_phrase in phrases:
                 self.assertNotEqual(current_phrase, next_phrase)
+        self.browser.refresh()
 
     #def test_phrase_buttons_to_acting_page
     #    for index in range(1, 5):

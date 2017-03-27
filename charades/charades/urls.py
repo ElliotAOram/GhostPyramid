@@ -15,11 +15,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from charades.views import index, instructions
+from charades.views import index, instructions, select_phrase
 
 #pylint: disable=invalid-name
 urlpatterns = [
     url(r'^$', index),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^instructions/$', instructions),
+    url(r'^select_phrase/$', select_phrase)
 ]

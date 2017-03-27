@@ -3,6 +3,7 @@ from django.shortcuts import render
 from strings import actor_instructions, viewer_instructions
 from actor import Actor
 from viewer import Viewer
+from phrases import get_phrases_from_type
 
 
 ##Global variables that will later be added to Game.py
@@ -40,3 +41,11 @@ def instructions(request):
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,
                                                  'actor' : is_actor})
+
+def select_phrase(request):
+    """
+    The view for the select.html page.
+    Gets random phrases from the phrases module using
+    get_phrases_from_type
+    """
+    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'SPORTS')})

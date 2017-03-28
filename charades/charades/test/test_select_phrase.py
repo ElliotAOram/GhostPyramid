@@ -37,13 +37,13 @@ class SelectPhraseTests(LiveServerTestCase):
                 self.assertNotEqual(current_phrase, next_phrase)
         self.browser.refresh()
 
-    #def test_phrase_buttons_to_acting_page
-    #    for index in range(1, 5):
-    #        self.browser.get('%s%s', (self.live_server_url, '/select_phrase/'))
-    #        phrase_button = self.browser.find_element_by_id('phrase' + str(index))
-    #        phrase_button.click()
-    #        self.assertTrue('/acting/' in self.live_server_url)
-    #        self.browser.refresh()
+    def test_phrase_buttons_to_acting_page(self):
+        for index in range(1, 5):
+            self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
+            phrase_button = self.browser.find_element_by_id('phrase' + str(index))
+            phrase_button.click()
+            self.assertTrue('/acting/' in self.live_server_url)
+            self.browser.refresh()
 
     def tearDown(self):
         self.browser.refresh()

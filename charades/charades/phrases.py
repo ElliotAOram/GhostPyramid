@@ -1,7 +1,7 @@
 """Module that stores phrases and handles random phrase selection"""
 from random import randint
 
-ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', 'Monkey']
+ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', 'Monkey', 'Frog', 'Penguin', 'Bird']
 
 SPORTS = ['Tennis', 'Football', 'Swimming', 'Rowing', 'Karate', 'Rugby']
 

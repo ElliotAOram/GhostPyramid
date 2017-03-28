@@ -9,13 +9,25 @@ TYPES = ['ANIMALS', 'SPORTS', 'ANY']
 
 
 def find_list(type):
-    """Return the desire list from the type variable"""
+    """
+    Return the desire list from the type variable
+    @param the type of list to find
+    """
     if type == 'ANY':
         return ANIMALS + SPORTS
     return {
         'ANIMALS': ANIMALS,
         'SPORTS': SPORTS,
     }[type]
+
+def check_phrase(phrase):
+    """
+    Ensures that the phrase is known and valid
+    @param the phrase to check
+    @return true is valid
+    """
+    all_phrases = ANIMALS + SPORTS
+    return phrase.upper() in [x.upper() for x in all_phrases]
 
 def get_phrases_from_type(num_of_items, type):
     if type not in TYPES:

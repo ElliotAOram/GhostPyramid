@@ -16,6 +16,10 @@ class SelectPhraseTests(LiveServerTestCase):
         cls.browser = webdriver.Chrome()
         cls.browser.implicitly_wait(10)
 
+    def setUp(self):
+        self.browser.get('%s%s' % (self.live_server_url, '/instructions/?user_type=Actor'))
+        self.browser.refresh()
+
     def test_generic_page_elements(self):
         self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
         self.assertTrue('Charades' in self.browser.title)
@@ -38,11 +42,12 @@ class SelectPhraseTests(LiveServerTestCase):
         self.browser.refresh()
 
     def test_phrase_buttons_to_acting_page(self):
-        for index in range(1, 5):
+        for i in range(1, 5):
             self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
-            phrase_button = self.browser.find_element_by_id('phrase' + str(index))
+            phrase_button = self.browser.find_element_by_xpath( \
+                "//form[@id='phrase_selection_form']/input["+str(i)+"]")
             phrase_button.click()
-            self.assertTrue('/acting/' in self.live_server_url)
+            self.assertTrue('/acting/' in self.browser.current_url)
             self.browser.refresh()
 
     def tearDown(self):

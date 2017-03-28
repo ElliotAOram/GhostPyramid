@@ -1,6 +1,6 @@
 """module containing phrases for use in Charades game as well as helper functions"""
 import unittest
-from charades.phrases import get_phrases_from_type
+from charades.phrases import get_phrases_from_type, check_phrase
 
 class TestPhrases(unittest.TestCase):
     """

@@ -6,6 +6,9 @@
 <body>
     <h1 class="page_title">Home page</h1>
 
+    {% if warning not in '' %}
+        <p class="warning">{{warning}}</p>
+    {% endif %}
     <form id="login_form" action="/instructions/" method="get">
         Session ID: <input type="text" name="session_id">
         <br/>

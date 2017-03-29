@@ -1,6 +1,7 @@
 """Tests for the index.html and associated view"""
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from charades.strings import actor_none
 
 
 #https://pypi.python.org/pypi/selenium
@@ -59,8 +60,13 @@ class IndexTests(StaticLiveServerTestCase):
         viewer_button = self.browser.find_element_by_id('viewer_button')
         viewer_button.click()
         current_url = self.browser.current_url
-        self.assertTrue(r'localhost:8081/instructions/' in current_url)
+        self.assertTrue('/instructions/' in current_url)
         self.assertTrue('user_type=Viewer' in current_url)
+
+    def test_login_failure(self):
+        self.browser.get('%s%s' % (self.live_server_url, '/?no_actor=True'))
+        warning = self.browser.find_element_by_class_name('warning').text
+        self.assertEqual(warning, actor_none())
 
     # http://stackoverflow.com/questions/13243267/django-and-selenium-web-testing-error-errno-10054
     def tearDown(self):

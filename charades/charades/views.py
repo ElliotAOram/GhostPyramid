@@ -1,8 +1,9 @@
 """Controls the data that is passed to the webpages"""
-from django.shortcuts import render
-from strings import actor_instructions, viewer_instructions
+from django.shortcuts import render, redirect
+from strings import actor_instructions, viewer_instructions, actor_none
 from actor import Actor
 from viewer import Viewer
+from phrases import get_phrases_from_type, check_phrase
 
 
 ##Global variables that will later be added to Game.py
@@ -13,7 +14,10 @@ viewers_list = []
 
 
 def index(request):
-    return render(request, 'index.html')
+    warning = ''
+    if 'no_actor' in request.GET:
+        warning = actor_none()
+    return render(request, 'index.html', {'warning' : warning})
 
 def instructions(request):
     """
@@ -31,7 +35,8 @@ def instructions(request):
         if user == 'Actor':
             instructions_str = actor_instructions()
             is_actor = True
-            #pylint: disable=unused-variable, redefined-outer-name
+            #pylint: disable=global-statement, redefined-outer-name
+            global actor_user
             actor_user = Actor()
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
@@ -40,3 +45,30 @@ def instructions(request):
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,
                                                  'actor' : is_actor})
+
+def select_phrase(request):
+    """
+    The view for the select.html page.
+    Gets random phrases from the phrases module using
+    get_phrases_from_type
+    """
+    if actor_user is None:
+        return redirect('/?no_actor=True')
+    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY')})
+
+def acting(request):
+    """
+    The default page for the actor while acting out a word/phrase
+    """
+    if actor_user is None:
+        return redirect('/?no_actor=True')
+    phrase = actor_user.current_phrase
+    if 'phrase' in request.GET:
+        phrase = request.GET['phrase']
+        if check_phrase(phrase):
+            actor_user.set_phrase(phrase)
+        else:
+            raise RuntimeError("Phrase was not recognised as valid.")
+    num_words = len(actor_user.current_phrase_word_list)
+    return render(request, 'acting.html', {'phrase' : phrase,
+                                           'num_words' : num_words})

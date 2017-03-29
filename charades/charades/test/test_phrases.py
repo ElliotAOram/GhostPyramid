@@ -53,7 +53,7 @@ class TestPhrases(unittest.TestCase):
     def test_check_valid_phrase_upper(self):
         self.assertTrue(check_phrase('TENNIS'))
 
-    def test_check_valid_phrase_mixed_case(self):
+    def test_check_valid_mixed_case(self):
         self.assertTrue(check_phrase('TeNNiS'))
 
     def test_check_invalid_phrase(self):

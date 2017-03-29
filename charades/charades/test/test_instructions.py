@@ -43,7 +43,7 @@ class InstructionsTests(LiveServerTestCase):
         phrase_selection_button = self.browser.find_element_by_id('phrase_selection_button')
         self.assertIsNotNone(phrase_selection_button)
 
-    def test_actor_button_to_phrase_selection(self):
+    def test_actor_button_click(self):
         """
         test that the actor button for phrase selection
         moves the user to the phrase_selection.html page

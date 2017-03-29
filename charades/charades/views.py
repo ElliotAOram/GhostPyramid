@@ -35,7 +35,7 @@ def instructions(request):
         if user == 'Actor':
             instructions_str = actor_instructions()
             is_actor = True
-            #pylint: disable=unused-variable, redefined-outer-name
+            #pylint: disable=global-statement, redefined-outer-name
             global actor_user
             actor_user = Actor()
         elif user == 'Viewer':
@@ -52,7 +52,6 @@ def select_phrase(request):
     Gets random phrases from the phrases module using
     get_phrases_from_type
     """
-    global actor_user
     if actor_user is None:
         return redirect('/?no_actor=True')
     return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY')})
@@ -61,7 +60,6 @@ def acting(request):
     """
     The default page for the actor while acting out a word/phrase
     """
-    global actor_user
     if actor_user is None:
         return redirect('/?no_actor=True')
     phrase = actor_user.current_phrase

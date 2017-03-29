@@ -1,24 +1,25 @@
 """Module that stores phrases and handles random phrase selection"""
 from random import randint
 
-ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', 'Monkey', 'Frog', 'Penguin', 'Bird']
+ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', \
+           'Monkey', 'Frog', 'Penguin', 'Bird']
 
 SPORTS = ['Tennis', 'Football', 'Swimming', 'Rowing', 'Karate', 'Rugby']
 
 TYPES = ['ANIMALS', 'SPORTS', 'ANY']
 
 
-def find_list(type):
+def find_list(list_type):
     """
     Return the desire list from the type variable
-    @param the type of list to find
+    @param list_type    :: The type of list to find
     """
-    if type == 'ANY':
+    if list_type == 'ANY':
         return ANIMALS + SPORTS
     return {
         'ANIMALS': ANIMALS,
         'SPORTS': SPORTS,
-    }[type]
+    }[list_type]
 
 def check_phrase(phrase):
     """
@@ -29,20 +30,27 @@ def check_phrase(phrase):
     all_phrases = ANIMALS + SPORTS
     return phrase.upper() in [x.upper() for x in all_phrases]
 
-def get_phrases_from_type(num_of_items, type):
-    if type not in TYPES:
-        raise RuntimeError('Type %s is not one of the available types of phrase.' % (type))
+def get_phrases_from_type(num_of_items, list_type):
+    """
+    Gets a number of phrases from a given category.
+    Check that the type of list can be found and the number of items is not 0 (or less)
+    @param num_of_items     :: The number of items to return
+    @param list_type        :: The name of the list to find
+    @return list of phrases
+    """
+    if list_type not in TYPES:
+        raise RuntimeError('Type %s is not one of the available types of phrase.' % (list_type))
     if num_of_items > 5:
         num_of_items = 5
     if num_of_items < 0:
         raise RuntimeError('The number of item, %d, must be positive number.' % (num_of_items))
-    list = find_list(type)
+    category_list = find_list(list_type)
     phrases = []
     used_numbers = []
     for _ in range(0, num_of_items):
-        index = randint(0, len(list)-1)
+        index = randint(0, len(category_list)-1)
         while index in used_numbers:
-            index = randint(0, len(list) -1)
-        phrases.append(list[index])
+            index = randint(0, len(category_list) -1)
+        phrases.append(category_list[index])
         used_numbers.append(index)
     return phrases

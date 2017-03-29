@@ -253,4 +253,26 @@
 ### 26/03/2017
 * Fix pylint issues for feature 7
 * Update design for feature 7 with minor changes
-* Merge feature 7 
+* Merge feature 7
+* Feature 8 UI design (phrase_selection.html)
+* Feature 8 Class diagram (phrases module)
+* Add tests for phrases module
+* Add tests for select_phrase.html
+
+## Week 9
+
+### 27/03/2017
+
+* Implement code to pass tests in feature 8
+* Use XPath in selenium to test button values using get_attribute
+  * http://selenium-python.readthedocs.io/locating-elements.html#locating-by-xpath
+
+### 28/03/2017
+* Add design for acting (single and multi word)
+* Add tests for redirects
+* Implement redirects for pages when actor not present
+
+### 29/03/2017
+* Add warnings on index for no actor
+* PR for feature 8
+* Resolve pylint issues

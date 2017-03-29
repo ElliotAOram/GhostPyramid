@@ -6,10 +6,18 @@
 <body>
     <h1 class="page_title">{{phrase}}</h1>
 
-    {% if num_words < 1 %}
-    <form id="current_word_form" action="/acting/" method="get">
-        <!--Add current word selection buttons--> 
-    </form>
+    {% if num_words > 1 %}
+        <form id="word_selection" action="/acting/" method="get">
+            {% for words in word_list %}
+                <input type="submit"
+                {% if forloop.counter == current_word %}
+                    class="current_word_button"
+                {% else %}
+                    class="word_button"
+                {% endif %}
+                name= "current_word_index" value="{{forloop.counter}}">
+            {% endfor %}
+        </form>
     {% endif %}
 </body>
 </html>

@@ -8,7 +8,7 @@
     
     <form id='phrase_selection_form' action="/acting/" method="get">
         {% for phrase in phrases %}
-        <input type="submit" class="phrase_button" name="phrase" value={{ phrase }}>
+        <input type="submit" class="phrase_button" name="phrase" value="{{ phrase }}">
         <br/>
         {% endfor %}
     </form>

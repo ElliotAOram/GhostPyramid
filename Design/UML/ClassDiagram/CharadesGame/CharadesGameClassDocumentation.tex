@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.2.0}
+\lhead{Version 1.2.1}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -112,6 +112,10 @@ This is an additional architecture embedded into the Django website. These class
 \begin{itemize}
 	
 	\item \textbf{get\_phrase\_from\_type}: A function that get a number of phrases from a type (string list of phrases). The int is the number to retrieve, the string is the type to get. The string are returned in a string list from the function. The function will raise a RuntimeError if the type is unknown (this will be handled neatly in the web interface upon access).
+	
+	\item \textbf{check\_phrase}: Ensures that a string is present in one of the lists of phrases. This is done by concatenating all the lists and checking the input string is present. Returns a boolean of if the string is present in the list.
+	
+	\item \textbf{find\_list}: Takes a string input and return the relevant list matching that string. This is used as a private function for the get\_phrase\_from\_type function.
 	
 \end{itemize}
 

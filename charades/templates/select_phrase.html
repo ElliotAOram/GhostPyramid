@@ -1,16 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-    <title>Charades Game</title>
-</head>
+{% include "includes/head.html" %}
 <body>
-    <h1 class="page_title">Select Phrase</h1>
-    
-    <form id='phrase_selection_form' action="/acting/" method="get">
-        {% for phrase in phrases %}
-        <input type="submit" class="phrase_button" name="phrase" value="{{ phrase }}">
-        <br/>
-        {% endfor %}
-    </form>
+    <div class="main">
+        <h1 class="page_title">Select Phrase</h1>
+
+        <form id='phrase_selection_form' action="/acting/" method="get">
+            {% for phrase in phrases %}
+            <input type="submit" class="standard_button" name="phrase" value="{{ phrase }}">
+            <br/>
+            {% endfor %}
+        </form>
+    </div>
 </body>
 </html>

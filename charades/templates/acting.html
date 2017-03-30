@@ -1,23 +1,26 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-    <title>Charades Game</title>
-</head>
+{% include "includes/head.html" %}
 <body>
-    <h1 class="page_title">{{phrase}}</h1>
+    <div class="main">
+        <h1 class="page_title">
+        {% for word in word_list %}
+        {% if forloop.counter == current_word %}
+        <span class="current_word_span">{% else %}<span class="word_span">{% endif %}{{word}}</span>
+        {% endfor %}
+        </h1>
 
-    {% if num_words > 1 %}
-        <form id="word_selection" action="/acting/" method="get">
-            {% for words in word_list %}
-                <input type="submit"
-                {% if forloop.counter == current_word %}
-                    class="current_word_button"
-                {% else %}
-                    class="word_button"
-                {% endif %}
-                name= "current_word_index" value="{{forloop.counter}}">
-            {% endfor %}
-        </form>
-    {% endif %}
+        {% if num_words > 1 %}
+            <form id="word_selection" action="/acting/" method="get">
+                {% for words in word_list %}
+                    <input type="submit"
+                    {% if forloop.counter == current_word %}
+                        class="current_word_button"
+                    {% else %}
+                        class="standard_button"
+                    {% endif %}
+                    name= "current_word_index" value="{{forloop.counter}}">
+                {% endfor %}
+            </form>
+        {% endif %}
+    </div>
 </body>
 </html>

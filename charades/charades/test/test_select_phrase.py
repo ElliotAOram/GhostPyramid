@@ -1,8 +1,8 @@
 """Tests for the select_phrase.html and associated view"""
 from selenium import webdriver
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
-class SelectPhraseTests(LiveServerTestCase):
+class SelectPhraseTests(StaticLiveServerTestCase):
     """
     Select_Phrase.html for page elements and button transistions
     """

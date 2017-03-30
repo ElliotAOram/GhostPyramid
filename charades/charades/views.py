@@ -90,7 +90,6 @@ def acting(request):
     ### Render page
     return render(request,
                   'acting.html',
-                  {'phrase' : phrase,
-                   'num_words' : len(actor_user.current_phrase_word_list),
+                  {'num_words' : len(actor_user.current_phrase_word_list),
                    'word_list' : actor_user.current_phrase_word_list,
                    'current_word' : current_word_index})

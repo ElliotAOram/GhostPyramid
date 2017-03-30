@@ -23,19 +23,17 @@ class InstructionsTests(StaticLiveServerTestCase):
         test the non-actor and non-viewer spesific content
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=test-room'))
+                                   '/instructions/?session_id=BSW18'))
         self.assertTrue('Charades' in self.browser.title)
         page_title = self.browser.find_element_by_class_name('page_title').text
         self.assertEqual('Instructions', page_title)
-        session_id = self.browser.find_element_by_id('session_id').text
-        self.assertEqual('Session Id: test-room', session_id)
 
     def test_page_elements_actor(self):
         """
         test the elements of the actor page
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=test-room&user_type=Actor'))
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
         inst_para = self.browser.find_element_by_id('instruction_para').text
         self.assertEqual(strings.actor_instructions(), inst_para)
         actor_form = self.browser.find_element_by_id('phrase_selection')
@@ -49,7 +47,7 @@ class InstructionsTests(StaticLiveServerTestCase):
         moves the user to the phrase_selection.html page
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?user_type=Actor'))
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
         phrase_sel_button = self.browser.find_element_by_id('phrase_selection_button')
         phrase_sel_button.click()
         current_url = self.browser.current_url
@@ -61,7 +59,7 @@ class InstructionsTests(StaticLiveServerTestCase):
         test the elements of the viewer page
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=test-room&user_type=Viewer'))
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         inst_para = self.browser.find_element_by_id('instruction_para').text
         self.assertEqual(strings.viewer_instructions(), inst_para)
         please_wait = self.browser.find_element_by_id('please_wait_para').text

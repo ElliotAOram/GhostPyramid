@@ -17,7 +17,7 @@ class SelectPhraseTests(StaticLiveServerTestCase):
         cls.browser.implicitly_wait(10)
 
     def setUp(self):
-        self.browser.get('%s%s' % (self.live_server_url, '/instructions/?user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.refresh()
 
     def test_generic_page_elements(self):

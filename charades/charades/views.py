@@ -1,6 +1,7 @@
 """Controls the data that is passed to the webpages"""
 from django.shortcuts import render, redirect
-from strings import actor_instructions, viewer_instructions, actor_none
+from strings import actor_instructions, viewer_instructions, \
+                    actor_none, invalid_session
 from actor import Actor
 from viewer import Viewer
 from phrases import get_phrases_from_type, check_phrase
@@ -17,6 +18,8 @@ def index(request):
     warning = ''
     if 'no_actor' in request.GET:
         warning = actor_none()
+    if 'invalid_session' in request.GET:
+        warning = invalid_session()
     return render(request, 'index.html', {'warning' : warning})
 
 def instructions(request):
@@ -28,6 +31,10 @@ def instructions(request):
     sess_id = 'Not found'
     if 'session_id' in request.GET:
         sess_id = request.GET['session_id']
+    else:
+        return redirect('/?invalid_session=True')
+    if request.GET['session_id'] != 'BSW18':
+        return redirect('/?invalid_session=True')
     instructions_str = ''
     is_actor = False
     if 'user_type' in request.GET:
@@ -38,13 +45,19 @@ def instructions(request):
             #pylint: disable=global-statement, redefined-outer-name
             global actor_user
             actor_user = Actor()
+            request.session['user_type'] = 'Actor'
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             viewers_list.append(Viewer())
+            request.session['user_type'] = 'Viewer'
+            request.session['viewer_number'] = len(viewers_list)
 
     return render(request, 'instructions.html', {'session_id' : sess_id,
                                                  'instructions' : instructions_str,
                                                  'actor' : is_actor})
+
+def guess(request):
+    return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number']})
 
 def select_phrase(request):
     """

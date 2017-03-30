@@ -276,3 +276,13 @@
 * Add warnings on index for no actor
 * PR for feature 8
 * Resolve pylint issues
+* Add tests for feature 9
+* Add implementation to pass tests
+* Initial static file set up
+* Add start of css
+
+### 30/03/2017
+* Complete css
+* Change tests to Static to allow for css import on localhost
+* Add highlighting on current word button and word
+

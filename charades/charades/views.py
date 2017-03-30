@@ -63,12 +63,33 @@ def acting(request):
     if actor_user is None:
         return redirect('/?no_actor=True')
     phrase = actor_user.current_phrase
+    ### Select phrase
     if 'phrase' in request.GET:
         phrase = request.GET['phrase']
+        if "+" in phrase:
+            phrase = phrase.replace("+", " ")
         if check_phrase(phrase):
             actor_user.set_phrase(phrase)
         else:
             raise RuntimeError("Phrase was not recognised as valid.")
-    num_words = len(actor_user.current_phrase_word_list)
-    return render(request, 'acting.html', {'phrase' : phrase,
-                                           'num_words' : num_words})
+
+    ### Select current word
+    current_word_index = actor_user.current_word_index
+    if 'current_word_index' in request.GET:
+        current_word_index = request.GET['current_word_index']
+        try:
+            current_word_index = int(current_word_index)
+        except RuntimeError:
+            raise RuntimeError("Provided integer for current_word_index was not a number")
+        if current_word_index < 1 or current_word_index > len(phrase.split()):
+            raise RuntimeError("Provided word index %d is not in the range of the word" \
+                               " with length %d." % (current_word_index, len(phrase.split)))
+        else:
+            actor_user.set_word(current_word_index - 1)
+
+    ### Render page
+    return render(request,
+                  'acting.html',
+                  {'num_words' : len(actor_user.current_phrase_word_list),
+                   'word_list' : actor_user.current_phrase_word_list,
+                   'current_word' : current_word_index})

@@ -1,9 +1,9 @@
 """Tests for the instructions.html and associated view"""
 from selenium import webdriver
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from charades import strings
 
-class InstructionsTests(LiveServerTestCase):
+class InstructionsTests(StaticLiveServerTestCase):
     """
     Index.html tests for page elements and button uses
     """

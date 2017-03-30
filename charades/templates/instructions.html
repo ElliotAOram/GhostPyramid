@@ -1,20 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-    <title>Charades Game</title>
-</head>
+{% include "includes/head.html" %}
 <body>
-    <h1 class="page_title">Instructions</h1>
-    <p id='session_id'>Session Id: {{session_id}} </p>
-    <p id='instruction_para'>{{instructions}}</p>
-    
-    {% if actor %}
-    <form id='phrase_selection' action="/select_phrase/">
-        <input type="submit" id='phrase_selection_button'
-               name="continue" value="Continue to phrase selection">
-    </form>
-    {% else %}
-    <p id='please_wait_para'>Please wait for the actor to select a phrase</p>
-    {% endif %}
+    <div class="main">
+        <h1 class="page_title">Instructions</h1>
+        <p id='session_id'>Session Id: {{session_id}} </p>
+        <p id='instruction_para'>{{instructions}}</p>
+
+        {% if actor %}
+        <form id='phrase_selection' action="/select_phrase/">
+            <input type="submit" id='phrase_selection_button'
+                   class="standard_button"
+                   name="continue" value="Continue to phrase selection">
+        </form>
+        {% else %}
+        <p id='please_wait_para'>Please wait for the actor to select a phrase</p>
+        {% endif %}
+    </div>
 </body>
 </html>

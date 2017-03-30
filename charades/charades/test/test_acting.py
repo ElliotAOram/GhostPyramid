@@ -30,6 +30,23 @@ class ActingTests(StaticLiveServerTestCase):
         self.assertIsNotNone(page_title)
         self.browser.refresh()
 
+    def test_buttons_present_multi_word(self):
+        """
+        Tests that the buttons for word selection are present when the
+        phrase contains multiple words
+        """
+        for index in range(0, 2):
+            self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
+            button = self.browser.find_element_by_xpath( \
+                "//form[@id='word_selection']/input["+ str(index + 1) +"]")
+            self.assertEqual(str(index + 1), button.get_attribute("value"))
+            button.click()
+            self.assertTrue('current_word_index=' + str(index+1) in self.browser.current_url)
+            button = self.browser.find_element_by_xpath( \
+                "//form[@id='word_selection']/input["+ str(index + 1) +"]")
+            self.assertEqual(button.get_attribute("class"), "current_word_button")
+            self.browser.refresh()
+
     def tearDown(self):
         self.browser.refresh()
 

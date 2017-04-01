@@ -1,0 +1,22 @@
+{% include "includes/head.html" %}
+<body>
+    <div class="main">
+        <h1 class="page_title">Guess the phrase</h1>
+        <div id="guess_info">
+            <p>Topic : {{type}}</p>
+            <p>Total words: {{total_words}}</p>
+            <p>Current word: {{current_word}}</p>
+        </div>
+        <div id="guess_input">
+            <p></p>
+            <!--TODO replace hard coded urls-->
+            <form id="guess_form" action="/guess/" method="get">
+                <input id="guess_field" class="input_field" type="text" name="guess">
+                <br/><br/>
+                <input class="standard_button" id="guess_word" type="submit" name="user_type" value="Guess Word">
+                <input class="standard_button" id="guess_phrase" type="submit" name="user_type" value="Guess Phrase">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

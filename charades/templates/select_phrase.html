@@ -3,7 +3,7 @@
     <div class="main">
         <h1 class="page_title">Select Phrase</h1>
 
-        <form id='phrase_selection_form' action="/acting/" method="get">
+        <form id='phrase_selection_form' action="{% url 'acting' %}" method="get">
             {% for phrase in phrases %}
             <input type="submit" class="standard_button" name="phrase" value="{{ phrase }}">
             <br/>

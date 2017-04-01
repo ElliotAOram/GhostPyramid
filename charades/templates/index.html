@@ -6,7 +6,7 @@
         {% if warning not in '' %}
             <p class="warning">{{warning}}</p>
         {% endif %}
-        <form id="login_form" action="/instructions/" method="get">
+        <form id="login_form" action="{% url 'instructions' %}" method="get">
             Session ID: <input id="session_field" class="input_field" type="text" name="session_id">
             <br/><br/>
             <input class="standard_button" id="actor_button" type="submit" name="user_type" value="Actor">

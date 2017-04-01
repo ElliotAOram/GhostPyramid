@@ -47,8 +47,8 @@ class InstructionsTests(StaticLiveServerTestCase):
         """
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
-        phrase_sel_button = self.browser.find_element_by_id('continue_button')
-        phrase_sel_button.click()
+        continue_button = self.browser.find_element_by_id('continue_button')
+        continue_button.click()
         self.assertTrue(self.live_server_url + '/select_phrase/' in self.browser.current_url)
 
     def test_page_elements_viewer(self):

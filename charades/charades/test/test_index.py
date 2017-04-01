@@ -28,16 +28,11 @@ class IndexTests(StaticLiveServerTestCase):
         """
         self.browser.get('%s' % (self.live_server_url))
         self.assertTrue('Charades' in self.browser.title)
-        page_title = self.browser.find_element_by_class_name('page_title')
-        self.assertIsNotNone(page_title)
-        login_form = self.browser.find_element_by_id('login_form')
-        self.assertIsNotNone(login_form)
-        session_id = self.browser.find_element_by_name('session_id')
-        self.assertIsNotNone(session_id)
-        actor_button = self.browser.find_element_by_id('actor_button')
-        self.assertIsNotNone(actor_button)
-        viewer_button = self.browser.find_element_by_id('viewer_button')
-        self.assertIsNotNone(viewer_button)
+        self.assertIsNotNone(self.browser.find_element_by_class_name('page_title'))
+        self.assertIsNotNone(self.browser.find_element_by_id('login_form'))
+        self.assertIsNotNone(self.browser.find_element_by_name('session_id'))
+        self.assertIsNotNone(self.browser.find_element_by_id('actor_button'))
+        self.assertIsNotNone(self.browser.find_element_by_id('viewer_button'))
 
 
     def test_actor_button_valid_sess(self):
@@ -64,10 +59,9 @@ class IndexTests(StaticLiveServerTestCase):
         session_field.send_keys("incorrect-session_id")
         actor_button = self.browser.find_element_by_id('actor_button')
         actor_button.click()
-        current_url = self.browser.current_url
-        self.assertTrue('?invalid_session=True' in current_url)
-        warning_msg = self.browser.find_element_by_class_name('warning').text
-        self.assertEqual(warning_msg, invalid_session())
+        self.assertTrue('?invalid_session=True' in self.browser.current_url)
+        self.assertEqual(self.browser.find_element_by_class_name('warning').text,
+                         invalid_session())
 
     def test_viewer_button_valid_sess(self):
         """
@@ -92,15 +86,14 @@ class IndexTests(StaticLiveServerTestCase):
         session_field.send_keys("incorrect-session_id")
         viewer_button = self.browser.find_element_by_id('viewer_button')
         viewer_button.click()
-        current_url = self.browser.current_url
-        self.assertTrue('?invalid_session=True' in current_url)
-        warning_msg = self.browser.find_element_by_class_name('warning').text
-        self.assertEqual(warning_msg, invalid_session())
+        self.assertTrue('?invalid_session=True' in self.browser.current_url)
+        self.assertEqual(self.browser.find_element_by_class_name('warning').text,
+                         invalid_session())
 
     def test_login_failure(self):
         self.browser.get('%s%s' % (self.live_server_url, '/?no_actor=True'))
-        warning = self.browser.find_element_by_class_name('warning').text
-        self.assertEqual(warning, actor_none())
+        self.assertEqual(self.browser.find_element_by_class_name('warning').text,
+                         actor_none())
 
     # http://stackoverflow.com/questions/13243267/django-and-selenium-web-testing-error-errno-10054
     def tearDown(self):

@@ -15,7 +15,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from charades.views import index, instructions, select_phrase, acting, guess
+from charades.views import index, instructions, select_phrase, acting, guess, reset
 
 #pylint: disable=invalid-name
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^select_phrase/$', select_phrase, name='select_phrase'),
     url(r'^acting/$', acting, name='acting'),
     url(r'^(\d)/guess/$', guess, name='guess'),
+    url(r'^reset/$', reset),
 ]

@@ -18,7 +18,6 @@ class ActingTests(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser.get('%s%s' % (self.live_server_url, '/instructions/?session_id=BSW18&user_type=Actor'))
-        self.browser.refresh()
 
     def test_page_basic_page_elements(self):
         """
@@ -28,7 +27,6 @@ class ActingTests(StaticLiveServerTestCase):
         self.assertTrue('Charades' in self.browser.title)
         page_title = self.browser.find_element_by_class_name('page_title')
         self.assertIsNotNone(page_title)
-        self.browser.refresh()
 
     def test_buttons_present_multi_word(self):
         """
@@ -45,7 +43,6 @@ class ActingTests(StaticLiveServerTestCase):
             button = self.browser.find_element_by_xpath( \
                 "//form[@id='word_selection']/input["+ str(index + 1) +"]")
             self.assertEqual(button.get_attribute("class"), "current_word_button")
-            self.browser.refresh()
 
     def tearDown(self):
         self.browser.refresh()

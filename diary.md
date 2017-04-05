@@ -286,3 +286,27 @@
 * Change tests to Static to allow for css import on localhost
 * Add highlighting on current word button and word
 
+### 31/04/2017
+* Close and merge feature 9
+
+### 01/04/2017
+* Add session variable to store viewer number browser side
+* Add guess basic test
+* Improve Instructions.html and view
+* Use url functions over hard coded addresses
+
+## Week 10
+
+### 04/04/2017
+* Remove uneeded variable assignment in tests in favour of one-liners
+* Add the reset page
+
+### 06/04/2017
+* Implment game.py and tests
+* Add test redirect on login for too many actors
+* update tests to work with game.py implementation and use reset where required
+* Fix pylint issues for feature 10
+* Merge feature 10
+
+### 07/04/2017
+* Write up issues for feature 11/03/2017

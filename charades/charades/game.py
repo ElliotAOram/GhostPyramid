@@ -23,7 +23,7 @@ class Game(object):
         if self.actor is None:
             self.actor = actor
             return True
-        else: 
+        else:
             return False
 
     def add_viewer(self, viewer):

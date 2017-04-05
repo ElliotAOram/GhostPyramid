@@ -17,7 +17,8 @@ def actor_none():
            " Please ensure an Actor has signed in using the correct session key."
 
 def actor_already_defined():
-    return "There is already an actor for that session ID. Please log in as a Viewer to participate."
+    return "There is already an actor for that session ID. Please log in as a" +\
+           " Viewer to participate."
 
 def invalid_session():
     return "Invalid session ID has been provided."

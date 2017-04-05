@@ -2,18 +2,11 @@
 <body>
     <div class="main">
         <h1 class="page_title">Instructions</h1>
-        <p id='session_id'>Session Id: {{session_id}} </p>
         <p id='instruction_para'>{{instructions}}</p>
 
-        {% if actor %}
-        <form id='phrase_selection' action="/select_phrase/">
-            <input type="submit" id='phrase_selection_button'
-                   class="standard_button"
-                   name="continue" value="Continue to phrase selection">
+        <form id='instructions_cont' action="{{outbound_url}}">
+            <input type="submit" id='continue_button' class="standard_button" value="Continue">
         </form>
-        {% else %}
-        <p id='please_wait_para'>Please wait for the actor to select a phrase</p>
-        {% endif %}
     </div>
 </body>
 </html>

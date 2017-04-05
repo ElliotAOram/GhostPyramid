@@ -50,6 +50,8 @@ class SelectPhraseTests(StaticLiveServerTestCase):
 
     def tearDown(self):
         self.browser.refresh()
+        self.browser.get('%s%s' % (self.live_server_url, '/reset'))
+        self.browser.refresh()
 
     @classmethod
     def tearDownClass(cls):

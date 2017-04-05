@@ -43,14 +43,11 @@ def instructions(request):
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             if 'viewer_number' not in request.session:
-                print 'creating new viewer'
                 viewer_num = game.add_viewer(Viewer())
                 request.session['user_type'] = 'Viewer'
                 request.session['viewer_number'] = viewer_num
                 outbound_url = reverse('guess', args=(viewer_num,))
             else:
-                print 'viewer already exists'
-                print request.session['viewer_number']
                 outbound_url = reverse('guess', args=(request.session['viewer_number'],))
 
     return render(request, 'instructions.html', {'instructions' : instructions_str,

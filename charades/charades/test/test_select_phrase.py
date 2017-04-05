@@ -17,13 +17,15 @@ class SelectPhraseTests(StaticLiveServerTestCase):
         cls.browser.implicitly_wait(10)
 
     def setUp(self):
-        self.browser.get('%s%s' % (self.live_server_url, '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.refresh()
 
     def test_generic_page_elements(self):
         self.browser.get('%s%s' % (self.live_server_url, '/select_phrase/'))
         self.assertTrue('Charades' in self.browser.title)
-        self.assertEqual('Select Phrase', self.browser.find_element_by_class_name('page_title').text)
+        self.assertEqual('Select Phrase',
+                         self.browser.find_element_by_class_name('page_title').text)
         self.assertIsNotNone(self.browser.find_element_by_id('phrase_selection_form'))
 
     def test_phrases_are_not_same(self):

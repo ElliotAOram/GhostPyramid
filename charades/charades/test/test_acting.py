@@ -17,7 +17,8 @@ class ActingTests(StaticLiveServerTestCase):
         cls.browser.implicitly_wait(10)
 
     def setUp(self):
-        self.browser.get('%s%s' % (self.live_server_url, '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
 
     def test_page_basic_page_elements(self):
         """

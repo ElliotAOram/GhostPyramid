@@ -35,7 +35,7 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertIsNotNone(self.browser.find_element_by_id('guess_input'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_form'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_field'))
-        self.assertEqual('Guess Word', 
+        self.assertEqual('Guess Word',
                          self.browser.find_element_by_id('guess_word').get_attribute("value"))
         self.assertEqual('Guess Phrase',
                          self.browser.find_element_by_id('guess_phrase').get_attribute("value"))

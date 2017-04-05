@@ -8,7 +8,7 @@ def actor_instructions():
 
 def viewer_instructions():
     return "After the Actor has selected a phrase, you will have a limited time to guess it." +\
-           " Look at the hologram infront of you to see what the actor is doing." +\
+           " Look at the hologram in front of you to see what the actor is doing." +\
            " The faster you guess the phrase the more points you get." +\
            " You will be given some information about the current word or phrase to help you guess."
 

@@ -21,6 +21,10 @@ class TestGuess(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+Put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
+        self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.refresh()
 
@@ -32,6 +36,12 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertEqual('Guess the phrase',
                          self.browser.find_element_by_class_name('page_title').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_info'))
+        self.assertEqual('Topic: Sport',
+                         self.browser.find_element_by_id('topic').text,)
+        self.assertEqual('Total words: 2',
+                         self.browser.find_element_by_id('total_words').text)
+        self.assertEqual('Current word: 1',
+                         self.browser.find_element_by_id('current_word').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_input'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_form'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_field'))

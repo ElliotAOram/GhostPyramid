@@ -25,10 +25,13 @@ def check_phrase(phrase):
     """
     Ensures that the phrase is known and valid
     @param the phrase to check
-    @return true is valid
+    @return category if valid else return false
     """
-    all_phrases = ANIMALS + SPORTS
-    return phrase.upper() in [x.upper() for x in all_phrases]
+    if phrase.upper() in [x.upper() for x in ANIMALS]:
+        return 'Animal'
+    if phrase.upper() in [x.upper() for x in SPORTS]:
+        return 'Sport'
+    return False
 
 def get_phrases_from_type(num_of_items, list_type):
     """

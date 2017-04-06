@@ -45,16 +45,16 @@ class TestPhrases(unittest.TestCase):
                 self.assertNotEqual(current_phrase, next_phrase)
 
     def test_check_valid_phrase(self):
-        self.assertTrue(check_phrase('Tennis'))
+        self.assertEqual('Sport', check_phrase('Tennis'))
 
     def test_check_valid_phrase_lower(self):
-        self.assertTrue(check_phrase('tennis'))
+        self.assertEqual('Sport', check_phrase('tennis'))
 
     def test_check_valid_phrase_upper(self):
-        self.assertTrue(check_phrase('TENNIS'))
+        self.assertEqual('Sport', check_phrase('TENNIS'))
 
     def test_check_valid_mixed_case(self):
-        self.assertTrue(check_phrase('TeNNiS'))
+        self.assertEqual('Sport', check_phrase('TeNNiS'))
 
     def test_check_invalid_phrase(self):
         self.assertFalse(check_phrase('Test phrase'))

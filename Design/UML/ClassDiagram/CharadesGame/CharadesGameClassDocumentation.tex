@@ -5,7 +5,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{Version 1.2.1}
+\lhead{Version 1.3.0}
 \rhead{Elliot Oram}
 \rfoot{\thepage}
 
@@ -31,7 +31,7 @@ This is an additional architecture embedded into the Django website. These class
 \subsubsection{Variables}
 \begin{itemize}
 
-	\item \textbf{current\_phrase}: Contains the current phrase that the Actor is attempting to act. Type: String.
+	\item \textbf{current\_phrase}: Contains the current phrase that the Actor is attempting to act. Type: string.
 	
 	\item \textbf{current\_phrase\_word\_list}: A list of the words within the phrase. This will be created using the python split() function which separates a string by spaces. This variable will save time having to look up the word each time to display it. Type: string list.
 
@@ -41,6 +41,8 @@ This is an additional architecture embedded into the Django website. These class
 	
 	\item \textbf{completed\_words}: A list of integers representing the words that have been completed. A word is completed when it correctly guessed or time has elapsed. Type: int list.
 	
+	\item \textbf{phrase\_genre}: A string representing the genre of the current phrase e.g. 'Sport'. Type: string.
+	
 \end{itemize}
 
 \subsubsection{Functions}
@@ -49,7 +51,7 @@ This is an additional architecture embedded into the Django website. These class
 
 	\item \textbf{\_\_init\_\_}: Resets the variables to default values.
 
-	\item \textbf{set\_phrase}: updates the phrase variable with a new string.
+	\item \textbf{set\_phrase}: updates the phrase variable with a new string. Updates the phrase word list with a with each word in the phrase. Updates the genre of the phrase.
 	
 	\item \textbf{set\_word}: updates the word variable with a  new int.
 	
@@ -113,7 +115,7 @@ This is an additional architecture embedded into the Django website. These class
 	
 	\item \textbf{get\_phrase\_from\_type}: A function that get a number of phrases from a type (string list of phrases). The int is the number to retrieve, the string is the type to get. The string are returned in a string list from the function. The function will raise a RuntimeError if the type is unknown (this will be handled neatly in the web interface upon access).
 	
-	\item \textbf{check\_phrase}: Ensures that a string is present in one of the lists of phrases. This is done by concatenating all the lists and checking the input string is present. Returns a boolean of if the string is present in the list.
+	\item \textbf{check\_phrase}: Ensures that a string is present in one of the lists of phrases. This is done by concatenating all the lists and checking the input string is present. Returns a string of the name of the list that the string is present in or False if the string could not be found.
 	
 	\item \textbf{find\_list}: Takes a string input and return the relevant list matching that string. This is used as a private function for the get\_phrase\_from\_type function.
 	

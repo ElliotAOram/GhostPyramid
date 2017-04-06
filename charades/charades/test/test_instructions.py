@@ -65,6 +65,9 @@ class InstructionsTests(StaticLiveServerTestCase):
         Test the viewer instance of the continue button leads to the guess page
         """
         self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
+        self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         continue_button = self.browser.find_element_by_id('continue_button')
         continue_button.click()

@@ -27,6 +27,8 @@ class Actor(object):
         @param genre    :: The topic of the phrase e.g. Sport
         """
         self.current_phrase = phrase
+        if len(phrase.split()) == 1:
+            self.current_word_index = 0
         self.phrase_genre = genre
         self.current_phrase_word_list = phrase.split()
 

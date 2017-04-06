@@ -50,6 +50,19 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertEqual('Guess Phrase',
                          self.browser.find_element_by_id('guess_phrase').get_attribute("value"))
 
+    def test_single_word_phrase(self):
+        """
+        Test that the current word is not displayed when the phrase only has one word
+        """
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
+        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        self.assertRaises(self.browser.find_element_by_id('current_word'))
+
     def test_multi_user(self):
         """
         Test that when two users sign in, they have different urls in guess.html

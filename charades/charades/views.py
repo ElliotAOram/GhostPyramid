@@ -59,7 +59,10 @@ def instructions(request):
                                                  'outbound_url' : outbound_url})
 
 def guess(request, _):
-    return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number']})
+    return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
+                                          'type' : GAME.actor.phrase_genre,
+                                          'total_words' : len(GAME.actor.current_phrase_word_list),
+                                          'current_word' : GAME.actor.current_word_index + 1})
 
 def select_phrase(request):
     """
@@ -83,8 +86,9 @@ def acting(request):
         phrase = request.GET['phrase']
         if "+" in phrase:
             phrase = phrase.replace("+", " ")
-        if check_phrase(phrase):
-            GAME.actor.set_phrase(phrase)
+        genre = check_phrase(phrase)
+        if genre is not None:
+            GAME.actor.set_phrase(phrase, genre)
         else:
             raise RuntimeError("Phrase was not recognised as valid.")
 

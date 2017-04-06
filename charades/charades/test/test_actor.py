@@ -20,20 +20,21 @@ class TestActor(unittest.TestCase):
         self.assertEqual(self.actor_obj.current_phrase, None)
 
     def test_set_phrase(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.assertEqual(self.actor_obj.current_phrase, 'test phrase')
         self.assertEqual(self.actor_obj.current_phrase_word_list, ['test', 'phrase'])
+        self.assertEqual(self.actor_obj.phrase_genre, 'test genre')
 
     def test_get_current_word(self):
         self.assertEqual(self.actor_obj.current_word, None)
 
     def test_set_current_word(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.actor_obj.set_word(1)
         self.assertEqual(self.actor_obj.current_word, 'phrase')
 
     def test_complete_word(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()
         self.assertEquals(self.actor_obj.completed_words, [1])
@@ -43,7 +44,7 @@ class TestActor(unittest.TestCase):
         Ensures that the complete_word function makes the current_word
         variable None after a successful completion.
         """
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()
         self.assertIsNone(self.actor_obj.current_word)
@@ -51,7 +52,7 @@ class TestActor(unittest.TestCase):
     ###=======================================Failure cases==================================###
 
     def test_out_of_scope_set_word(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.assertRaises(RuntimeError,
                           self.actor_obj.set_word,
                           2)
@@ -66,12 +67,12 @@ class TestActor(unittest.TestCase):
                           self.actor_obj.complete_word)
 
     def test_comp_word_no_current_word(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.assertRaises(RuntimeError,
                           self.actor_obj.complete_word)
 
     def test_set_word_already_complete(self):
-        self.actor_obj.set_phrase('test phrase')
+        self.actor_obj.set_phrase('test phrase', 'test genre')
         self.actor_obj.set_word(1)
         self.actor_obj.complete_word()
         self.assertRaises(RuntimeError,

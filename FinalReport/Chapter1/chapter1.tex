@@ -12,13 +12,23 @@ This section should discuss your preparation for the project, including backgrou
 \end {itemize}
 
 \section{Background}
+\subsection{Pepper's Ghost Pyramid}
 What was your background preparation for the project? What similar systems did you assess? What was your motivation and interest in this project?
 
 The Pepper's Ghost technique was originally used for stage and theatre productions in the Victorian era to display holographic illusions to the audience. The technique, discovered by Dr. Henry Pepper, was first used in theatre in xxxx. The holograms being visible is reliant on lighting and the viewer being positioned correctly relative to a transparent surface. Figure 1 shows a basic example of how the technique produces holographic illusions. The object of interest is the focus of the lighting and, in this implementation, is out of the line of the sight of the audience. The light bounces from the object of interest and travels radially until it makes contact with the surrounding surfaces. The majority is absorbed by the surrounding black walls, but the remainder will reach the angled transparent plane. The plane is angled at a 45 degree offset to the object of interest. The plane manipulates the light particles, by refraction, to display them at a right angle to their angle of entry. The audience are positioned at 90 degrees from the object of interest and therefore, when the light is refracted, they see the object of interest appear in front of them. 
 
-This technique has been used in different applications in following years such as [arcade machine] but it has had a more recent resurgence as an impactful display media in computer visualisation. Whilst the technique still uses Henry Pepper's original concept, it has been modified to display the hologram from multiple angles. This technique is now more commonly known as the Pepper's Ghost pyramid as it uses a transparent pyramid rather than a single plane. Figure 2 shows an example of a Pepper's Ghost pyramid. The pyramid is square based, made from a transparent material (such as perspex or clear acrylic) and is open at both the top and bottom. The technique for displaying holograms differs with the object of interest now being an image or video displayed on a screen. Furthermore, to create an illusion from all sides of the pyramid, four images are required (one for each side of the pyramid). This  means that the 2D projection of the image can be seen from any side of the pyramid. Figure 3 shows this in more detail. 
+This technique has been used in different some differing applications such as [arcade machine] but it has had a more recent resurgence as an impactful display media in computer visualisation. Whilst the technique still uses Henry Pepper's original concept, it has been modified to display the hologram from multiple angles. This technique is now more commonly known as the Pepper's Ghost pyramid as it uses a transparent pyramid rather than a single plane. Figure 2 shows an example of a Pepper's Ghost pyramid. The pyramid is square based, made from a transparent material (such as perspex or clear acrylic) and is open at both the top and bottom. The technique for displaying holograms differs with the object of interest now being an image or video displayed on a screen. Furthermore, to create an illusion from all sides of the pyramid, four images are required (one for each side of the pyramid). This  means that the 2D projection of the image can be seen from any side of the pyramid. Figure 3 shows this in more detail. 
 
-Whilst the pyramid implementation is an improvement on Pepper's original design it still suffers from the some of the same limitations of the original. The original design is reliant on the viewer looking directly at the transparent plane which makes it both vertically and horizontally intolerant for the viewer. The pyramid implementation means that the hologram is visible from four perspectives (in front, behind, left and right). Whilst this is an improvement, the hologram is not easily viewed from the edges of the pyramid and does not affect the vertical intolerance as viewing from above is not possible. Some concepts for a spherical design (instead of a pyramid) are proposed to resolve the horizontal intolerance completely. 
+\textit{Whilst the pyramid implementation is an improvement on Pepper's original design it still suffers from the some of the same limitations of the original. The original design is reliant on the viewer looking directly at the transparent plane which makes it both vertically and horizontally intolerant for the viewer. The pyramid implementation means that the hologram is visible from four perspectives (in front, behind, left and right). Whilst this is an improvement, the hologram is not easily viewed from the edges of the pyramid and does not affect the vertical intolerance as viewing from above is not possible. Some concepts for a spherical design (instead of a pyramid) are proposed to resolve the horizontal intolerance completely.}
+
+\subsection{Charades game}
+\textit{TODO}
+
+
+\subsection{Motivation and Justification}
+This project is appealing due to the uniqueness of the technology being used to produce it. Whilst the charades game can be considered as a generic system, the creation of real-time holograms is not heavily developed. Many examples of video footage that can be used with the Pepper's Ghost Pyramid are readily available online, however there are far fewer implementation that do real time manipulation for this purpose.
+
+Further to the project being interesting, it is designed with outreach events in mind. Already having an intended purpose means that it can be used as a helpful teaching tool for children to learn how basic physics and computer science can be used to create an interesting and engaging visual display. In addition, the charades game and real-time hologram system will help to further engage the audience with technique and visualise an impactful application of the technique. 
 
 \section{Analysis}
 Taking into account the problem and what you learned from the background work, what was your analysis of the problem? How did your analysis help to decompose the problem into the main tasks that you would undertake? Were there alternative approaches? Why did you choose one approach compared to the alternatives? 
@@ -29,6 +39,29 @@ In most cases, the agreed objectives or requirements will be the result of a com
 
 As mentioned in the lectures, think about possible security issues for the project topic. Whilst these might not be relevant for all projects, do consider if there are relevant for your project. Where there are relevant security issues, discuss how they will this affect the work that you are doing. Carry forward this discussion into relevant areas for design, implementation and testing.
 
-\section{Process}
-You need to describe briefly the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used. It is possible that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
 
+
+\section{Process}
+The development of this project followed the Feature Driven Development (FDD) plan driven methodology. FDD is normally considered for larger projects as it provides a framework for distributed development. By dividing developers into smaller teams, FDD allows those teams to tackle features one at a time in parallel. Furthermore, the up front planning stage is generally indicative of projects that are more stable as, whilst it can be adapted throughout the process, the overall model is normally only added to, and the core architecture remains static.
+
+The steps required to complete this project are well defined and therefore would be well suited to having up front design. Furthermore, FDD encourages continuous integration (CI) which offers  a good way to produce a functional prototype at various stages of the project. CI will be a significant aid for the mid project review and potentially testing a prototype with users at the 2017 Aberystwyth University science week event.
+
+\subsection{Single Person FDD adaptation}
+To successfully use FDD for this project, several adaptations to the normal processes of the methodology will need to be made. The most notable is the abolition of the developer teams in favour of a single developer. This requires the developer to assume multiple roles throughout the development process and at each different stage.
+
+\subsubsection{Develop an Overall Model}
+Initially, a Domain Expert (Customer) is required to aide in the development of the overall model and feature creation. In this context, the project supervisor can fulfil this role and the developer shall act as both the Chief Programmer and Chief Architect. For this project, the Domain specific language is shared by both the Domain Expert and the developer.
+
+\subsubsection{Build a Feature list}
+The feature list produced will form the requirements list for the project. This will be generated from discussion between the developer and the Domain Expert and then when complete will be verified by both parties.
+
+\subsubsection{Plan by Feature}
+Steps such as establishing developer teams and scheduling developer teams time throughout the project no longer exist. In their place, the features can be given priorities that will aide in time scheduling and development order. Once the order is created, the features can be assigned to separate iterations.
+
+\subsubsection{Design by Feature}
+Once a feature is selected, that feature will be exhaustively designed taking into consideration the functions required to fulfil the feature. The project uses GitHub for version control and an issue will be created which corresponds to a feature. The first action in an issue will be to complete a design of the feature and update the overall design as required.
+
+\subsubsection{Implement by Feature}
+Features will be implemented in the same GitHub issue as the design work. The project is being developed using TDD and therefore, the test suite will be updated before any code is implemented. Once the tests are created, an implementation is then added and this must pass the tests to be acceptable. Whilst the tests can be run locally, there will also be a Jenkins service for continuous integration to run the full test suite before it can be merged with the master branch.  
+
+To allow for a code review/walk through, completed features are to be left as open pull requests for a day before reviewing the code to ensure good quality code is created for each feature.

@@ -34,8 +34,15 @@ def instructions(request):
     global GAME
     if GAME is None:
         GAME = Game()
+
     instructions_str = ''
     outbound_url = ''
+    is_actor = False
+    phrase_ready = False
+    if GAME.actor is not None:
+        if GAME.actor.current_phrase is not None:
+            phrase_ready = True
+
     if 'user_type' in request.GET:
         user = request.GET['user_type']
         if user == 'Actor':
@@ -45,6 +52,7 @@ def instructions(request):
                 return redirect('/?actor_already')
             request.session['user_type'] = 'Actor'
             outbound_url = reverse('select_phrase')
+            is_actor = True
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             if 'viewer_number' not in request.session:
@@ -56,7 +64,9 @@ def instructions(request):
                 outbound_url = reverse('guess', args=(request.session['viewer_number'],))
 
     return render(request, 'instructions.html', {'instructions' : instructions_str,
-                                                 'outbound_url' : outbound_url})
+                                                 'outbound_url' : outbound_url,
+                                                 'is_actor': is_actor,
+                                                 'phrase_ready' : phrase_ready})
 
 def guess(request, _):
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],

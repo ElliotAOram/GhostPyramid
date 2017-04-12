@@ -309,4 +309,26 @@
 * Merge feature 10
 
 ### 07/04/2017
-* Write up issues for feature 11/03/2017
+* Write up issues for feature 11
+* Add genre information to design 
+* Implement tests for genre in guess.html
+* Add code to pass tests. 
+* Add code to remove current word info when phrase is one word.
+* I should make it so the button for the viewer does not appear until the actor has selected a phrase
+
+## Week 11
+
+### 10/04/2017
+* first draft for acknowledgement and abstract
+
+### 11/04/2017
+* first draft for background chapter(almost complete)
+
+### 12/04/2017
+* Only add continue button when actor has selected a word
+* Update tests for this 
+* settled on polling functionality to find out when the viewer button should be displayed
+* Need to work out how to call python model function from with javascript in template
+  * Polling function:
+    * http://stackoverflow.com/questions/20820115/how-to-automatically-fetch-new-data-from-server
+    * http://stackoverflow.com/questions/8106230/django-refresh-page-if-change-data-by-other-user    

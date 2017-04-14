@@ -68,9 +68,10 @@ def instructions(request):
                                                  'phrase_ready' : phrase_ready})
 
 def guess(request, viewer_num):
-    guess = ''
+    user_guess = ''
     if 'guess' in request.GET:
-        guess = request.GET['guess']
+        user_guess = request.GET['guess']
+        print user_guess # Will be used to update correct guess_api
     outbound_url = reverse('guess', args=(viewer_num,))
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,

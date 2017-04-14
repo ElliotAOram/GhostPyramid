@@ -32,7 +32,7 @@ class TestGuess(StaticLiveServerTestCase):
         Test that the expected generic elements are on the guess.html page
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                         '/instructions/?session_id=BSW18&user_type=Viewer'))
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
         self.assertEqual('Guess the phrase',
                          self.browser.find_element_by_class_name('page_title').text)
@@ -72,7 +72,7 @@ class TestGuess(StaticLiveServerTestCase):
         Test that when two users sign in, they have different urls in guess.html
         """
         self.browser.get('%s%s' % (self.live_server_url,
-                         '/instructions/?session_id=BSW18&user_type=Viewer'))
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.find_element_by_id('continue_button').click()
         self.browser.refresh()
         first_url = self.browser.current_url

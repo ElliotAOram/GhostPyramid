@@ -68,6 +68,9 @@ def instructions(request):
                                                  'phrase_ready' : phrase_ready})
 
 def guess(request, viewer_num):
+    """
+    The controller for the viewer guess.html page
+    """
     user_guess = ''
     if 'guess' in request.GET:
         user_guess = request.GET['guess']

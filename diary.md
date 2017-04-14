@@ -345,3 +345,6 @@
 * Implement API in instructions.html
 * Feature 12: Add handle for GET request of current guess of word
   * Test, implementation, review and merge complete
+* Feature 13: Add handle for GET request of current guess of phrase
+  * Add conditional statements for phrase vs. word
+  * Test, implementation, review and merge complete

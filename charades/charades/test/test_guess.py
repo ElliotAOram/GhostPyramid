@@ -25,14 +25,14 @@ class TestGuess(StaticLiveServerTestCase):
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+Put'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
-        self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.refresh()
 
-    def xtest_generic_page_elements(self):
+    def test_generic_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
         self.assertEqual('Guess the phrase',
                          self.browser.find_element_by_class_name('page_title').text)
@@ -55,24 +55,24 @@ class TestGuess(StaticLiveServerTestCase):
         """
         Test that the current word is not displayed when the phrase only has one word
         """
-        self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
-        #self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
         try:
             self.browser.find_element_by_id('current_word')
+            self.browser.find_element_by_id('guess_phrase')
         except NoSuchElementException:
             pass
         else:
             self.fail('No exception found when search for current word')
 
-    def xtest_multi_user(self):
+    def test_two_users(self):
         """
         Test that when two users sign in, they have different urls in guess.html
         """
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.find_element_by_id('continue_button').click()
         self.browser.refresh()
         first_url = self.browser.current_url
@@ -91,6 +91,7 @@ class TestGuess(StaticLiveServerTestCase):
     # http://stackoverflow.com/questions/28934533/python-selenium-how-to-check-whether-the-webdriver-did-quit
     def tearDown(self):
         try:
+            self.browser.get('%s%s' % (self.live_server_url, '/reset'))
             self.browser.refresh()
         except (socket.error, httplib.CannotSendRequest):
             return True

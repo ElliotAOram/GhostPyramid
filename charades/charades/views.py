@@ -67,11 +67,17 @@ def instructions(request):
                                                  'is_actor': is_actor,
                                                  'phrase_ready' : phrase_ready})
 
-def guess(request, _):
+def guess(request, viewer_num):
+    user_guess = ''
+    if 'guess' in request.GET:
+        user_guess = request.GET['guess']
+        print user_guess # Will be used to update correct guess_api
+    outbound_url = reverse('guess', args=(viewer_num,))
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
-                                          'current_word' : GAME.actor.current_word_index + 1})
+                                          'current_word' : GAME.actor.current_word_index + 1,
+                                          'outbound_url' : outbound_url})
 
 def select_phrase(request):
     """

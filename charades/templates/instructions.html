@@ -1,4 +1,18 @@
 {% include "includes/head.html" %}
+{% if is_actor == False or phrase_ready == False%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+setInterval(function(){
+    $.get( "/api/phrase_ready", function( data ) {
+        if (data == "True") {
+            location.reload(true);
+        }
+    });
+    poll();
+}, 2500);
+</script>
+{% endif %}
+
 <body>
     <div class="main">
         <h1 class="page_title">Instructions</h1>

@@ -66,6 +66,24 @@ class TestGuess(StaticLiveServerTestCase):
             pass
         else:
             self.fail('No exception found when search for current word')
+        guess_field = self.browser.find_element_by_id('guess_field')
+        guess_field.send_keys("test")
+        guess_word_button = self.browser.find_element_by_id('guess_word')
+        guess_word_button.click()
+        self.assertTrue('guess=test' in self.browser.current_url)
+        self.assertTrue('guess_type=Guess+Word' in self.browser.current_url)
+
+    def test_multi_word_phrase(self):
+        """
+        Test that the multi word interface is correct and adds
+        the correct information to GET
+        """
+        guess_field = self.browser.find_element_by_id('guess_field')
+        guess_field.send_keys("test")
+        guess_word_button = self.browser.find_element_by_id('guess_phrase')
+        guess_word_button.click()
+        self.assertTrue('guess=test' in self.browser.current_url)
+        self.assertTrue('guess_type=Guess+Phrase' in self.browser.current_url)
 
     def test_two_users(self):
         """

@@ -29,7 +29,7 @@ class TestGuess(StaticLiveServerTestCase):
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.refresh()
 
-    def xtest_generic_page_elements(self):
+    def test_generic_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """
@@ -58,18 +58,18 @@ class TestGuess(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
-        #self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
         try:
             self.browser.find_element_by_id('current_word')
+            self.browser.find_element_by_id('guess_phrase')
         except NoSuchElementException:
             pass
         else:
             self.fail('No exception found when search for current word')
 
-    def xtest_multi_user(self):
+    def test_multi_user(self):
         """
         Test that when two users sign in, they have different urls in guess.html
         """

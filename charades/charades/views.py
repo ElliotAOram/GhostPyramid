@@ -40,8 +40,7 @@ def instructions(request):
     is_actor = False
     phrase_ready = False
     if GAME.actor is not None:
-        if GAME.actor.current_phrase is not None:
-            phrase_ready = True
+        phrase_ready = GAME.actor.phrase_ready()
 
     if 'user_type' in request.GET:
         user = request.GET['user_type']
@@ -134,3 +133,15 @@ def reset(request):
     if 'viewer_number' in request.session:
         del request.session['viewer_number']
     return redirect('/')
+
+
+### ============================ API =================================== ###
+def phrase_ready_api(request):
+    """
+    Asserts if the phrase is ready. Only intended for api access
+    """
+    phrase_ready = False
+    if GAME is not None:
+        if GAME.actor is not None:
+            phrase_ready = GAME.actor.phrase_ready()
+    return render(request, 'phrase_ready.html', {'phrase_ready' : phrase_ready})

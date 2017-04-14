@@ -72,6 +72,16 @@ def guess(request, viewer_num):
     if 'guess' in request.GET:
         user_guess = request.GET['guess']
         print user_guess # Will be used to update correct guess_api
+    if 'guess_type' in request.GET:
+        if request.GET['guess_type'] == 'Guess Word':
+            # If correct, update correct_guess.html api with 'Word'
+            if user_guess.upper() == GAME.actor.current_word.upper():
+                print 'Word guessed correctly'
+        if request.GET['guess_type'] == 'Guess Phrase':
+            # If correct, update correct_guess.html api with 'Phrase'
+            if user_guess.upper() == GAME.actor.current_phrase.upper():
+                print 'Phrase guessed correctly'
+
     outbound_url = reverse('guess', args=(viewer_num,))
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,

@@ -49,6 +49,22 @@ class TestActor(unittest.TestCase):
         self.actor_obj.complete_word()
         self.assertIsNone(self.actor_obj.current_word)
 
+    def test_phrase_ready_single_true(self):
+        """
+        Ensure that true is return for valid single word state
+        """
+        self.actor_obj.set_phrase('test', 'test genre')
+        self.assertTrue(self.actor_obj.phrase_ready())
+
+    def test_phrase_ready_multi_true(self):
+        """
+        Ensures that true is returned for valid multiword state
+        """
+        self.actor_obj.set_phrase('test phrase', 'test genre')
+        self.actor_obj.set_word(0)
+        self.assertTrue(self.actor_obj.phrase_ready())
+
+
     ###=======================================Failure cases==================================###
 
     def test_out_of_scope_set_word(self):
@@ -78,6 +94,28 @@ class TestActor(unittest.TestCase):
         self.assertRaises(RuntimeError,
                           self.actor_obj.set_word,
                           1)
+
+    def test_phrase_ready_no_phrase(self):
+        """
+        Ensures false is returned with no phrase selected
+        """
+        self.assertFalse(self.actor_obj.phrase_ready())
+
+    def test_phrase_ready_no_word(self):
+        """
+        Ensure false is returned with no word selected from phrase
+        """
+        self.actor_obj.set_phrase('test phrase', 'test genre')
+        self.assertFalse(self.actor_obj.phrase_ready())
+
+    def test_phrase_ready_no_word_index(self):
+        """
+        Ensure false is returned with no current_word_index
+        (should not be a reachable state but is being checked for clarity)
+        """
+        self.actor_obj.set_phrase('test phrase', 'test genre')
+        self.actor_obj.current_word = 'test'
+        self.assertFalse(self.actor_obj.phrase_ready())
 
     def tearDown(self):
         del self.actor_obj

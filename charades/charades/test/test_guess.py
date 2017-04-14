@@ -78,6 +78,9 @@ class TestGuess(StaticLiveServerTestCase):
         Test that the multi word interface is correct and adds
         the correct information to GET
         """
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
+        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
         guess_field = self.browser.find_element_by_id('guess_field')
         guess_field.send_keys("test")
         guess_word_button = self.browser.find_element_by_id('guess_phrase')

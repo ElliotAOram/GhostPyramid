@@ -1,10 +1,10 @@
 {% include "includes/head.html" %}
-{% if is_actor == False or phrase_ready == False%}
+{% if is_actor == False and phrase_ready == False %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script>
 setInterval(function(){
     $.get( "/api/phrase_ready", function( data ) {
-        if (data == "True") {
+        if (data.includes("True")) {
             location.reload(true);
         }
     });

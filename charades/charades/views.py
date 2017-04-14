@@ -34,8 +34,14 @@ def instructions(request):
     global GAME
     if GAME is None:
         GAME = Game()
+
     instructions_str = ''
     outbound_url = ''
+    is_actor = False
+    phrase_ready = False
+    if GAME.actor is not None:
+        phrase_ready = GAME.actor.phrase_ready()
+
     if 'user_type' in request.GET:
         user = request.GET['user_type']
         if user == 'Actor':
@@ -45,6 +51,7 @@ def instructions(request):
                 return redirect('/?actor_already')
             request.session['user_type'] = 'Actor'
             outbound_url = reverse('select_phrase')
+            is_actor = True
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             if 'viewer_number' not in request.session:
@@ -56,10 +63,15 @@ def instructions(request):
                 outbound_url = reverse('guess', args=(request.session['viewer_number'],))
 
     return render(request, 'instructions.html', {'instructions' : instructions_str,
-                                                 'outbound_url' : outbound_url})
+                                                 'outbound_url' : outbound_url,
+                                                 'is_actor': is_actor,
+                                                 'phrase_ready' : phrase_ready})
 
 def guess(request, _):
-    return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number']})
+    return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
+                                          'type' : GAME.actor.phrase_genre,
+                                          'total_words' : len(GAME.actor.current_phrase_word_list),
+                                          'current_word' : GAME.actor.current_word_index + 1})
 
 def select_phrase(request):
     """
@@ -83,8 +95,9 @@ def acting(request):
         phrase = request.GET['phrase']
         if "+" in phrase:
             phrase = phrase.replace("+", " ")
-        if check_phrase(phrase):
-            GAME.actor.set_phrase(phrase)
+        genre = check_phrase(phrase)
+        if genre is not None:
+            GAME.actor.set_phrase(phrase, genre)
         else:
             raise RuntimeError("Phrase was not recognised as valid.")
 
@@ -120,3 +133,15 @@ def reset(request):
     if 'viewer_number' in request.session:
         del request.session['viewer_number']
     return redirect('/')
+
+
+### ============================ API =================================== ###
+def phrase_ready_api(request):
+    """
+    Asserts if the phrase is ready. Only intended for api access
+    """
+    phrase_ready = False
+    if GAME is not None:
+        if GAME.actor is not None:
+            phrase_ready = GAME.actor.phrase_ready()
+    return render(request, 'phrase_ready.html', {'phrase_ready' : phrase_ready})

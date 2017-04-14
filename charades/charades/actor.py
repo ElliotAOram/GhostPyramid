@@ -10,6 +10,7 @@ class Actor(object):
     current_word = None
     current_word_index = None
     completed_words = []
+    phrase_genre = None
 
     def __init__(self):
         self.current_phrase = None
@@ -17,13 +18,19 @@ class Actor(object):
         self.current_word = None
         self.current_word_index = None
         self.completed_words = []
+        self.phrase_genre = None
 
-    def set_phrase(self, phrase):
+    def set_phrase(self, phrase, genre):
         """
         sets the current phrase and splits the words into a list
         @param phrase   :: The new phrase to use
+        @param genre    :: The topic of the phrase e.g. Sport
         """
         self.current_phrase = phrase
+        if len(phrase.split()) == 1:
+            self.current_word_index = 0
+            self.current_word = phrase
+        self.phrase_genre = genre
         self.current_phrase_word_list = phrase.split()
 
     def set_word(self, word_index):
@@ -54,3 +61,15 @@ class Actor(object):
         if self.current_word_index not in self.completed_words:
             self.completed_words.append(self.current_word_index)
             self.current_word = None
+            self.current_word_index = None
+
+    def phrase_ready(self):
+        """
+        checks if the phrase and word have been selected
+        @return True if phr\\se is in a guessable state
+        """
+        if self.current_phrase is not None:
+            if self.current_word is not None:
+                if self.current_word_index is not None:
+                    return True
+        return False

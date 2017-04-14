@@ -3,9 +3,12 @@
     <div class="main">
         <h1 class="page_title">Guess the phrase</h1>
         <div id="guess_info">
-            <p>Topic : {{type}}</p>
-            <p>Total words: {{total_words}}</p>
-            <p>Current word: {{current_word}}</p>
+            <p id='topic'>Topic: {{type}}</p>
+            <p id='total_words'>Total words: {{total_words}}</p>
+            {% if total_words > 1 %}
+            <p id='current_word'>Current word: {{current_word}}</p>
+            {% endif %}
+
         </div>
         <div id="guess_input">
             <p></p>

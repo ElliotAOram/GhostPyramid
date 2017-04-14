@@ -3,6 +3,7 @@ import httplib
 import socket
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 class TestGuess(StaticLiveServerTestCase):
@@ -21,10 +22,14 @@ class TestGuess(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+Put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
+        self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.refresh()
 
-    def test_generic_page_elements(self):
+    def xtest_generic_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """
@@ -32,6 +37,12 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertEqual('Guess the phrase',
                          self.browser.find_element_by_class_name('page_title').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_info'))
+        self.assertEqual('Topic: Sport',
+                         self.browser.find_element_by_id('topic').text,)
+        self.assertEqual('Total words: 2',
+                         self.browser.find_element_by_id('total_words').text)
+        self.assertEqual('Current word: 1',
+                         self.browser.find_element_by_id('current_word').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_input'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_form'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_field'))
@@ -40,7 +51,25 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertEqual('Guess Phrase',
                          self.browser.find_element_by_id('guess_phrase').get_attribute("value"))
 
-    def test_multi_user(self):
+    def test_single_word_phrase(self):
+        """
+        Test that the current word is not displayed when the phrase only has one word
+        """
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Actor'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
+        #self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
+        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        try:
+            self.browser.find_element_by_id('current_word')
+        except NoSuchElementException:
+            pass
+        else:
+            self.fail('No exception found when search for current word')
+
+    def xtest_multi_user(self):
         """
         Test that when two users sign in, they have different urls in guess.html
         """

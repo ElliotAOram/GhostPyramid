@@ -343,3 +343,5 @@
 * Refactor phrase ready checking to Actor class
 * fix bug with current_word not being set when phrase length is 1 word
 * Implement API in instructions.html
+* Feature 12: Add handle for GET request of current guess of word
+  * Test, implementation, review and merge complete

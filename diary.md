@@ -332,3 +332,14 @@
   * Polling function:
     * http://stackoverflow.com/questions/20820115/how-to-automatically-fetch-new-data-from-server
     * http://stackoverflow.com/questions/8106230/django-refresh-page-if-change-data-by-other-user    
+
+### 13/04/2017
+* Not possible to call view function in template due to HTTP Response style of django
+* Decided best way to deal with this is to implement an API
+* Spike work for API/ JQuery / Javascript on instructions page
+
+### 14/04/2017
+* Write tests for API
+* Refactor phrase ready checking to Actor class
+* fix bug with current_word not being set when phrase length is 1 word
+* Implement API in instructions.html

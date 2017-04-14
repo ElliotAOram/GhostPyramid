@@ -66,12 +66,12 @@ class InstructionsTests(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         continue_button = self.browser.find_element_by_id('continue_button')
         continue_button.click()
         self.assertTrue('/guess' in self.browser.current_url)
-        # Need additional test for viewer_number in url
 
     def tearDown(self):
         self.browser.refresh()

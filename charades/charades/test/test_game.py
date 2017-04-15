@@ -2,7 +2,6 @@
 import unittest
 from charades.actor import Actor
 from charades.game import Game
-from charades.viewer import Viewer
 
 class TestGame(unittest.TestCase):
     """
@@ -26,13 +25,22 @@ class TestGame(unittest.TestCase):
         self.assertTrue(self.game_obj.add_actor(Actor()))
         self.assertFalse(self.game_obj.add_actor(Actor()))
 
-    def test_add_valid_viewer(self):
-        self.assertTrue(self.game_obj.add_viewer(Viewer()))
+    def test_add_viewer(self):
+        self.assertEqual(1, self.game_obj.add_viewer())
 
     def test_add_max_actor(self):
-        for _ in range(0, 6):
-            self.assertTrue(self.game_obj.add_viewer(Viewer()))
-        self.assertFalse(self.game_obj.add_viewer(Viewer()))
+        for i in range(0, 6):
+            self.assertEqual(i + 1, self.game_obj.add_viewer())
+        self.assertFalse(self.game_obj.add_viewer())
+
+    def test_lookup_valid_viewer(self):
+        viewer_num = self.game_obj.add_viewer()
+        viewer = self.game_obj.lookup_viewer(1)
+        self.assertEqual(viewer.viewer_number, 1)
+
+    def test_lookup_invalid_viewer(self):
+        viewer_num = self.game_obj.add_viewer()
+        self.assertFalse(self.game_obj.lookup_viewer(2))
 
     ###=======================================Failure cases==================================###
 

@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined
 from actor import Actor
-from viewer import Viewer
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
 
@@ -54,8 +53,8 @@ def instructions(request):
             is_actor = True
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
-            if 'viewer_number' not in request.session:
-                viewer_num = GAME.add_viewer(Viewer())
+            if 'viewer_number' not in request.session: # TODO: or viewer number already in use
+                viewer_num = GAME.add_viewer()
                 request.session['user_type'] = 'Viewer'
                 request.session['viewer_number'] = viewer_num
                 outbound_url = reverse('guess', args=(viewer_num,))
@@ -155,7 +154,7 @@ def waiting_for_actor(request):
     next_selection = ''
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
-                   'guess_type' :, guess_type
+                   'guess_type' : guess_type,
                    'guess' : guess,
                    'position' : position,
                    'points' : points,

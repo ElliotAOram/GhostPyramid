@@ -2,7 +2,8 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
-                    actor_none, invalid_session, actor_already_defined
+                    actor_none, invalid_session, actor_already_defined, \
+                    new_phrase
 from actor import Actor
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
@@ -105,7 +106,11 @@ def select_phrase(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
-    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY')})
+    new_phrase_msg = ''
+    if 'new_phrase' in request.GET:
+        new_phrase_msg = new_phrase()
+    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
+                                                  'new_phrase' : new_phrase_msg})
 
 def acting(request):
     """

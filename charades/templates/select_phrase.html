@@ -2,6 +2,7 @@
 <body>
     <div class="main">
         <h1 class="page_title">Select Phrase</h1>
+        <p>{{new_phrase}}</p>
 
         <form id='phrase_selection_form' action="{% url 'acting' %}" method="get">
             {% for phrase in phrases %}

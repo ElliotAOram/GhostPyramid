@@ -2,7 +2,6 @@
 
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from charades import strings
 
 class TestWaitForActor(StaticLiveServerTestCase):
     """
@@ -40,7 +39,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertEqual(self.browser.find_element_by_id('points').text,
                          'You are first: 20points'
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
-                         strings.wait_for_actor())
+                         'Waiting for the actor to select a new Phrase')
 
 
     def tearDown(self):

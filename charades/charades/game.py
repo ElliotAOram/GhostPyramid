@@ -93,12 +93,14 @@ class Game(object):
 
         if self.current_correct_guess_type == 'Word':
             if self.actor.current_word.upper() == guess.upper():
-                self.current_correct_guess = guess
+                # use actor version of word to account for capitalisation
+                self.current_correct_guess = self.actor.current_word
             else:
                 return False
         else: # guess type is Phrase
             if self.actor.current_phrase.upper() == guess.upper():
-                self.current_correct_guess = guess
+                # use actor version of word to account for capitalisation
+                self.current_correct_guess = self.actor.current_word
             else:
                 return False
 

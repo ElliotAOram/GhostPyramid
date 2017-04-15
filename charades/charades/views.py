@@ -141,6 +141,27 @@ def acting(request):
                    'word_list' : GAME.actor.current_phrase_word_list,
                    'current_word' : current_word_index})
 
+
+def waiting_for_actor(request):
+    """
+    Controller for waiting_for_actor.html
+    Unique for each viewer
+    """
+    person = ''
+    guess_type = ''
+    guess = ''
+    position = ''
+    points = ''
+    next_selection = ''
+    return render(request, 'waiting_for_actor.html',
+                  {'person' : person,
+                   'guess_type' :, guess_type
+                   'guess' : guess,
+                   'position' : position,
+                   'points' : points,
+                   'next_selection' : next_selection})
+
+
 def reset(request):
     """
     resets the state of the game

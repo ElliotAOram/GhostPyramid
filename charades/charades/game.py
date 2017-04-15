@@ -10,10 +10,14 @@ class Game(object):
 
     actor = None
     viewers = []
+    current_correct_guess = None
+    current_correct_guess_type = None
 
     def __init__(self):
         self.actor = None
         self.viewers = []
+        self.current_correct_guess = None
+        self.current_correct_guess_type = None
 
     def add_actor(self, actor):
         """
@@ -57,3 +61,48 @@ class Game(object):
             raise RuntimeError('Viewer lookup returned a list not a single viewer')
         else:
             False
+
+    def set_guess_type(self, is_phrase):
+        """
+        Takes a boolean to represent if the guess type is for the phrase (True)
+        or the word (False)
+        @param is_phrase    :: True/False
+        """
+        if isinstance(is_phrase, bool):
+            if is_phrase is True:
+                self.current_correct_guess_type = 'Phrase'
+            else:
+                self.current_correct_guess_type = 'Word'
+        else:
+            return False
+
+    def set_guess(self, guess):
+        """
+        Sets the current correct guess and verify that the guess is correct
+        Function will assume a guess type if not already set (is None)
+        """
+        # If no guess type set (should not be the case) then the guess type is
+        # assumed by a space in the guess
+        if self.current_correct_guess_type is None:
+            if ' ' in guess:
+                self.current_correct_guess_type = 'Phrase'
+            else:
+                self.current_correct_guess_type = 'Word'
+
+        if self.current_correct_guess_type == 'Word':
+            if self.actor.current_word.upper() == guess.upper():
+                self.current_correct_guess = guess
+            else:
+                return False
+        else: # guess type is Phrase
+            if self.actor.current_phrase.upper() == guess.upper():
+                self.current_correct_guess = guess
+            else:
+                return False
+
+    def reset_guess_state(self):
+        """
+        Resets correct guess states to None
+        """
+        self.current_correct_guess = None
+        self.current_correct_guess_type = None

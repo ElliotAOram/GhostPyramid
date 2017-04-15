@@ -42,7 +42,72 @@ class TestGame(unittest.TestCase):
         viewer_num = self.game_obj.add_viewer()
         self.assertFalse(self.game_obj.lookup_viewer(2))
 
-    ###=======================================Failure cases==================================###
+    def test_set_guess_type(self):
+        self.game_obj.set_guess_type(True)
+        self.assertEqual(self.game_obj.current_correct_guess_type, 'Phrase')
+        self.game_obj.set_guess_type(False)
+        self.assertEqual(self.game_obj.current_correct_guess_type, 'Word')
+
+    def test_set_guess_type_non_bool(self):
+        self.assertFalse(self.game_obj.set_guess_type('String'))
+
+    def test_set_guess_word(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test', 'test genre')
+        self.game_obj.set_guess_type(True)
+        self.game_obj.set_guess('test')
+        self.assertEqual(self.game_obj.current_correct_guess, 'test')
+
+    def test_set_guess_word_no_type(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test', 'test genre')
+        self.game_obj.set_guess('test')
+        self.assertEqual(self.game_obj.current_correct_guess, 'test')
+        self.assertEqual(self.game_obj.current_correct_guess_type, 'Word')
+
+    def test_set_guess_word_incorrect(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test', 'test genre')
+        self.game_obj.set_guess_type(True)
+        self.assertFalse(self.game_obj.set_guess('wrong'))
+        self.assertIsNone(self.game_obj.current_correct_guess)
+
+    def test_set_guess_phrase(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test phrase', 'test genre')
+        self.game_obj.set_guess_type(True)
+        self.game_obj.set_guess('test phrase')
+        self.assertEqual(self.game_obj.current_correct_guess, 'test phrase')
+
+    def test_set_guess_word_in_phrase(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test phrase', 'test genre')
+        self.game_obj.actor.set_word(1)
+        self.game_obj.set_guess_type(False)
+        self.game_obj.set_guess('phrase')
+        self.assertEqual(self.game_obj.current_correct_guess, 'phrase')
+        self.assertEqual(self.game_obj.current_correct_guess_type, 'Word')
+
+    def test_set_guess_phrase_no_type(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test phrase', 'test genre')
+        self.game_obj.set_guess('test phrase')
+        self.assertEqual(self.game_obj.current_correct_guess, 'test phrase')
+        self.assertEqual(self.game_obj.current_correct_guess_type, 'Phrase')
+
+    def test_set_guess_incorrect_phrase(self):
+        self.game_obj.add_actor(Actor())
+        self.game_obj.actor.set_phrase('test phrase', 'test genre')
+        self.game_obj.set_guess_type(True)
+        self.assertFalse(self.game_obj.set_guess('incorrect guess'))
+        self.assertIsNone(self.game_obj.current_correct_guess)
+
+    def test_reset_guess_state(self):
+        self.game_obj.current_correct_guess = 'test'
+        self.game_obj.current_correct_guess_type = 'Word'
+        self.game_obj.reset_guess_state()
+        self.assertIsNone(self.game_obj.current_correct_guess)
+        self.assertIsNone(self.game_obj.current_correct_guess_type)
 
     def tearDown(self):
         del self.game_obj

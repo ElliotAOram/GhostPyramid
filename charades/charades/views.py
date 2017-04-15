@@ -78,17 +78,17 @@ def guess(request, viewer_num):
             if user_guess.upper() == GAME.actor.current_word.upper():
                 GAME.set_guess_type(False)
                 GAME.set_guess(user_guess)
-                GAME.winning_viewer = request.session['viewer_number']
+                GAME.winning_viewer_number = request.session['viewer_number']
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
-                return redirect('waiting_for_actor/')
+                return redirect('/waiting_for_actor/')
                 # Need to update API
         if request.GET['guess_type'] == 'Guess Phrase':
             if user_guess.upper() == GAME.actor.current_phrase.upper():
                 GAME.set_guess_type(True)
                 GAME.set_guess(user_guess)
-                GAME.winning_viewer = request.session['viewer_number']
+                GAME.winning_viewer_number = request.session['viewer_number']
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
-                return redirect('waiting_for_actor/')
+                return redirect('/waiting_for_actor/')
                 # Need to update API
     outbound_url = reverse('guess', args=(viewer_num,))
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
@@ -152,16 +152,18 @@ def waiting_for_actor(request):
     Controller for waiting_for_actor.html
     Unique for each viewer
     """
-    person = ''
-    guess_type = ''
-    guess = ''
+    viewer_number = request.session['viewer_number']
+    person = 'Someone else'
+    if GAME.winning_viewer_number == viewer_number:
+        person = 'You'
+    viewer = GAME.lookup_viewer(request.session['viewer_number'])
     position = ''
-    points = ''
+    points = viewer.points
     next_selection = ''
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
-                   'guess_type' : guess_type,
-                   'guess' : guess,
+                   'guess_type' : GAME.current_correct_guess_type,
+                   'guess' : GAME.current_correct_guess,
                    'position' : position,
                    'points' : points,
                    'next_selection' : next_selection})

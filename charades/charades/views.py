@@ -109,6 +109,7 @@ def select_phrase(request):
     new_phrase_msg = ''
     if 'new_phrase' in request.GET:
         new_phrase_msg = new_phrase()
+        GAME.actor.complete_word() # reset current_phrase ect.
     return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
                                                   'new_phrase' : new_phrase_msg})
 
@@ -118,6 +119,8 @@ def acting(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
+    if 'new_phrase' in request.GET:
+        GAME.reset_guess_state() #reset current_correct_guess ect.
     phrase = GAME.actor.current_phrase
     ### Select phrase
     if 'phrase' in request.GET:
@@ -161,7 +164,6 @@ def waiting_for_actor(request):
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:
         person = 'You'
-        GAME.actor.complete_word()
     viewer = GAME.lookup_viewer(request.session['viewer_number'])
     position = ''
     points = viewer.points

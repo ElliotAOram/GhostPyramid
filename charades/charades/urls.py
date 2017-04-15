@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^instructions/$', instructions, name='instructions'),
     url(r'^select_phrase/$', select_phrase, name='select_phrase'),
     url(r'^acting/$', acting, name='acting'),
-    url(r'^(\d)/guess/$', guess, name='guess'),
+    url(r'^guess/$', guess, name='guess'),
     url(r'^reset/$', reset),
     url(r'^waiting_for_actor/$', waiting_for_actor, name='waiting_for_actor'),
 

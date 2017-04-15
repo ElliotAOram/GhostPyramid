@@ -23,7 +23,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
         self.browser.get('%s%s' % (self.live_server_url, 
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
-        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        self.browser.get('%s%s' % (self.live_server_url, '/guess'))
         # Submit correct guess
         self.browser.find_element_by_id('guess_field').send_keys("Tennis")
         self.browser.find_element_by_id('guess_word').click()

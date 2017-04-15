@@ -58,16 +58,16 @@ def instructions(request):
                 viewer_num = GAME.add_viewer()
                 request.session['user_type'] = 'Viewer'
                 request.session['viewer_number'] = viewer_num
-                outbound_url = reverse('guess', args=(viewer_num,))
+                outbound_url = reverse('guess')
             else:
-                outbound_url = reverse('guess', args=(request.session['viewer_number'],))
+                outbound_url = reverse('guess')
 
     return render(request, 'instructions.html', {'instructions' : instructions_str,
                                                  'outbound_url' : outbound_url,
                                                  'is_actor': is_actor,
                                                  'phrase_ready' : phrase_ready})
 
-def guess(request, viewer_num):
+def guess(request):
     """
     The controller for the viewer guess.html page
     """
@@ -91,7 +91,7 @@ def guess(request, viewer_num):
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
                 return redirect('/waiting_for_actor/')
                 # Need to update API
-    outbound_url = reverse('guess', args=(viewer_num,))
+    outbound_url = reverse('guess')
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),

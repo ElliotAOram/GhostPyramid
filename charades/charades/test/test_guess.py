@@ -33,7 +33,7 @@ class TestGuess(StaticLiveServerTestCase):
         """
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
-        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        self.browser.get('%s%s' % (self.live_server_url, '/guess'))
         self.assertEqual('Guess the phrase',
                          self.browser.find_element_by_class_name('page_title').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_info'))
@@ -58,7 +58,7 @@ class TestGuess(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
-        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        self.browser.get('%s%s' % (self.live_server_url, '/guess'))
         try:
             self.browser.find_element_by_id('current_word')
             self.browser.find_element_by_id('guess_phrase')
@@ -80,7 +80,7 @@ class TestGuess(StaticLiveServerTestCase):
         """
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
-        self.browser.get('%s%s' % (self.live_server_url, '/1/guess'))
+        self.browser.get('%s%s' % (self.live_server_url, '/guess'))
         guess_field = self.browser.find_element_by_id('guess_field')
         guess_field.send_keys("test")
         guess_word_button = self.browser.find_element_by_id('guess_phrase')

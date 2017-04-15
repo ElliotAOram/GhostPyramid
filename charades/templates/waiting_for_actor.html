@@ -1,4 +1,16 @@
 {% include "includes/head.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+setInterval(function(){
+    $.get( "/api/phrase_ready/", function( data ) {
+        if (data.includes("True")) {
+            <!--http://stackoverflow.com/questions/3846935/how-to-change-page-from-within-javascript-->
+            window.location.replace('/guess/');
+        }
+    });
+    poll();
+}, 1000);
+</script>
 <body>
     <div class="main">
         <div id='correct_guess_div'>

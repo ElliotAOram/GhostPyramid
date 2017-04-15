@@ -62,7 +62,7 @@ class Actor(object):
             self.completed_words.append(self.current_word_index)
             self.current_word = None
             self.current_word_index = None
-            if len(self.complete_words) == len(self.current_phrase_word_list):
+            if len(self.completed_words) == len(self.current_phrase_word_list):
                 # All the words in the phrase have been guessed
                 self.phrase_complete()
 
@@ -75,13 +75,13 @@ class Actor(object):
         self.current_phrase_word_list = None
         self.current_word = None
         self.current_word_index = None
-        self.complete_words = []
+        self.completed_words = []
         self.phrase_genre = None
 
     def phrase_ready(self):
         """
         checks if the phrase and word have been selected
-        @return True if phr\\se is in a guessable state
+        @return True if phrase is in a guessable state
         """
         if self.current_phrase is not None:
             if self.current_word is not None:

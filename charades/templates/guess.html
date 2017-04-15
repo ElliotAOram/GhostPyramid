@@ -26,10 +26,10 @@ setInterval(function(){
             <form id="guess_form" action="{{outbound_url}}" method="get">
                 <input id="guess_field" class="input_field" type="text" name="guess">
                 <br/><br/>
-                <input class="standard_button" id="guess_word" type="submit" name="guess_type" value="Guess Word">
                 {% if total_words > 1 %}
-                <input class="standard_button" id="guess_phrase" type="submit" name="guess_type" value="Guess Phrase">
+                <input class="standard_button" id="guess_word" type="submit" name="guess_type" value="Guess Word">
                 {% endif %}
+                <input class="standard_button" id="guess_phrase" type="submit" name="guess_type" value="Guess Phrase">
             </form>
         </div>
     </div>

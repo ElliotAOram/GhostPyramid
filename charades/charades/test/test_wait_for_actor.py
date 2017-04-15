@@ -37,7 +37,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text, 
                          'You guessed the phrase \'Tennis\' correctly!')
         self.assertEqual(self.browser.find_element_by_id('points').text,
-                         'You are first: 20points'
+                         'You are first: 20points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Phrase')
 

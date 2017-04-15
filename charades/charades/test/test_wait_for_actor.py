@@ -33,7 +33,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         """
         Test that the expected generic elements are on the guess.html page
         """
-        self.assertTrue('wait_for_actor' in self.current_url)
+        self.assertTrue('wait_for_actor' in self.browser.current_url)
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text, 
                          'You guessed the phrase \'Tennis\' correctly!')
         self.assertEqual(self.browser.find_element_by_id('points').text,

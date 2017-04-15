@@ -161,6 +161,7 @@ def waiting_for_actor(request):
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:
         person = 'You'
+        GAME.actor.complete_word()
     viewer = GAME.lookup_viewer(request.session['viewer_number'])
     position = ''
     points = viewer.points

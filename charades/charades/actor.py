@@ -62,6 +62,21 @@ class Actor(object):
             self.completed_words.append(self.current_word_index)
             self.current_word = None
             self.current_word_index = None
+            if len(self.complete_words) == len(self.current_phrase_word_list):
+                # All the words in the phrase have been guessed
+                self.phrase_complete()
+
+    def phrase_complete(self):
+        """
+        Called when the phrase has been guessed and is used to reset
+        the state of the phrase/word
+        """
+        self.current_phrase = None
+        self.current_phrase_word_list = None
+        self.current_word = None
+        self.current_word_index = None
+        self.complete_words = []
+        self.phrase_genre = None
 
     def phrase_ready(self):
         """

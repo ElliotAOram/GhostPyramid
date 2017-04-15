@@ -1,0 +1,16 @@
+{% include "includes/head.html" %}
+<body>
+    <div class="main">
+        <div id='correct_guess_div'>
+            <p id='correct_guess'>{{person}} has guess the {{guess_type}} \'{{guess}}\' correctly!</p>
+        </div>
+        <div id="points_div">
+            <p id=''>You are {{position}}: <br/>
+                     {{points}} points</p>
+        </div>
+        <div id="waiting_div">
+            <p id='waiting'>{{waiting_message}}</p>
+        </div>
+    </div>
+</body>
+</html>

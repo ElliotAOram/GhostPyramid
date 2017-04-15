@@ -192,3 +192,11 @@ def phrase_ready_api(request):
         if GAME.actor is not None:
             phrase_ready = GAME.actor.phrase_ready()
     return render(request, 'phrase_ready.html', {'phrase_ready' : phrase_ready})
+
+def guess_correct_api(request):
+    """
+    None  :: Phrase has not been succesfully guessed / not ready to be guessed.
+    Phrase :: The current Phrase has been correctly guessed.
+    Word   :: The current word has been guessed correectly
+    """
+    return render(request, 'guess_correct.html', {'guess_type' : GAME.current_correct_guess_type})

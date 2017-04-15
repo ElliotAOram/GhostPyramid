@@ -12,12 +12,14 @@ class Game(object):
     viewers = []
     current_correct_guess = None
     current_correct_guess_type = None
+    winning_viewer_number = None
 
     def __init__(self):
         self.actor = None
         self.viewers = []
         self.current_correct_guess = None
         self.current_correct_guess_type = None
+        self.winning_viewer_number = None
 
     def add_actor(self, actor):
         """

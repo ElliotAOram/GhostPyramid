@@ -92,10 +92,13 @@ def guess(request):
                 return redirect('/waiting_for_actor/')
                 # Need to update API
     outbound_url = reverse('guess')
+    points = GAME.lookup_viewer(request.session['viewer_number']).points
+    print points
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
                                           'current_word' : GAME.actor.current_word_index + 1,
+                                          'points' : points,
                                           'outbound_url' : outbound_url})
 
 def select_phrase(request):
@@ -164,7 +167,7 @@ def waiting_for_actor(request):
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:
         person = 'You'
-    viewer = GAME.lookup_viewer(request.session['viewer_number'])
+    viewer = GAME.lookup_viewer(viewer_number)
     position = ''
     points = viewer.points
     next_selection = ''

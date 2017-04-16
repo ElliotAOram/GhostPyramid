@@ -20,7 +20,9 @@ setInterval(function(){
             {% if total_words > 1 %}
             <p id='current_word'>Current word: {{current_word}}</p>
             {% endif %}
-
+        </div>
+        <div class="points_div">
+            <p id="points_para">You have {{points}} points</p>
         </div>
         <div id="guess_input">
             <form id="guess_form" action="{{outbound_url}}" method="get">

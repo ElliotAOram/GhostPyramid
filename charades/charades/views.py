@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
-                    new_phrase, new_word
+                    new_phrase, new_word, incorrect_guess
 from actor import Actor
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
@@ -72,6 +72,7 @@ def guess(request):
     The controller for the viewer guess.html page
     """
     user_guess = ''
+    incorrect = ''
     if 'guess' in request.GET:
         user_guess = request.GET['guess']
     if 'guess_type' in request.GET:
@@ -86,6 +87,8 @@ def guess(request):
                     GAME.set_guess_type(True)
                     GAME.actor.phrase_complete()
                 return redirect('/waiting_for_actor/')
+            else:
+                incorrect = incorrect_guess()
         if request.GET['guess_type'] == 'Guess Phrase':
             if user_guess.upper() == GAME.actor.current_phrase.upper():
                 GAME.set_guess_type(True)
@@ -94,14 +97,15 @@ def guess(request):
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(20)
                 GAME.actor.phrase_complete()
                 return redirect('/waiting_for_actor/')
+            else:
+                incorrect = incorrect_guess()
     outbound_url = reverse('guess')
-    points = GAME.lookup_viewer(request.session['viewer_number']).points
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
                                           'current_word_index' : GAME.actor.current_word_index + 1,
                                           'current_word' : GAME.actor.current_word,
-                                          'points' : points,
+                                          'incorrect' : incorrect, 
                                           'outbound_url' : outbound_url})
 
 def select_phrase(request):

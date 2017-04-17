@@ -21,8 +21,8 @@ setInterval(function(){
             <p id='current_word'>Current word: {{current_word_index}}</p>
             {% endif %}
         </div>
-        <div class="points_div">
-            <p id="points_para">You have {{points}} points</p>
+        <div class="guess status">
+            <p class="warning">{{incorrect}}</p>
         </div>
 
         <div id="guess_input">

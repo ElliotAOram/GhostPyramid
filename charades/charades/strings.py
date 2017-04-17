@@ -28,3 +28,6 @@ def new_phrase():
 
 def new_word():
     return "The Viewers have guessed your word! Please select a new word using the buttons below."
+
+def incorrect_guess():
+    return "Incorrect! Try again!"

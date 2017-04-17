@@ -210,4 +210,7 @@ def guess_correct_api(request):
     Phrase :: The current Phrase has been correctly guessed.
     Word   :: The current word has been guessed correectly
     """
-    return render(request, 'guess_correct.html', {'guess_type' : GAME.current_correct_guess_type})
+    guess_type = None
+    if GAME is not None:
+        guess_type = GAME.current_correct_guess_type
+    return render(request, 'guess_correct.html', {'guess_type' : guess_type})

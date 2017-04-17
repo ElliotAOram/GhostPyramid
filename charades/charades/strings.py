@@ -22,3 +22,6 @@ def actor_already_defined():
 
 def invalid_session():
     return "Invalid session ID has been provided."
+
+def new_phrase():
+    return "The Viewers have guessed your phrase! Please select a new phrase from the list below"

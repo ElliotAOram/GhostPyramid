@@ -109,5 +109,41 @@ class TestGame(unittest.TestCase):
         self.assertIsNone(self.game_obj.current_correct_guess)
         self.assertIsNone(self.game_obj.current_correct_guess_type)
 
+    def add_viewers(self, num_viewers):
+        for _ in range(0, num_viewers):
+            self.game_obj.add_viewer()
+
+    def test_get_position_first(self):
+        self.add_viewer(2)
+        position_1 = self.game_obj.get_viewer_position(1)
+        position_2 = self.game_obj.get_viewer_position(2)
+        self.assertEqual(position_1, '1st')
+        self.assertEqual(position_2, '1st')
+
+    def test_get_position_second(self):
+        self.add_viewer(2)
+        self.game_obj.lookup_viewer(1).increment_points(10)
+        position_1 = self.game_obj.get_viewer_position(1)
+        position_2 = self.game_obj.get_viewer_position(2)
+        self.assertEqual(position_1, '1st')
+        self.assertEqual(position_2, '2nd')
+
+    def test_get_position_third(self):
+        self.add_viewer(3)
+        self.game_obj.lookup_viewer(1).increment_points(20)
+        self.game_obj.lookup_viewer(2).increment_points(10)
+        position_3 = self.game_obj.get_viewer_position(3)
+        self.assertEqual(position_3, '3rd')
+
+    def test_get_position_forth(self):
+        self.add_viewer(4)
+        self.game_obj.lookup_viewer(1).increment_points(30)
+        self.game_obj.lookup_viewer(2).increment_points(20)
+        self.game_obj.lookup_viewer(3).increment_points(10)
+        position_4 = self.game_obj.get_viewer_position(4)
+        self.assertEqual(position_4, '4th')
+
+
+
     def tearDown(self):
         del self.game_obj

@@ -4,9 +4,12 @@ from random import randint
 ANIMALS = ['Cat', 'Dog', 'Elephant', 'Mouse', 'Meerkat', 'Kangaroo', \
            'Monkey', 'Frog', 'Penguin', 'Bird']
 
-SPORTS = ['Tennis', 'Football', 'Swimming', 'Rowing', 'Karate', 'Rugby', 'Shot put']
+SPORTS = ['Tennis', 'Football', 'Swimming', 'Rowing', 'Karate', 'Rugby', 'Shot put', \
+          'Skipping']
 
-TYPES = ['ANIMALS', 'SPORTS', 'ANY']
+ACTIVITY = ['Brushing Teeth', 'Combing Hair', 'Sweeping', 'Sleeping']
+
+TYPES = ['ANIMALS', 'SPORTS', 'ACTIVITY', 'ANY']
 
 
 def find_list(list_type):
@@ -15,10 +18,11 @@ def find_list(list_type):
     @param list_type    :: The type of list to find
     """
     if list_type == 'ANY':
-        return ANIMALS + SPORTS
+        return ANIMALS + SPORTS + ACTIVITY
     return {
         'ANIMALS': ANIMALS,
         'SPORTS': SPORTS,
+        'ACTIVITY': ACTIVITY,
     }[list_type]
 
 def check_phrase(phrase):
@@ -31,6 +35,8 @@ def check_phrase(phrase):
         return 'Animal'
     if phrase.upper() in [x.upper() for x in SPORTS]:
         return 'Sport'
+    if phrase.upper() in [x.upper() for x in ACTIVITY]:
+        return 'Activity'
     return False
 
 def get_phrases_from_type(num_of_items, list_type):

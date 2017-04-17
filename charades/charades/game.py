@@ -62,7 +62,7 @@ class Game(object):
             # for clarity
             raise RuntimeError('Viewer lookup returned a list not a single viewer')
         else:
-            return False
+            return []
 
     def get_viewer_position(self, viewer_num):
         """

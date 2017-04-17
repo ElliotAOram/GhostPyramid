@@ -56,6 +56,10 @@ This is an additional architecture embedded into the Django website. These class
 	\item \textbf{set\_word}: updates the word variable with a  new int.
 	
 	\item \textbf{complete\_word}: adds a word (int) to the completed word list.
+	
+	\item \textbf{phrase\_complete}: Called when the full phrase has been successfully guessed. The function resets the variables to default values (None, empty lists, ect.)
+	
+	\item \textbf{phrase\_ready}: Function is linked to the the API usage. Return True when the phrase/word is in a guessable state (phrase selected is True, word selected is True).
 
 \end{itemize}
 
@@ -66,7 +70,7 @@ This is an additional architecture embedded into the Django website. These class
 \begin{itemize}
 	\item \textbf{points}: The number of points accumulated by the viewer. Type: int.
 
-	\item \textbf{name}: The name of the viewer. Type: String.
+	\item \textbf{viewer\_number}: Single digit integer used to identify the viewer. This is also stored client side. Type: int.
 
 \end{itemize}
 
@@ -78,8 +82,6 @@ This is an additional architecture embedded into the Django website. These class
 
 	\item \textbf{increment\_points}: increase the points variable by an integer.
 	
-	\item \textbf{set\_name}: updates the name variable with a String.
-	
 \end{itemize}
 
 \subsection{Game}
@@ -89,6 +91,12 @@ This is an additional architecture embedded into the Django website. These class
 	
 	\item \textbf{viewers}: A list of the viewers in the game. Type: Viewer list.
 	
+	\item \textbf{current\_correct\_guess}: defaults to None. Hold the current correct guess made by a viewer from the guess interface. Type: String.
+	
+	\item \textbf{current\_correct\_guess\_type}: defaults to None. Hold the type of guess made by the viewer that was correct ('Word'/'Phrase'). Type: String. 
+	
+	\item \textbf{winning\_viewer\_number}: Holds the viewer number of the viewer that made the correct guess. This is used for adding points and for reference on the waiting for actor screen.
+	
 \end{itemize}
 
 \subsubsection{Functions}
@@ -97,6 +105,16 @@ This is an additional architecture embedded into the Django website. These class
 	\item \textbf{add\_actor}: Updates the actor variable with a new Actor.
 	
 	\item \textbf{add\_viewer}: Adds a Viewer to the viewer list variable. There will be a check to ensure the same viewer is not being added again as well as ensure the maximum number of viewers is not exceeded.
+	
+	\item \textbf{lookup\_viewer}: Looks up the viewer in the viewers list using the viewer\_number to identify them. Returns Viewer.
+	
+	\item \textbf{get\_viewer\_position}: Looks up the viewers score and their position relative to other viewers in the session. Returns a string for their position (1st, 2nd, ect...).
+	
+	\item \textbf{set\_guess\_type}: Takes a boolean to represent if the guess type is for the phrase (True) or the word (False).
+	
+	\item \textbf{set\_guess}: Sets the current correct guess and verify that the guess is correct. The Function will assume a guess type if not already set (is None).
+	
+	\item \textbf{reset\_guess\_state}: Resets the current\_correct\_guess variables to the default values of None.
 	
 \end{itemize}
 

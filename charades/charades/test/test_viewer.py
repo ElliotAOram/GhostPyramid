@@ -22,14 +22,7 @@ class TestViewer(unittest.TestCase):
         self.assertEqual(self.viewer_obj.points, 25)
 
         self.viewer_obj.increment_points(10)
-        self.assertEqual(self.viewer_obj.points, 35)
-
-    def test_get_name(self):
-        self.assertEqual(self.viewer_obj.name, 'anonymous')
-
-    def test_set_name(self):
-        self.viewer_obj.set_name('test-name')
-        self.assertEqual(self.viewer_obj.name, 'test-name')
+        self.assertEqual(self.viewer_obj.points, 35)s
 
     def test_viewer_number(self):
         self.assertEqual(0, self.viewer_obj.viewer_number)

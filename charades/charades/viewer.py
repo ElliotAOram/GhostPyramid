@@ -1,7 +1,7 @@
 """
 Module for the Viewer class
 """
-
+#pylint: disable=too-few-public-methods
 class Viewer(object):
     """
     The class for the user of type Viewer

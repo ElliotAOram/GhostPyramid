@@ -22,7 +22,7 @@ class TestViewer(unittest.TestCase):
         self.assertEqual(self.viewer_obj.points, 25)
 
         self.viewer_obj.increment_points(10)
-        self.assertEqual(self.viewer_obj.points, 35)s
+        self.assertEqual(self.viewer_obj.points, 35)
 
     def test_viewer_number(self):
         self.assertEqual(0, self.viewer_obj.viewer_number)

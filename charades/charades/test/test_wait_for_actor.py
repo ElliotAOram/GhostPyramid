@@ -20,26 +20,42 @@ class TestWaitForActor(StaticLiveServerTestCase):
     def setUp(self):
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
-        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+Put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/guess'))
-        # Submit correct guess
-        self.browser.find_element_by_id('guess_field').send_keys("Tennis")
-        self.browser.find_element_by_id('guess_phrase').click()
-        self.browser.refresh()
 
-    def test_generic_page_elements(self):
+
+    def test_phrase_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """
+        self.browser.find_element_by_id('guess_field').send_keys("Shot Put")
+        self.browser.find_element_by_id('guess_phrase').click()
+        self.browser.refresh()
         self.assertTrue('waiting_for_actor' in self.browser.current_url)
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text,
-                         'You guessed the Phrase Tennis correctly!')
+                         'You guessed the Phrase Shot Put correctly!')
         self.assertEqual(self.browser.find_element_by_id('points_position').text,
-                         'You are 1st:\n25 points')
+                         'You are 1st:\n20 points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Phrase')
+
+    def test_word_page_elements(self):
+        """
+        Test that the expected generic elements are on the guess.html page
+        """
+        self.browser.find_element_by_id('guess_field').send_keys("Shot")
+        self.browser.find_element_by_id('guess_word').click()
+        self.browser.refresh()
+        self.assertTrue('waiting_for_actor' in self.browser.current_url)
+        self.assertEqual(self.browser.find_element_by_id('correct_guess').text,
+                         'You guessed the Word Shot correctly!')
+        self.assertEqual(self.browser.find_element_by_id('points_position').text,
+                         'You are 1st:\n10 points')
+        self.assertEqual(self.browser.find_element_by_id('waiting').text,
+                         'Waiting for the actor to select a new Word')
 
 
     def tearDown(self):

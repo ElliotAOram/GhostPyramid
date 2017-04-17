@@ -34,16 +34,31 @@ class ActingTests(StaticLiveServerTestCase):
         Tests that the buttons for word selection are present when the
         phrase contains multiple words
         """
-        for index in range(0, 2):
-            self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
-            button = self.browser.find_element_by_xpath( \
-                "//form[@id='word_selection']/input["+ str(index + 1) +"]")
-            self.assertEqual(str(index + 1), button.get_attribute("value"))
-            button.click()
-            self.assertTrue('current_word_index=' + str(index+1) in self.browser.current_url)
-            button = self.browser.find_element_by_xpath( \
-                "//form[@id='word_selection']/input["+ str(index + 1) +"]")
-            self.assertEqual(button.get_attribute("class"), "current_word_button")
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
+        button = self.browser.find_element_by_xpath( \
+            "//form[@id='word_selection']/input["+ str(1) +"]")
+        self.assertEqual(str(1), button.get_attribute("value"))
+        button.click()
+        self.assertTrue('current_word_index=' + str(1) in self.browser.current_url)
+        button = self.browser.find_element_by_xpath( \
+            "//form[@id='word_selection']/input["+ str(1) +"]")
+        self.assertEqual(button.get_attribute("class"), "current_word_button")
+
+    def test_complete_button(self):
+        """
+        Tests that the complete word button works
+        """
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=1'))
+        self.assertEqual(self.browser.find_element_by_class_name( \
+                         'current_word_button').get_attribute('value'), '1')
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/guess/?guess=Shot&guess_type=Guess+Word'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?word_complete=True'))
+        self.assertEqual(self.browser.find_element_by_class_name( \
+                          'completed_word_button').get_attribute('value'), '1')
 
     def tearDown(self):
         self.browser.refresh()

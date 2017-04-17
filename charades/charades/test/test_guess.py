@@ -41,8 +41,6 @@ class TestGuess(StaticLiveServerTestCase):
                          self.browser.find_element_by_id('total_words').text)
         self.assertEqual('Current word: 1',
                          self.browser.find_element_by_id('current_word').text)
-        self.assertEqual('You have 0 points',
-                         self.browser.find_element_by_id('points_para').text)
         self.assertIsNotNone(self.browser.find_element_by_id('guess_input'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_form'))
         self.assertIsNotNone(self.browser.find_element_by_id('guess_field'))

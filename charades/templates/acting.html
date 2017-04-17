@@ -2,12 +2,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script>
 setInterval(function(){
-    $.get( "/api/guess_correct", function( data ) {
-        if (data.includes("Phrase")) {
-            <!--http://stackoverflow.com/questions/3846935/how-to-change-page-from-within-javascript-->
-            window.location.replace('/select_phrase/?new_phrase=True');
-        }
-    });
+    if (! window.location.href.includes("word_complete=True") ){
+        $.get( "/api/guess_correct", function( data ) {
+            if (data.includes("Phrase")) {
+                <!--http://stackoverflow.com/questions/3846935/how-to-change-page-from-within-javascript-->
+                window.location.replace('/select_phrase/?new_phrase=True');
+            }
+            if (data.includes("Word")) {
+                    window.location.replace('/acting/?word_complete=True');
+            }
+        });
+    }
     poll();
 }, 1000);
 </script>
@@ -16,18 +21,29 @@ setInterval(function(){
         <h1 class="page_title">
         {% for word in word_list %}
         {% if forloop.counter == current_word %}
-        <span class="current_word_span">{% else %}<span class="word_span">{% endif %}{{word}}</span>
+        <span class="current_word_span">
+        {% elif forloop.counter0 in completed_words %}
+        <span class="completed_word_span">
+        {% else %}
+        <span class="word_span">
+        {% endif %}
+        {{word}}</span>
         {% endfor %}
         </h1>
+        
+        <p id="instructions">{{instructions}}</p>
 
+        <p id="new_word_msg">{{new_word_msg}}</p>
         {% if num_words > 1 %}
             <form id="word_selection" action="/acting/" method="get">
                 {% for words in word_list %}
                     <input type="submit"
                     {% if forloop.counter == current_word %}
-                        class="current_word_button"
+                        class="current_word_button" {% if not words_changable %} disabled {% endif %}
+                    {% elif forloop.counter0 in completed_words %}
+                        class="completed_word_button" disabled
                     {% else %}
-                        class="standard_button"
+                        class="standard_button" {% if not words_changable %} disabled {% endif %}
                     {% endif %}
                     name= "current_word_index" value="{{forloop.counter}}">
                 {% endfor %}

@@ -26,18 +26,18 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url, '/guess'))
         # Submit correct guess
         self.browser.find_element_by_id('guess_field').send_keys("Tennis")
-        self.browser.find_element_by_id('guess_word').click()
+        self.browser.find_element_by_id('guess_phrase').click()
         self.browser.refresh()
 
     def test_generic_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """
-        self.assertTrue('wait_for_actor' in self.browser.current_url)
+        self.assertTrue('waiting_for_actor' in self.browser.current_url)
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text, 
-                         'You guessed the phrase \'Tennis\' correctly!')
-        self.assertEqual(self.browser.find_element_by_id('points').text,
-                         'You are first: 20points')
+                         'You guessed the Phrase Tennis correctly!')
+        self.assertEqual(self.browser.find_element_by_id('points_position').text,
+                         'You are 1st:\n25 points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Phrase')
 

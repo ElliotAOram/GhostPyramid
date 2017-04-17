@@ -167,9 +167,12 @@ def waiting_for_actor(request):
     if GAME.winning_viewer_number == viewer_number:
         person = 'You'
     viewer = GAME.lookup_viewer(viewer_number)
-    position = ''
+    position = GAME.get_viewer_position(viewer_number)
     points = viewer.points
-    next_selection = ''
+    next_selection = 'Phrase'
+    if GAME.current_correct_guess_type == 'Word' and \
+       len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list) - 1:
+            next_selection = 'Word'
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
                    'guess_type' : GAME.current_correct_guess_type,

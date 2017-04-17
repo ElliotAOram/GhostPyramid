@@ -6,11 +6,14 @@ body {
     display: table;
     position: absolute;
     width: 100%;
+    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 p{
     font-size: 2em;
+    padding-left: 8%;
+    padding-right: 8%;
 }
 
 p.warning{
@@ -69,7 +72,53 @@ form{
     margin-right: 1.5em;
 }
 
+.current_word_button:hover{
+    background-color: #ffcc66;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin-top: 1em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+.current_word_button:disabled {
+    background-color: #ffcc00;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin-top: 1em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+.completed_word_button:disabled {
+    background-color: #33cc33;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin-top: 1em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
 
 .current_word_span{
     color: #ffcc00;
+}
+
+.completed_word_span{
+    color: #33cc33;
 }

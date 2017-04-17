@@ -1,6 +1,4 @@
 """Tests for the guess.html and associated view"""
-import httplib
-import socket
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException

@@ -31,7 +31,7 @@ class GuessCorrectAPITests(StaticLiveServerTestCase):
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/guess/'))
         self.browser.get('%s%s' % (self.live_server_url,
-                                  '/guess/?guess_type=Guess+Word&guess=put'))
+                                   '/guess/?guess_type=Guess+Word&guess=put'))
         self.browser.get('%s%s' % (self.live_server_url, '/api/guess_correct'))
         text_found = re.search(r'Word', self.browser.page_source)
         self.assertNotEqual(text_found, None)

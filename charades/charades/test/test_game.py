@@ -3,6 +3,7 @@ import unittest
 from charades.actor import Actor
 from charades.game import Game
 
+#pylint: disable=too-many-public-methods
 class TestGame(unittest.TestCase):
     """
     Tests for the game.py Actor class
@@ -36,10 +37,10 @@ class TestGame(unittest.TestCase):
     def test_lookup_valid_viewer(self):
         viewer_num = self.game_obj.add_viewer()
         viewer = self.game_obj.lookup_viewer(1)
-        self.assertEqual(viewer.viewer_number, 1)
+        self.assertEqual(viewer.viewer_number, viewer_num)
 
     def test_lookup_invalid_viewer(self):
-        viewer_num = self.game_obj.add_viewer()
+        self.game_obj.add_viewer()
         self.assertFalse(self.game_obj.lookup_viewer(2))
 
     def test_set_guess_type(self):

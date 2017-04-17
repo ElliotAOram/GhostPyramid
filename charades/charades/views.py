@@ -54,7 +54,7 @@ def instructions(request):
             is_actor = True
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
-            if 'viewer_number' not in request.session: # TODO: or viewer number already in use
+            if 'viewer_number' not in request.session:
                 viewer_num = GAME.add_viewer()
                 request.session['user_type'] = 'Viewer'
                 request.session['viewer_number'] = viewer_num
@@ -172,7 +172,7 @@ def waiting_for_actor(request):
     next_selection = 'Phrase'
     if GAME.current_correct_guess_type == 'Word' and \
        len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list) - 1:
-            next_selection = 'Word'
+       next_selection = 'Word'
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
                    'guess_type' : GAME.current_correct_guess_type,

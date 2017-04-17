@@ -32,5 +32,5 @@ urlpatterns = [
 
     ### API ###
     url(r'^api/phrase_ready/$', phrase_ready_api, name='phrase_ready'),
-    url(r'^api/guess_correct/$',guess_correct_api, name='guess_correct'),
+    url(r'^api/guess_correct/$', guess_correct_api, name='guess_correct'),
 ]

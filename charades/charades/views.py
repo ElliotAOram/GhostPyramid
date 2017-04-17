@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
-                    new_phrase
+                    new_phrase, new_word
 from actor import Actor
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
@@ -80,23 +80,27 @@ def guess(request):
                 GAME.set_guess_type(False)
                 GAME.set_guess(user_guess)
                 GAME.winning_viewer_number = request.session['viewer_number']
-                GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
+                GAME.lookup_viewer(request.session['viewer_number']).increment_points(10)
+                GAME.actor.complete_word()
+                if len(GAME.actor.completed_words) == len(GAME.actor.current_phrase_word_list):
+                    GAME.set_guess_type(True)
+                    GAME.actor.phrase_complete()
                 return redirect('/waiting_for_actor/')
-                # Need to update API
         if request.GET['guess_type'] == 'Guess Phrase':
             if user_guess.upper() == GAME.actor.current_phrase.upper():
                 GAME.set_guess_type(True)
                 GAME.set_guess(user_guess)
                 GAME.winning_viewer_number = request.session['viewer_number']
-                GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
+                GAME.lookup_viewer(request.session['viewer_number']).increment_points(20)
+                GAME.actor.phrase_complete()
                 return redirect('/waiting_for_actor/')
-                # Need to update API
     outbound_url = reverse('guess')
     points = GAME.lookup_viewer(request.session['viewer_number']).points
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
-                                          'current_word' : GAME.actor.current_word_index + 1,
+                                          'current_word_index' : GAME.actor.current_word_index + 1,
+                                          'current_word' : GAME.actor.current_word,
                                           'points' : points,
                                           'outbound_url' : outbound_url})
 
@@ -111,7 +115,7 @@ def select_phrase(request):
     new_phrase_msg = ''
     if 'new_phrase' in request.GET:
         new_phrase_msg = new_phrase()
-        GAME.actor.complete_word() # reset current_phrase ect.
+        #GAME.actor.phrase_complete() # reset current_phrase ect.
     return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
                                                   'new_phrase' : new_phrase_msg})
 
@@ -121,12 +125,15 @@ def acting(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
+    words_changable = False
     if 'new_phrase' in request.GET:
         GAME.reset_guess_state() #reset current_correct_guess ect.
+        words_changable = True
     phrase = GAME.actor.current_phrase
     ### Select phrase
     if 'phrase' in request.GET:
         phrase = request.GET['phrase']
+        words_changable = True
         if "+" in phrase:
             phrase = phrase.replace("+", " ")
         genre = check_phrase(phrase)
@@ -138,6 +145,7 @@ def acting(request):
     ### Select current word
     current_word_index = GAME.actor.current_word_index
     if 'current_word_index' in request.GET:
+        GAME.reset_guess_state()
         current_word_index = request.GET['current_word_index']
         try:
             current_word_index = int(current_word_index)
@@ -149,12 +157,21 @@ def acting(request):
         else:
             GAME.actor.set_word(current_word_index - 1)
 
+    ### Word polling response
+    new_word_msg = ''
+    if 'word_complete' in request.GET:
+        new_word_msg = new_word()
+        words_changable = True
+
     ### Render page
     return render(request,
                   'acting.html',
                   {'num_words' : len(GAME.actor.current_phrase_word_list),
                    'word_list' : GAME.actor.current_phrase_word_list,
-                   'current_word' : current_word_index})
+                   'completed_words' : GAME.actor.completed_words,
+                   'new_word_msg' : new_word_msg,
+                   'current_word' : current_word_index,
+                   'words_changable' : words_changable})
 
 
 def waiting_for_actor(request):
@@ -171,7 +188,7 @@ def waiting_for_actor(request):
     points = viewer.points
     next_selection = 'Phrase'
     if GAME.current_correct_guess_type == 'Word' and \
-       len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list) - 1:
+       len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list):
         next_selection = 'Word'
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,

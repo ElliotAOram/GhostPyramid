@@ -1,4 +1,16 @@
 {% include "includes/head.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+setInterval(function(){
+    $.get( "/api/guess_correct", function( data ) {
+        if (data.includes("Word") || data.includes("Phrase")) {
+            <!--http://stackoverflow.com/questions/3846935/how-to-change-page-from-within-javascript-->
+            window.location.replace('/waiting_for_actor/');
+        }
+    });
+    poll();
+}, 1000);
+</script>
 <body>
     <div class="main">
         <h1 class="page_title">Guess the phrase</h1>
@@ -8,16 +20,18 @@
             {% if total_words > 1 %}
             <p id='current_word'>Current word: {{current_word}}</p>
             {% endif %}
-
+        </div>
+        <div class="points_div">
+            <p id="points_para">You have {{points}} points</p>
         </div>
         <div id="guess_input">
             <form id="guess_form" action="{{outbound_url}}" method="get">
                 <input id="guess_field" class="input_field" type="text" name="guess">
                 <br/><br/>
-                <input class="standard_button" id="guess_word" type="submit" name="guess_type" value="Guess Word">
                 {% if total_words > 1 %}
-                <input class="standard_button" id="guess_phrase" type="submit" name="guess_type" value="Guess Phrase">
+                <input class="standard_button" id="guess_word" type="submit" name="guess_type" value="Guess Word">
                 {% endif %}
+                <input class="standard_button" id="guess_phrase" type="submit" name="guess_type" value="Guess Phrase">
             </form>
         </div>
     </div>

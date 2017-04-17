@@ -64,6 +64,24 @@ class TestActor(unittest.TestCase):
         self.actor_obj.set_word(0)
         self.assertTrue(self.actor_obj.phrase_ready())
 
+    def test_phrase_complete(self):
+        """
+        Ensure all variables are reset after phrase complete
+        """
+        self.actor_obj.set_phrase('test phrase', 'test genre')
+        self.actor_obj.set_word(0)
+        self.actor_obj.complete_word()
+        self.actor_obj.set_word(1)
+        self.assertEqual(self.actor_obj.completed_words, [0])
+        self.assertEqual(self.actor_obj.current_word_index, 1)
+        self.actor_obj.phrase_complete()
+        self.assertEqual(self.actor_obj.current_phrase, None)
+        self.assertEqual(self.actor_obj.current_phrase_word_list, None)
+        self.assertEqual(self.actor_obj.current_word, None)
+        self.assertEqual(self.actor_obj.current_word_index, None)
+        self.assertEqual(self.actor_obj.completed_words, [])
+        self.assertEqual(self.actor_obj.phrase_genre, None)
+
 
     ###=======================================Failure cases==================================###
 

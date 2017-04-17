@@ -8,7 +8,7 @@ class TestViewer(unittest.TestCase):
     """
 
     def setUp(self):
-        self.viewer_obj = Viewer()
+        self.viewer_obj = Viewer(0)
 
     def test_create_viewer(self):
         self.assertIsNotNone(self.viewer_obj)
@@ -30,6 +30,9 @@ class TestViewer(unittest.TestCase):
     def test_set_name(self):
         self.viewer_obj.set_name('test-name')
         self.assertEqual(self.viewer_obj.name, 'test-name')
+
+    def test_viewer_number(self):
+        self.assertEqual(0, self.viewer_obj.viewer_number)
 
     def tearDown(self):
         del self.viewer_obj

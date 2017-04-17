@@ -2,9 +2,9 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
-                    actor_none, invalid_session, actor_already_defined
+                    actor_none, invalid_session, actor_already_defined, \
+                    new_phrase
 from actor import Actor
-from viewer import Viewer
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
 
@@ -55,41 +55,49 @@ def instructions(request):
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             if 'viewer_number' not in request.session:
-                viewer_num = GAME.add_viewer(Viewer())
+                viewer_num = GAME.add_viewer()
                 request.session['user_type'] = 'Viewer'
                 request.session['viewer_number'] = viewer_num
-                outbound_url = reverse('guess', args=(viewer_num,))
+                outbound_url = reverse('guess')
             else:
-                outbound_url = reverse('guess', args=(request.session['viewer_number'],))
+                outbound_url = reverse('guess')
 
     return render(request, 'instructions.html', {'instructions' : instructions_str,
                                                  'outbound_url' : outbound_url,
                                                  'is_actor': is_actor,
                                                  'phrase_ready' : phrase_ready})
 
-def guess(request, viewer_num):
+def guess(request):
     """
     The controller for the viewer guess.html page
     """
     user_guess = ''
     if 'guess' in request.GET:
         user_guess = request.GET['guess']
-        print user_guess # Will be used to update correct guess_api
     if 'guess_type' in request.GET:
         if request.GET['guess_type'] == 'Guess Word':
-            # If correct, update correct_guess.html api with 'Word'
             if user_guess.upper() == GAME.actor.current_word.upper():
-                print 'Word guessed correctly'
+                GAME.set_guess_type(False)
+                GAME.set_guess(user_guess)
+                GAME.winning_viewer_number = request.session['viewer_number']
+                GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
+                return redirect('/waiting_for_actor/')
+                # Need to update API
         if request.GET['guess_type'] == 'Guess Phrase':
-            # If correct, update correct_guess.html api with 'Phrase'
             if user_guess.upper() == GAME.actor.current_phrase.upper():
-                print 'Phrase guessed correctly'
-
-    outbound_url = reverse('guess', args=(viewer_num,))
+                GAME.set_guess_type(True)
+                GAME.set_guess(user_guess)
+                GAME.winning_viewer_number = request.session['viewer_number']
+                GAME.lookup_viewer(request.session['viewer_number']).increment_points(25)
+                return redirect('/waiting_for_actor/')
+                # Need to update API
+    outbound_url = reverse('guess')
+    points = GAME.lookup_viewer(request.session['viewer_number']).points
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
                                           'current_word' : GAME.actor.current_word_index + 1,
+                                          'points' : points,
                                           'outbound_url' : outbound_url})
 
 def select_phrase(request):
@@ -100,7 +108,12 @@ def select_phrase(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
-    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY')})
+    new_phrase_msg = ''
+    if 'new_phrase' in request.GET:
+        new_phrase_msg = new_phrase()
+        GAME.actor.complete_word() # reset current_phrase ect.
+    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
+                                                  'new_phrase' : new_phrase_msg})
 
 def acting(request):
     """
@@ -108,6 +121,8 @@ def acting(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
+    if 'new_phrase' in request.GET:
+        GAME.reset_guess_state() #reset current_correct_guess ect.
     phrase = GAME.actor.current_phrase
     ### Select phrase
     if 'phrase' in request.GET:
@@ -141,6 +156,32 @@ def acting(request):
                    'word_list' : GAME.actor.current_phrase_word_list,
                    'current_word' : current_word_index})
 
+
+def waiting_for_actor(request):
+    """
+    Controller for waiting_for_actor.html
+    Unique for each viewer
+    """
+    viewer_number = request.session['viewer_number']
+    person = 'Someone else'
+    if GAME.winning_viewer_number == viewer_number:
+        person = 'You'
+    viewer = GAME.lookup_viewer(viewer_number)
+    position = GAME.get_viewer_position(viewer_number)
+    points = viewer.points
+    next_selection = 'Phrase'
+    if GAME.current_correct_guess_type == 'Word' and \
+       len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list) - 1:
+        next_selection = 'Word'
+    return render(request, 'waiting_for_actor.html',
+                  {'person' : person,
+                   'guess_type' : GAME.current_correct_guess_type,
+                   'guess' : GAME.current_correct_guess,
+                   'position' : position,
+                   'points' : points,
+                   'next_selection' : next_selection})
+
+
 def reset(request):
     """
     resets the state of the game
@@ -164,3 +205,14 @@ def phrase_ready_api(request):
         if GAME.actor is not None:
             phrase_ready = GAME.actor.phrase_ready()
     return render(request, 'phrase_ready.html', {'phrase_ready' : phrase_ready})
+
+def guess_correct_api(request):
+    """
+    None  :: Phrase has not been succesfully guessed / not ready to be guessed.
+    Phrase :: The current Phrase has been correctly guessed.
+    Word   :: The current word has been guessed correectly
+    """
+    guess_type = None
+    if GAME is not None:
+        guess_type = GAME.current_correct_guess_type
+    return render(request, 'guess_correct.html', {'guess_type' : guess_type})

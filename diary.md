@@ -348,3 +348,14 @@
 * Feature 13: Add handle for GET request of current guess of phrase
   * Add conditional statements for phrase vs. word
   * Test, implementation, review and merge complete
+  
+### 15/04/2017
+* Complete Feature 13
+* Complete vast majority of Feature 14
+  * May also cover other features too (investigate - possibly 15 & 16)
+  * Need to implement multi word (e.g. when word of multi word guessed force choose next word in phrase)
+    * Feature 15
+* Still need to complete and think about issue 18
+
+### 17/04/2017
+* Complete feature 14 and 16 and merge (one issue #62) 

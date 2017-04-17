@@ -64,6 +64,28 @@ class Game(object):
         else:
             False
 
+    def get_viewer_position(self, viewer_num):
+        """
+        Looks up the viewers score and their position relative to other viewers
+        @param viewer_num  :: The viewer number to lookup the position of
+        @return The position as a string
+        """
+        current_viewer_points = self.lookup_viewer(viewer_num).points
+        position = 1
+        for viewer in self.viewers:
+            if viewer.points > current_viewer_points:
+                position += 1
+        def position_string(number):
+            return {
+                1: '1st',
+                2: '2nd',
+                3: '3rd',
+            }[number]
+        if position <= 3:
+            return position_string(position)
+        else:
+            return str(position) + 'th'
+
     def set_guess_type(self, is_phrase):
         """
         Takes a boolean to represent if the guess type is for the phrase (True)

@@ -114,14 +114,14 @@ class TestGame(unittest.TestCase):
             self.game_obj.add_viewer()
 
     def test_get_position_first(self):
-        self.add_viewer(2)
+        self.add_viewers(2)
         position_1 = self.game_obj.get_viewer_position(1)
         position_2 = self.game_obj.get_viewer_position(2)
         self.assertEqual(position_1, '1st')
         self.assertEqual(position_2, '1st')
 
     def test_get_position_second(self):
-        self.add_viewer(2)
+        self.add_viewers(2)
         self.game_obj.lookup_viewer(1).increment_points(10)
         position_1 = self.game_obj.get_viewer_position(1)
         position_2 = self.game_obj.get_viewer_position(2)
@@ -129,14 +129,14 @@ class TestGame(unittest.TestCase):
         self.assertEqual(position_2, '2nd')
 
     def test_get_position_third(self):
-        self.add_viewer(3)
+        self.add_viewers(3)
         self.game_obj.lookup_viewer(1).increment_points(20)
         self.game_obj.lookup_viewer(2).increment_points(10)
         position_3 = self.game_obj.get_viewer_position(3)
         self.assertEqual(position_3, '3rd')
 
     def test_get_position_forth(self):
-        self.add_viewer(4)
+        self.add_viewers(4)
         self.game_obj.lookup_viewer(1).increment_points(30)
         self.game_obj.lookup_viewer(2).increment_points(20)
         self.game_obj.lookup_viewer(3).increment_points(10)

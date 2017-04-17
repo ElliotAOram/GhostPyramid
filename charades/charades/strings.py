@@ -24,4 +24,7 @@ def invalid_session():
     return "Invalid session ID has been provided."
 
 def new_phrase():
-    return "The Viewers have guessed your phrase! Please select a new phrase from the list below"
+    return "The Viewers have guessed your phrase! Please select a new phrase from the list below."
+
+def new_word():
+    return "The Viewers have guessed your word! Please select a new word using the buttons below."

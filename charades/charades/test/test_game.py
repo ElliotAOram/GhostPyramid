@@ -41,7 +41,9 @@ class TestGame(unittest.TestCase):
 
     def test_lookup_invalid_viewer(self):
         self.game_obj.add_viewer()
-        self.assertFalse(self.game_obj.lookup_viewer(2))
+        self.assertRaises(RuntimeError,
+                          self.game_obj.lookup_viewer,
+                          2)
 
     def test_set_guess_type(self):
         self.game_obj.set_guess_type(True)

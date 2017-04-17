@@ -93,7 +93,6 @@ def guess(request):
                 # Need to update API
     outbound_url = reverse('guess')
     points = GAME.lookup_viewer(request.session['viewer_number']).points
-    print points
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),

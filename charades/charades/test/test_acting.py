@@ -54,7 +54,8 @@ class ActingTests(StaticLiveServerTestCase):
                          'current_word_button').get_attribute('value'), '1')
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Viewer'))
-        self.browser.get('%s%s' % (self.live_server_url, '/guess/?guess=Shot&guess_type=Guess+Word'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/guess/?guess=Shot&guess_type=Guess+Word'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?word_complete=True'))
         self.assertEqual(self.browser.find_element_by_class_name( \
                           'completed_word_button').get_attribute('value'), '1')

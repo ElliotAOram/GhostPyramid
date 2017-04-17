@@ -105,7 +105,7 @@ def guess(request):
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
                                           'current_word_index' : GAME.actor.current_word_index + 1,
                                           'current_word' : GAME.actor.current_word,
-                                          'incorrect' : incorrect, 
+                                          'incorrect' : incorrect,
                                           'outbound_url' : outbound_url})
 
 def select_phrase(request):
@@ -130,7 +130,7 @@ def acting(request):
     if GAME.actor is None:
         return redirect('/?no_actor=True')
     words_changable = False
-    instructions = 'Act the Word!'
+    instructions_str = 'Act the Word!'
     if 'new_phrase' in request.GET:
         GAME.reset_guess_state() #reset current_correct_guess ect.
         words_changable = True
@@ -141,9 +141,9 @@ def acting(request):
         words_changable = True
         if "+" in phrase:
             phrase = phrase.replace("+", " ")
-            instructions = select_word()
+            instructions_str = select_word()
         if " " in phrase:
-            instructions = select_word()
+            instructions_str = select_word()
         genre = check_phrase(phrase)
         if genre is not None:
             GAME.actor.set_phrase(phrase, genre)
@@ -166,9 +166,8 @@ def acting(request):
             GAME.actor.set_word(current_word_index - 1)
 
     ### Word polling response
-    new_word_msg = ''
     if 'word_complete' in request.GET:
-        instructions = new_word()
+        instructions_str = new_word()
         words_changable = True
 
     ### Render page
@@ -177,7 +176,7 @@ def acting(request):
                   {'num_words' : len(GAME.actor.current_phrase_word_list),
                    'word_list' : GAME.actor.current_phrase_word_list,
                    'completed_words' : GAME.actor.completed_words,
-                   'instructions' : instructions,
+                   'instructions' : instructions_str,
                    'current_word' : current_word_index,
                    'words_changable' : words_changable})
 

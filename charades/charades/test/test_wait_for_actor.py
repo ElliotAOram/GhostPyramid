@@ -42,7 +42,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Phrase')
 
-    def test_phrase_page_elements(self):
+    def test_word_page_elements(self):
         """
         Test that the expected generic elements are on the guess.html page
         """

@@ -172,7 +172,7 @@ def waiting_for_actor(request):
     next_selection = 'Phrase'
     if GAME.current_correct_guess_type == 'Word' and \
        len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list) - 1:
-       next_selection = 'Word'
+        next_selection = 'Word'
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
                    'guess_type' : GAME.current_correct_guess_type,

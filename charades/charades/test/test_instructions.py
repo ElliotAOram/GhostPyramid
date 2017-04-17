@@ -74,7 +74,6 @@ class InstructionsTests(StaticLiveServerTestCase):
         self.assertTrue('/guess' in self.browser.current_url)
 
     def tearDown(self):
-        self.browser.refresh()
         self.browser.get('%s%s' % (self.live_server_url, '/reset'))
         self.browser.refresh()
 

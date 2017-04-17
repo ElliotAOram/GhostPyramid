@@ -97,7 +97,6 @@ class IndexTests(StaticLiveServerTestCase):
 
     # http://stackoverflow.com/questions/13243267/django-and-selenium-web-testing-error-errno-10054
     def tearDown(self):
-        self.browser.refresh()
         self.browser.get('%s%s' % (self.live_server_url, '/reset'))
         self.browser.refresh()
 

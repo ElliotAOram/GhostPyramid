@@ -90,8 +90,8 @@ class TestGuess(StaticLiveServerTestCase):
         self.assertTrue('guess=test' in self.browser.current_url)
         self.assertTrue('guess_type=Guess+Phrase' in self.browser.current_url)
 
-    # http://stackoverflow.com/questions/28934533/python-selenium-how-to-check-whether-the-webdriver-did-quit
     def tearDown(self):
+        self.browser.get('%s%s' % (self.live_server_url, '/reset'))
         self.browser.refresh()
 
     @classmethod

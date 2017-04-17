@@ -30,6 +30,9 @@ class PhraseReadyAPITests(StaticLiveServerTestCase):
         text_found = re.search(r'True', self.browser.page_source)
         self.assertNotEqual(text_found, None)
 
+    def tearDown(self):
+        self.browser.get('%s%s' % (self.live_server_url, '/reset'))
+
     @classmethod
     def tearDownClass(cls):
         """

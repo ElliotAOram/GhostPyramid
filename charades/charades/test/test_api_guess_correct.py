@@ -26,11 +26,12 @@ class GuessCorrectAPITests(StaticLiveServerTestCase):
         self.browser.get('%s%s' % (self.live_server_url,
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Shot+Put'))
-        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word=Put'))
+        self.browser.get('%s%s' % (self.live_server_url, '/acting/?current_word_index=2'))
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=BSW18&user_type=Viewer/'))
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/guess/'))
-        self.browser.get('%s%s' % (self.live_server_url, '/guess/Guess+Word=Put'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                  '/guess/?guess_type=Guess+Word&guess=put'))
         self.browser.get('%s%s' % (self.live_server_url, '/api/guess_correct'))
         text_found = re.search(r'Word', self.browser.page_source)
         self.assertNotEqual(text_found, None)
@@ -40,9 +41,10 @@ class GuessCorrectAPITests(StaticLiveServerTestCase):
                                    '/instructions/?session_id=BSW18&user_type=Actor'))
         self.browser.get('%s%s' % (self.live_server_url, '/acting/?phrase=Tennis'))
         self.browser.get('%s%s' % (self.live_server_url,
-                                   '/instructions/?session_id=BSW18&user_type=Viewer/'))
+                                   '/instructions/?session_id=BSW18&user_type=Viewer'))
         self.browser.get('%s%s' % (self.live_server_url, '/guess/'))
-        self.browser.get('%s%s' % (self.live_server_url, '/guess/Guess+Phrase=Tennis'))
+        self.browser.get('%s%s' % (self.live_server_url,
+                                   '/guess/?guess_type=Guess+Phrase&guess=Tennis'))
         self.browser.get('%s%s' % (self.live_server_url, '/api/guess_correct'))
         text_found = re.search(r'Phrase', self.browser.page_source)
         self.assertNotEqual(text_found, None)

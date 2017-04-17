@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
-                    new_phrase, new_word, incorrect_guess
+                    new_phrase, new_word, incorrect_guess, select_word
 from actor import Actor
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
@@ -130,6 +130,7 @@ def acting(request):
     if GAME.actor is None:
         return redirect('/?no_actor=True')
     words_changable = False
+    instructions = 'Act the Word!'
     if 'new_phrase' in request.GET:
         GAME.reset_guess_state() #reset current_correct_guess ect.
         words_changable = True
@@ -140,6 +141,9 @@ def acting(request):
         words_changable = True
         if "+" in phrase:
             phrase = phrase.replace("+", " ")
+            instructions = select_word()
+        if " " in phrase:
+            instructions = select_word()
         genre = check_phrase(phrase)
         if genre is not None:
             GAME.actor.set_phrase(phrase, genre)
@@ -164,7 +168,7 @@ def acting(request):
     ### Word polling response
     new_word_msg = ''
     if 'word_complete' in request.GET:
-        new_word_msg = new_word()
+        instructions = new_word()
         words_changable = True
 
     ### Render page
@@ -173,7 +177,7 @@ def acting(request):
                   {'num_words' : len(GAME.actor.current_phrase_word_list),
                    'word_list' : GAME.actor.current_phrase_word_list,
                    'completed_words' : GAME.actor.completed_words,
-                   'new_word_msg' : new_word_msg,
+                   'instructions' : instructions,
                    'current_word' : current_word_index,
                    'words_changable' : words_changable})
 

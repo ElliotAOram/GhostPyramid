@@ -31,3 +31,6 @@ def new_word():
 
 def incorrect_guess():
     return "Incorrect! Try again!"
+
+def select_word():
+    return "Select a word using the buttons below and then start to Act it out!"

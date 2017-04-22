@@ -42,16 +42,31 @@ An additional testing package, nosetest \cite{nosetest}, was used to run python 
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter4/jenkins_test_coverage.PNG}
-		\caption{The above shows the rendered output of the test coverage report from nosetest in Jenkins. This report includes both a graphical and table representation of the data showing the amount of code that is being exercised by the unit tests. Note the incomplete test coverage and see explanation above.}
+		\caption{The rendered output of the test coverage report from nosetest in Jenkins. This report includes both a graphical and table representation of the data showing the amount of code that is being exercised by the unit tests. Note the incomplete test coverage and see explanation above.}
 		\label{fig:jenkins_test_cover}
 	}
 \end{figure}
  
 
 \subsection{Unit Tests}
-
+To ensure the functionality of the system, unit tests were created to test functions. 
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.75]{Chapter4/jenkins_unit_test.PNG}
+		\caption{The rendered output of the unit test report in Jenkins. Blue indicates passing tests while red is those that failed.}
+		\label{fig:jenkins_unit_test}
+	}
+\end{figure}
 
 \subsection{User Interface Testing}
+Selenium was used for all the testing of the user interface. The selenium library allows for interaction with a web browser in a testing environment. All user interface tests have several generic tests which are as follows:
+\begin{itemize}
+	\item Page elements: The generic view of a page is tested to ensure that the elements on the page are what the test expects. This is mainly used as a test of the Django template code, written in HTML, and the embedded Python.
+	\item Navigation: Most pages of the website will either have a button to take the user to another page, or poll the api until the conditions are met to redirect the user. In both cases, a test case will exist to ensure the page transition is correct. 
+\end{itemize}
+
+\subsubsection{Selenium problems and solutions}
+Selenium gives the advantage of being able to test a web interface. However, when run locally, selenium took on average 6 to 8 seconds to create a new instance of the web browser. Many tutorials for using the Selenium testing framework 
 
 \subsection{Stress Testing}
 

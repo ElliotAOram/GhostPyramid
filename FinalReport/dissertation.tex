@@ -34,6 +34,7 @@
 
 \usepackage{textcomp}
 \usepackage{graphicx}
+\usepackage{tabu}
 
 % Use the following to selectively exclude chapters
 %\includeonly{cover,abstract,acknowledge,declare,chapter1,chapter2}
@@ -103,6 +104,14 @@ There is a balance to be struck between what is relevant to include in the body 
 %\fancyhf{} % clear all header and footer fields
 \fancyhead[L]{\textsl{Appendix\ \thechapter}}
 \fancyhead[R]{\textsl{\leftmark}}}
+
+\appendix
+\fancyhead[L]{\textsl{Appendix\ \thechapter}}
+\fancyhead[R]{\textsl{\leftmark}}
+\fancyhead[C]{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
 \appendix
 \fancyhead[L]{\textsl{Appendix\ \thechapter}}

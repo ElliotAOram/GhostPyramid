@@ -26,9 +26,9 @@ The Pepper's Ghost technique was originally used for stage and theatre productio
 
 Figure \ref{fig:basic_ghost} shows a basic example of how the technique produces holographic illusions. The lit stage that is parallel to the viewers line of sight will have actors and scenery as per a normal stage production. The "Ghost" is located off stage and is not visible by the audience. When illuminated, the ghost is displayed to the audience as the light rays travel radially from the "Ghost" and those that reach the glass will be refracted. The glass is positioned at 45\textdegree{} from both the audience and the "Ghost" to account for the 90\textdegree{} offset between the two.
 
-This technique has been modernised since the 1860s, and has been used in different settings proving particularly popular in museums and exhibitions such as \textit{An Audience with Sir Alex Ferguson} at the Manchester United Football Club museum \cite{alex_ferguson} and \textit{Shane Warne - 'Cricket Found Me'} at the national sports museum in Melbourne \cite{shane_warne}. Within the last few years, there has been a resurgence in the use of the technique with consumers creating there own Pepper's Ghost illusions on mobile devices.
+This technique has been modernised since the 1860s, and has been used in different settings proving particularly popular in museums and exhibitions such as \textit{An Audience with Sir Alex Ferguson} at the Manchester United Football Club museum \cite{alex_ferguson} and \textit{Shane Warne - 'Cricket Found Me'} at the national sports museum in Melbourne \cite{shane_warne}.
 
-Whilst the technique still uses Henry Pepper's original concept, it has been modified to display the hologram from multiple angles using a pyramid - rather than a single glass plane. This structure is commonly referred to as the Pepper's Ghost pyramid.
+Within the last few years, there has been a resurgence in the use of the technique with consumers creating there own Pepper's Ghost illusions on mobile devices. Whilst the technique still uses Henry Pepper's original concept, it has been modified to display the hologram from multiple angles using a pyramid - rather than a single glass plane. This structure is commonly referred to as the Pepper's Ghost pyramid.
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[width=\linewidth]{Chapter1/ghost_pyramid.png}
@@ -40,7 +40,9 @@ Whilst the technique still uses Henry Pepper's original concept, it has been mod
 Figure \ref{fig:ghost_pramid} shows an example of a Pepper's Ghost pyramid. The pyramid is square based, made from a transparent material (such as perspex, clear acrylic or glass) and is open at both the top and bottom. The technique for displaying holograms differs with the "Ghost" now being an image or video displayed on a screen. The pyramid is located on a large horizontal monitor that is being used to display the hologram input images. Furthermore, to create an illusion from all sides of the pyramid, four images are required (one for each side of the pyramid). This  means that the 2D projection of the image can be seen from any side of the pyramid. This Pyramid structure will be used for the hologram creation part of this project.
 
 \section{Analysis}
-Whilst there have been numerous examples of applications using the Pepper's Ghost Pyramid as a computer visualisation technique, none were found that detailed using this as part of a real-time system. Furthermore, whilst many have used the technique in an educational setting, it is more often the case that the content of the hologram is used as an educational aid, rather than focusing on the technique itself. Due to its simplicity and visual impact, the Pepper's Ghost technique is ideal to help younger children understand light and refraction.  
+Whilst there have been numerous examples of applications using the Pepper's Ghost Pyramid as a computer visualisation technique, very few implementation use real time video feeds. This year, 2017, in the presidential election campaign in France, candidate Jean-Luc Melenchon has utilised the Pepper's Ghost technique to give a speech to prospective voters in six cities simultaneously \cite{french_elections}. Whilst no precise details of how this system works have been released, this project draws several parallels with the system. Both use the Pepper's Ghost technique with real-time video and therefore this example can be used as a feasibility case for this project. Furthermore, this highlights additional use cases in media and visual representation proving the technique to be of more use than simply an educational tool.
+
+Whilst many have used the technique in an educational setting (such as museums and exhibitions), it is more often the case that the content of the hologram is used as an educational aid, rather than focusing on the technique itself. Due to its simplicity and visual impact, the Pepper's Ghost technique is ideal to help younger children understand light and refraction.  
 
 \subsection{Objectives}
 Initially, the project scope covered the creation of a system to produce real-time holograms using a video feed. However, considering the time-line of the project and the work involved, the addition of an accompanying system for the Charades game was added to the objectives. The objectives that were agreed upon are as follows:
@@ -59,6 +61,8 @@ Initially, the project scope covered the creation of a system to produce real-ti
 	\item As it is designed for use at outreach events, the system should be robust and thoroughly tested.
 	
 	\item The system should be easy to run from the perspective of the client. Initial set up should ideally be straight forward and self explanatory.
+	
+	\item Given the target audience, the system should be robust and difficult to crash.
 \end{itemize}
 
 
@@ -81,7 +85,7 @@ Following research into the Pepper's Ghost technique, it was decided that it wou
 
 \end{itemize}
 
-The main consideration throughout the development process of the Pepper's Ghost application is the efficiency of the video feed manipulation. To have an effective display, the video should be running at no less than 30 frames per second. An ideal target would be 60 frames a second but this may not be achievable... depending on the capture speed of the camera.
+The main consideration throughout the development process of the Pepper's Ghost application is the efficiency of the video feed manipulation. To have an effective display, the video should be running at no less than 30 frames per second. An ideal target would be 60 frames a second but this may not be achievable depending on the capture speed of the camera.
  
 \subsubsection{Charades game}
 The charades game forms the more interactive side of the project. The concept is to have a single actor (member of the audience) outside the viewing area with a mobile device. He or she selects a phrase from a choice of phrases and then act out the selected phrase. The acting is captured by the web cam from Pepper's Ghost system and displayed as a hologram in the viewing area. Whilst the phrase is being acted, the viewers (who will also have mobile devices) are given information about the phrase (such as the number of words and the genre of the phrase) and attempt to guess what is being acted. Once the phrase has been successfully acted, the actor is be prompted to select a new phrase and the viewers are allocated points. After three phrases, the winner is the viewer with the most points. The main tasks of the charades game are:
@@ -124,7 +128,7 @@ To successfully use FDD for this project, several adaptations to the normal proc
 Initially, a Domain Expert (Customer) was required to aid in the development of the overall model and feature creation. In this context, the project supervisor (Dr. Helen Miles) fulfilled this role and the developer acted as both the Chief Programmer and Chief Architect. For this project, the Domain specific language was shared by both the Domain Expert and the developer.
 
 \subsubsection{Build a Feature list}
-The feature list was produced with the objectives of the system and  the main tasks for the project in mind. This was finalised with a discussion between the developer and the Domain Expert which verified all the features. In addition to a description, each feature also had a complexity and priority rating, as well as a list of dependent features and whether the feature was require for the prototype. The final feature list can be found in Appendix C.
+The feature list was produced with the objectives of the system and  the main tasks for the project in mind. This was finalised with a discussion between the developer and the Domain Expert which verified all the features. In addition to a description, each feature also had a complexity and priority rating, as well as a list of dependent features and whether the feature was require for the prototype. The final feature list can be found online here: \\ https://github.com/ElliotAOram/GhostPyramid/blob/master/Features/FeatureList.md .
 
 \subsubsection{Plan by Feature}
 Steps such as establishing developer teams and scheduling developer teams' time throughout the project were no longer required. In their place, the features were given priorities to aid time scheduling and development order. Once the order was created, the features were assigned to separate week long iterations.

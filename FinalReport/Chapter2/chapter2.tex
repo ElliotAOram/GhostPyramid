@@ -8,10 +8,13 @@ How much material you include on detailed design and implementation will depend 
 You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc. \\
 Some example sub-sections may be as follows, but the specific sections are for you to define.}
 
-The design for the system was completed in two major steps. First, the initial design was created before any development and following this, incremental changes were made to add  more detail to the design with every relevant feature. The overall initial design of the system remained mostly static and was only added to. The UML class diagrams were designed to start as very basic and evolved as the features were developed
+The design for the system was completed in two major steps. First, the initial design was created before any development and following this, incremental changes were made to add  more detail to the design with every relevant feature. The initial design formed the overall model for the system, and was only added to over the duration of the project. The UML class diagrams were designed to be basic initially and only contained major functions and classes. These then evolved as the features were developed.
+
+At the plan by feature level, design was performed at the start of each feature. The feature would be analysed and the relevant functions and variables that were required would be added to the design first. Following this, unit (or system) tests would be designed to exercise the functions as well as the full requirements of the feature.
 
 \section{Overall Architecture}
-\subsection{Use case}
+\subsection{Informing the Overall model}
+\subsubsection{Use case}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/use_case.png}
@@ -23,7 +26,7 @@ To best identify the requirements of the users, the use case diagram (Figure \re
 
 \newpage
 
-\subsection{Activity diagram}
+\subsubsection{Activity diagram}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.70]{Chapter2/activity_diagram.png}
@@ -33,7 +36,7 @@ To best identify the requirements of the users, the use case diagram (Figure \re
 \end{figure}
 Given the system was deigned to be a game of charades, it follows a linear set of instructions that mirror the original rules of the charades game. An activity diagram was chosen to model the flow of activities in the system due to the well defined path of game play. Figure \ref{fig:activity_diagram} shows an activity diagram that maps the basic flow of a single round of the game. The \textit{Image processing loop}, shown in purple, describes the flow  of the hologram creation. This process (prefixed with the letter A) run continuously in parallel with the game loop (prefixed with the letter B).
 
-\subsection{Component diagram}
+\subsubsection{Component diagram}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/component_diagram.png}
@@ -48,12 +51,18 @@ The \textbf{Staging Area} would be where the actor would be filmed. The camera d
 The \textbf{Image Processing machine} is a computer that acts as the server for the website as well as running the image processing application for the holograms. Due to the nature of the video feed processing in real-time, the computer will require a Graphical processing unit (GPU). The Image Processing application has input of the raw video feed from the camera in the Staging Area and will process the video and output the result.
 The Charades Game server is hosted on the Image processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
 
+\subsection{The overall model}
+\subsubsection{Hologram creation system}
 
+\subsubsection{Website}
 
-\section{Some detailed design}
+\subsection{UI Design}
 
-\subsection{Even more detail}
-
-\section{User Interface}
-
-\section{Other relevant sections}
+\section{Implementation tools}
+\subsection{Python}
+Python is a free, easy to learn, easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and 
+\subsection{OpenCV}
+OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}. 
+\subsection{Django}
+\subsection{JQuery?}
+\subsection{Pycharm}

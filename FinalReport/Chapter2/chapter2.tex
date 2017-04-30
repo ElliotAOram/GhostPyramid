@@ -12,9 +12,9 @@ The design for the system was completed in two major steps. First, the initial d
 
 At the plan by feature level, design was performed at the start of each feature. The feature would be analysed and the relevant functions and variables that were required would be added to the design first. Following this, unit (or system) tests would be designed to exercise the functions as well as the full requirements of the feature.
 
-\section{Overall Architecture}
-\subsection{Informing the Overall model}
-\subsubsection{Use case}
+
+\section{Informing the Overall model}
+\subsection{Use case}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/use_case.png}
@@ -22,11 +22,11 @@ At the plan by feature level, design was performed at the start of each feature.
 		\label{fig:use_case}
 	}
 \end{figure}
-To best identify the requirements of the users, the use case diagram (Figure \ref{fig:use_case}) was produced. In addition to the functionality required by each type of user (Actors and Viewers) the diagram also divides the system into basic subsections. This diagram was a good first step in the early development of the system as it gave an overview of the system as a whole before any major implementation choices were required. Whilst very basic, it also showed interaction with the system that the users would require and acted as the base for the input and output requirements to be address in the user interface design. In addition, the use case diagram showed that the Charades game functionality was very dependant on the type of user which promoted an model-view-controller design pattern.
+To best identify the requirements of the users, the use case diagram (Figure \ref{fig:use_case}) was produced. In addition to the functionality required by each type of user (Actors and Viewers) the diagram also divides the system into basic subsections. This diagram was a good first step in the early development of the system as it gave an overview of the system as a whole before any major implementation choices were required. Whilst very basic, it also showed interaction with the system that the users would require and acted as the base for the input and output requirements to be address in the user interface design. In addition, the use case diagram showed that the Charades game functionality was dependant on the type of user interacting with the system, which promoted an model-view-controller design pattern to be used.
 
 \newpage
 
-\subsubsection{Activity diagram}
+\subsection{Activity diagram}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.70]{Chapter2/activity_diagram.png}
@@ -36,7 +36,7 @@ To best identify the requirements of the users, the use case diagram (Figure \re
 \end{figure}
 Given the system was deigned to be a game of charades, it follows a linear set of instructions that mirror the original rules of the charades game. An activity diagram was chosen to model the flow of activities in the system due to the well defined path of game play. Figure \ref{fig:activity_diagram} shows an activity diagram that maps the basic flow of a single round of the game. The \textit{Image processing loop}, shown in purple, describes the flow  of the hologram creation. This process (prefixed with the letter A) run continuously in parallel with the game loop (prefixed with the letter B).
 
-\subsubsection{Component diagram}
+\subsection{Component diagram}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/component_diagram.png}
@@ -50,19 +50,22 @@ The \textbf{Staging Area} would be where the actor would be filmed. The camera d
 
 The \textbf{Image Processing machine} is a computer that acts as the server for the website as well as running the image processing application for the holograms. Due to the nature of the video feed processing in real-time, the computer will require a Graphical processing unit (GPU). The Image Processing application has input of the raw video feed from the camera in the Staging Area and will process the video and output the result.
 The Charades Game server is hosted on the Image processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
+\section{Overall Architecture}
+\subsection{Hologram creation system}
 
-\subsection{The overall model}
-\subsubsection{Hologram creation system}
-
-\subsubsection{Website}
+\subsection{Website}
 
 \subsection{UI Design}
 
 \section{Implementation tools}
 \subsection{Python}
-Python is a free, easy to learn, easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and 
-\subsection{OpenCV}
-OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}. 
-\subsection{Django}
-\subsection{JQuery?}
+Python is a free, easy to learn and easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and this approach is encouraged by the community for larger projects.
+
 \subsection{Pycharm}
+
+
+\subsection{OpenCV}
+OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}.
+
+\subsection{Django}
+Django 

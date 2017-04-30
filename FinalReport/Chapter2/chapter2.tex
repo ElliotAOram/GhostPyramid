@@ -59,13 +59,21 @@ The Charades Game server is hosted on the Image processing machine. This compone
 
 \section{Implementation tools}
 \subsection{Python}
-Python is a free, easy to learn and easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and this approach is encouraged by the community for larger projects.
+Python is a free, easy to learn and easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and this approach is encouraged by the community for larger projects. For this project, Python version 2.7.11 was used. Whilst this is becoming a legacy version of Python, it is still well supported and a pre-compiled OpenCV binary file for this version of Python is available from the OpenCV website. Furthermore, the developer had more experience with the 2.7.11 Python language than the newer 3.6 variant meaning that less training was required for the project to get under way.
 
 \subsection{Pycharm}
-
+Pycharm is a Python Integrated development environment (IDE) used to aid with the development of programming projects written in Python. The application offers facilities for refactoring code, auto completion and creation of variable and function names, as well as on the fly testing and code execution. In addition, Pycharm supports a variety of community built plugins that help developers with style and following convention. For this project, the PEP8 style plugin was used to reduce the amount of errors and warnings raised in the Pylint linting tool (discussed in further detail in section 4.2.2.1).
 
 \subsection{OpenCV}
-OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}.
+OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}. Whilst OpenCVs application range from object and feature detection to real-time 3D model extraction, this library is only being used for the simpler case video feed capture and basic manipulation.
 
 \subsection{Django}
-Django 
+Django is a free and open source web framework for the Python programming language. The framework helps developers to build web applications quickly without requiring in depth knowledge of web concepts. The framework uses a Model-Template-View (MTV) design pattern which almost mirrors the Model-View-Controller (MVC) pattern more commonly recognised in software engineering. 
+\begin{itemize}
+	\item Model: The Model manages the data
+	
+	\item Template: Template is comparable to the View in the more standard MVC pattern. They display the data to the client (webpage) and are written in the HTML web language.  In addition, data can be embedded into the templates using pythonic operations and variables that can be passed to the template from the View. 
+	
+	\item View: The View is comparable to the MVC controller. 
+	
+\end{itemize} 

@@ -1,12 +1,8 @@
 %\addcontentsline{toc}{chapter}{Development Process}
 \chapter{Design}
 
-\textit{You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.\\
-The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.\\
-Typically, for an object-oriented design, the discussion will focus on the choice of objects and classes and the allocation of methods to classes. The use made of reusable components should be described and their source referenced. Particularly important decisions concerning data structures usually affect the architecture of a system and so should be described here.\\
-How much material you include on detailed design and implementation will depend very much on the nature of the project. It should not be padded out. Think about the significant aspects of your system. For example, describe the design of the user interface if it is a critical aspect of your system, or provide detail about methods and data structures that are not trivial. Do not spend time on long lists of trivial items and repetitive descriptions. If in doubt about what is appropriate, speak to your supervisor.\\
-You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc. \\
-Some example sub-sections may be as follows, but the specific sections are for you to define.}
+\textit{ As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.\\
+The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.}
 
 The design for the system was completed in two major steps. First, the initial design was created before any development and following this, incremental changes were made to add  more detail to the design with every relevant feature. The initial design formed the overall model for the system, and was only added to over the duration of the project. The UML class diagrams were designed to be basic initially and only contained major functions and classes. These then evolved as the features were developed.
 
@@ -52,10 +48,76 @@ The \textbf{Image Processing machine} is a computer that acts as the server for 
 The Charades Game server is hosted on the Image processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
 \section{Overall Architecture}
 \subsection{Hologram creation system}
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.9]{Chapter2/vpa_class_diagram.png}
+		\caption{The UML class diagram for the hologram creation system. The diagram shows the vpa (video processing application) module and the enclosed subclasses and submodules.}
+		\label{fig:vpa_class_diagram}
+	}
+\end{figure}
 
-\subsection{Website}
+\begin{itemize}
+	\item \textbf{vpa}: This module holds all the code for hologram creation system. vpa stands for \textit{Video Processing Application} as the code in this module handles the processing of the video feed.
+
+	\item \textbf{run\_vpa}: This is a script and is the most simplistic in the module. This is the driver script for the VideoProcessor class and runs the required functions to create begin the video feed  capture and display the manipulated video feed in the output window.
+
+	\item \textbf{parsers}: This module holds several functions that are used to ensure that values provided in the system are expected and correct. As Python is not a strongly typed language, the parsers are required to ensure that no type errors occur during execution of the application. The parser functions have been separated into a separate module to group them together. All functions in the parser module have input of a single object (where object is the super class of all Python variables) and will raise a Python ValueError if they do not meet the criteria of the function.
+
+	\item \textbf{VideoProcessor}: This class handles the main functionality and logic of the application. The most import function in the VideoProcessor is the process\_and\_output\_video function. This function contains the main processing loop of the application. This loop will call the scale, rotate and position functions from the helper\_functions module. 
+	The VideoProcessor has been designed as a class rather than a collection of functions so that the video\_feed variable (which contains the video feed from the web cam) can be stored.  
+
+	\item \textbf{helper\_functions}: This module was not present in the original design, but in order to improve the quality, readability and test coverage of the code, it was added to hold refactored code from the \textbf{VideoProcessor} class. In addition to simple helper functions such as obtaining the screen resolution, the helper\_functions module also aid with manipulations of the video feed. Functions used for calculating the location, cropping and rotation of the image are also in the helper\_functions module. 
+
+\end{itemize}
+
+
+\subsection{Charades Game}
+\subsubsection{Model Design}
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.9]{Chapter2/charades_class_diagram.png}
+		\caption{The UML class diagram for the Charades game. The diagram shows the Model for the charades game implementation.}
+		\label{fig:charades_class_diagram}
+	}
+\end{figure}
+
+Figure \ref{fig:charades_class_diagram} shows the design for the Model used to represent data in the Charades game. For the Model, it was decided not to use a data and instead use a class representation for data storage. The reason behind this, is the  flow of the charades game is dependant on the state of the system, and a class based model provides a better way to model state versus a database alternative.
+
+The Model has been separated into four files:
+\begin{itemize}
+	\item \textbf{Game}: The Game class holds the state of the game at it's highest level of abstraction. As well as holding a list of the Viewers and Actors, the Game will also hold information regarding the current rounds correct guess, the type of the guess and the winning viewer number. All of these values are used to update the game state and inform the users of the current state of the game via the APIs.
+	
+	\item \textbf{Viewer}: The Viewer is a simple class that holds the number of points accumulated by a viewer and the the viewer\_number of that viewer. When a viewer logs in, the viewer\_number is automatically generated and a Viewer object is generated and added to the Game object. In addition to the Viewer being created in the model, the viewer\_number is also stored client side in a session cookie. This viewer\_number is then queried when the client needs to display a viewers score. 
+	
+	\item \textbf{Actor}: The model uses the concept of phrases and words for topics that an Actor will select to act out. In this scenario, a phrase is the whole topic that is being acted, for example "Shot put". However, a word is part of a phrase, for example "Shot" is a word in the phrase "Shot put". The Actor holds the current phrase and word variables for the phrase that is being acted. In addition it has functions to set new words and phrases and complete words when they are guessed correctly.
+	
+	\item \textbf{Phrases}: The Phrases module holds all the phrases that can be acted by the Actor in Python dictionaries. In addition, the module contains several helper functions designed to add checking phrases and phrase acquisition. This part of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
+	
+\end{itemize}
+
+\subsubsection{Routing and Website Design}
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.75]{Chapter2/website_design.png}
+		\caption{The website design for the Charades game. The diagram shows the Template structure of the website as well as when pages are updated and when polling of the API takes place.}
+		\label{fig:website_design}
+	}
+\end{figure}
+
+Figure \ref{fig:website_design}...
+
+
 
 \subsection{UI Design}
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.7]{Chapter2/guess_ui.png}
+		\caption{The UI design for the guess.html page. This page shows a user with 25 points and the phrase "Shot put" is being acted. The word "Put" has already been guessed meaning the word "Shot" is represented by "\_ \_ \_ \_" as it has yet to be guessed.}
+		\label{fig:guess_ui}
+	}
+\end{figure}
+
+Figure \ref{fig:guess_ui}...
 
 \section{Implementation tools}
 \subsection{Python}
@@ -68,12 +130,41 @@ Pycharm is a Python Integrated development environment (IDE) used to aid with th
 OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}. Whilst OpenCVs application range from object and feature detection to real-time 3D model extraction, this library is only being used for the simpler case video feed capture and basic manipulation.
 
 \subsection{Django}
-Django is a free and open source web framework for the Python programming language. The framework helps developers to build web applications quickly without requiring in depth knowledge of web concepts. The framework uses a Model-Template-View (MTV) design pattern which almost mirrors the Model-View-Controller (MVC) pattern more commonly recognised in software engineering. 
+Django is a free and open source web framework for the Python programming language. The framework helps developers to build web applications quickly without requiring in depth knowledge of web concepts such as middle-ware management and page routing. The framework uses a Model-Template-View (MTV) design pattern which almost mirrors the Model-View-Controller (MVC) pattern more commonly recognised in software engineering. 
 \begin{itemize}
-	\item Model: The Model manages the data
+	\item Model: The Model manages the data and logic of the application. In this project, the model consists of Python classes representing the Actor, Viewer and Game.
 	
 	\item Template: Template is comparable to the View in the more standard MVC pattern. They display the data to the client (webpage) and are written in the HTML web language.  In addition, data can be embedded into the templates using pythonic operations and variables that can be passed to the template from the View. 
 	
-	\item View: The View is comparable to the MVC controller. 
+	\item View: The View is comparable to the MVC controller. This handles the communication between the Model and the template as it has access to both. The View pushes data to the template using a python dictionary and pulls data from the Model using either database querying or accessing model classes with functions.
 	
-\end{itemize} 
+\end{itemize}
+
+\subsection{Git and GitHub}
+To maintain version control the project used git and GitHub. Git was used to help organise code as well as being a method to back up the development that had been carried out. With regards to organisation, this refers to setting milestones to measure progress, creating stable release branches for storing working versions of the code and creating pull requests to allow features to be reviewed before merging. In addition, a default template for GitHub issues and pull requests was created which added check lists to the issue and pull request descriptions. The templates helped to ensure that all required elements of the feature were considered and checked.
+
+When developing with git, a git work flow was used to ensure that iterations and features were handled in git correctly. Figure \ref{fig:git_workflow} shows the work flow diagram followed during development. In addition to the rules written at each stage, some additional rules were applied at certain stages: 
+\begin{itemize}
+	\item \textbf{A1}: The local branch follows the naming convention of:
+	\begin{verbatim}
+		<issue_number>_feature_<feature_number>
+	\end{verbatim}
+	An example of this for issue number 60, feature number 14 would be:
+	\begin{verbatim}
+		60_feature_14
+	\end{verbatim}
+	
+	\item \textbf{A2, A3}: When code is pushed, it should reference the issue number so that the issue online shows the commits history. This is done by finishing the commit with:
+	\begin{verbatim}
+	Refs #<issue_number>
+	\end{verbatim}
+	
+\end{itemize}
+
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.9]{Chapter2/git_workflow.png}
+		\caption{The GitHub work flow diagram used for development. The outer processes (1-3) are performed for every iteration. The inner processes (A1-A9) are performed for every feature.}
+		\label{fig:git_workflow}
+	}
+\end{figure}

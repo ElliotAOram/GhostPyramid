@@ -89,24 +89,36 @@ The Model has been separated into four files:
 	
 	\item \textbf{Viewer}: The Viewer is a simple class that holds the number of points accumulated by a viewer and the the viewer\_number of that viewer. When a viewer logs in, the viewer\_number is automatically generated and a Viewer object is generated and added to the Game object. In addition to the Viewer being created in the model, the viewer\_number is also stored client side in a session cookie. This viewer\_number is then queried when the client needs to display a viewers score. 
 	
-	\item \textbf{Actor}: The model uses the concept of phrases and words for topics that an Actor will select to act out. In this scenario, a phrase is the whole topic that is being acted, for example "Shot put". However, a word is part of a phrase, for example "Shot" is a word in the phrase "Shot put". The Actor holds the current phrase and word variables for the phrase that is being acted. In addition it has functions to set new words and phrases and complete words when they are guessed correctly.
+	\item \textbf{Actor}: The model uses the concept of phrases and words for topics that an Actor will select to act out. In this scenario, a phrase is the whole topic that is being acted, for example "Shot put". However, a word is part of a phrase, for example "Shot" is a word in the phrase "Shot put". The Actor class holds the current phrase and word variables for the phrase that is being acted. In addition it has functions to set new words and phrases and complete words when they are guessed correctly.
 	
 	\item \textbf{Phrases}: The Phrases module holds all the phrases that can be acted by the Actor in Python dictionaries. In addition, the module contains several helper functions designed to add checking phrases and phrase acquisition. This part of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
 	
 \end{itemize}
 
+\newpage
+
 \subsubsection{Routing and Website Design}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/website_design.png}
-		\caption{The website design for the Charades game. The diagram shows the Template structure of the website as well as when pages are updated and when polling of the API takes place.}
+		\caption{The website design for the Charades game. The diagram shows the Template structure of the website as well as when pages are updated from the API and when polling of the API takes place.}
 		\label{fig:website_design}
 	}
 \end{figure}
 
-Figure \ref{fig:website_design}...
+Figure \ref{fig:website_design} shows the design for the templates (html pages) of the website. The web pages are grouped into relevant sections that relate to their functionality:
 
+\begin{itemize}
 
+	\item \textbf{Website Core}: The Website core includes the login (index) and instructions page. The index.html page is where the user will provide the session information (This would be provided on the day that the system is being used, or set up in advance for an event) and the option to login in as a Viewer or Actor. The instructions.html provides a dynamic set of instructions depending on the type of the user (Actor or Viewer) and a continue button for the Actor to continue to the phrase\_selection page. In addition, as a viewer, the page will poll the phrase\_ready API and, when true, display a button for Viewers to click to advance to the next section of the website.
+	
+	\item \textbf{Actor}: The Actor section of the website handles phrase and word selection as well as a default page for the actor to view while they act out the current phrase. phrase\_selection.html provides the actor with a selection of five phrases and instructs them to select one. Once chosen, the actor advances to the acting.html page where the phrase is displayed and the actor is asked to choose a word from the phrase if that phrase has multiple words. Once the phrase and word have been selected, the phrase\_ready API will be updated to display True.
+	
+	\item \textbf{Viewer}: The Viewer section of the website handles when the phrase or word is guessed correctly or incorrectly. guess.html is where the viewers attempt to guess the current word or phrase being acted. Information about the genre, number of words and current word is also displayed to the viewer on this page, as well as a text field for viewer to submit their guess (see Figure \ref{fig:guess_ui}). This page both polls and updates the guess\_correct API. When a correct guess has been made, the API is updated with either "Word" or "Phrase" depending on the guess type. As multiple users will be on this page, the page also polls the guess\_correct API to see if a correct guess has been made. When a correct guess has been made, both the viewer who guessed correctly and all other viewers are taken to the wait\_for\_phrase page. This page polls the phrase\_ready API and when a new phrase has been selected (API returns 'True') viewers are redirect back to the guess.html page to guess the next word or phrase.
+	
+	\item \textbf{API}: The API consists of simple pages that are used when polling the game state for information. phrase\_ready.html displays 'True' when the phrase is in a guessable state (the phrase and word have been selected and the phrase or word have not been correctly guessed) and 'False' when not guessable. guess\_correct.html displays 'None' when no correct guesses have been made by the viewers, 'Word' when the word has been guessed correctly and 'Phrase' when the phrase has been correctly guessed.
+	
+\end{itemize}
 
 \subsection{UI Design}
 \begin{figure}[h!]
@@ -117,7 +129,20 @@ Figure \ref{fig:website_design}...
 	}
 \end{figure}
 
-Figure \ref{fig:guess_ui}...
+Figure \ref{fig:guess_ui} shows the UI design for the viewers guess.html page (All other UI diagrams are available in Appendix ...). The purpose of the UI diagrams was to ensure that all the functionality required for user interaction on a given page was met. In the case of Figure \ref{fig:guess_ui}, the page had to do the following:
+\begin{itemize}
+	\item Display the Genre information
+	
+	\item Display the total number of words in the phrase
+	
+	\item Display the current word being acted (when phrases contain multiple words)
+	
+	\item Display the viewers current score
+	
+	\item Provide a way for the viewers to submit a guess for the current word or the full phrase.
+\end{itemize}
+
+Whilst this criteria was never formalised at the point of design, given the knowledge of the system it was possible to infer this from the previous design documents (Figure \ref{fig:website_design}, \ref{fig:charades_class_diagram}). The goal for all pages on the website was to keep them simple were possible. Given the age of the target audience, the focus of the interface was on ease of use and simplicity. These values have been reflected by the minimal buttons and small amount of text.
 
 \section{Implementation tools}
 \subsection{Python}

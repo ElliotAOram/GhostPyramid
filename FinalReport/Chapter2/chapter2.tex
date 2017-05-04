@@ -1,56 +1,67 @@
 %\addcontentsline{toc}{chapter}{Development Process}
 \chapter{Design}
+The design for the system was completed in two major steps. First, the initial design was created before any development and secondly, incremental changes were made to add more detail to the design with every relevant feature. The initial design formed the overall model for the system, and was only added to over the duration of the project. The UML class diagrams were designed to be basic initially, and only contained major functions and classes. These then evolved as the features were developed. The diagrams displayed in this section will be the final full diagrams.
 
-\textit{The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.}
+At the \textbf{Plan by Feature} level, design was performed at the start of each feature. A feature would be analysed, and the relevant functions and variables that were required, would be added to the design first. Following this, unit (or system) tests would be designed to exercise the functions, as well as the full requirements of the feature.
 
-The design for the system was completed in two major steps. First, the initial design was created before any development and following this, incremental changes were made to add  more detail to the design with every relevant feature. The initial design formed the overall model for the system, and was only added to over the duration of the project. The UML class diagrams were designed to be basic initially and only contained major functions and classes. These then evolved as the features were developed.
-
-At the plan by feature level, design was performed at the start of each feature. A feature would be analysed, and the relevant functions and variables that were required, would be added to the design first. Following this, unit (or system) tests would be designed to exercise the functions as well as the full requirements of the feature.
-
+\newpage
 
 \section{Informing the Overall model}
 \subsection{Use case}
+
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/use_case.png}
-		\caption{A use case diagram produced to show how the users will interact with the system and the functionality they require.}
+		\caption{A use case diagram to show how the users will interact with the system and the functionality they require.}
 		\label{fig:use_case}
 	}
 \end{figure}
-To best identify the requirements of the users, the use case diagram (Figure \ref{fig:use_case}) was produced. In addition to the functionality required by each type of user (Actors and Viewers) the diagram also divides the system into basic subsections. This diagram was a good first step in the early development of the system as it gave an overview of the system as a whole before any major implementation choices were required. Whilst very basic, it also showed interaction with the system that the users would require and acted as the base for the input and output requirements to be address in the user interface design. In addition, the use case diagram showed that the Charades game functionality was dependant on the type of user interacting with the system, which promoted a model-view-controller design pattern to be used.
+
+To best identify the requirements of the users, the use case diagram (Figure \ref{fig:use_case}) was produced. In addition to the functionality required by each type of user (Actors and Viewers), the diagram also divides the system into basic sub systems. This diagram was an insightful first step in the early development of the system as it gave an overview of the system as a whole, prior to any major implementation choices being required. Whilst the diagram was basic, it showed the interactions that users would have with the system. These interactions formed the input and output requirements that needed to be addressed in the user interface design. In addition, the use case diagram showed that the Charades game functionality is dependant on the whether the user is an actor or a viewer. This in turn promoted a model-view-controller design pattern to be used for the system.
 
 \newpage
 
 \subsection{Activity diagram}
+
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.70]{Chapter2/activity_diagram.png}
-		\caption{An activity diagram that describes the flow of information in the system. Includes the data flow for both the Hologram and Charades systems.}
+		\caption{An activity diagram that describes the flow of information in the system. It includes the data flow for both the Hologram and Charades systems.}
 		\label{fig:activity_diagram}
 	}
 \end{figure}
-Given the system was deigned to be a game of charades, it follows a linear set of instructions that mirror the original rules of the charades game. An activity diagram was chosen to model the flow of activities in the system due to the well defined path of game play. Figure \ref{fig:activity_diagram} shows an activity diagram that maps the basic flow of a single round of the game. The \textit{Image processing loop}, shown in purple, describes the flow  of the hologram creation. This process (prefixed with the letter A) runs continuously in parallel with the game loop (prefixed with the letter B).
+
+Given the system was designed to be a game of charades, it follows a linear set of instructions that mirror the original rules of the charades game. An activity diagram was chosen to model the flow of activities in the system, due to the well defined path of game play. Figure \ref{fig:activity_diagram} shows an activity diagram that maps the basic flow of a single round of the game. The \textit{Image processing loop}, shown in purple, describes the flow  of the hologram creation. This process (prefixed with the letter A) runs continuously in parallel with the game loop (prefixed with the letter B).
 
 \subsection{Component diagram}
+
 \begin{figure}[h!]
 	\centering{
-		\includegraphics[scale=0.75]{Chapter2/component_diagram.png}
-		\caption{A component diagram that describes both the software are hardware components of the system and how they interact with each other.}
+		\includegraphics[scale=0.80]{Chapter2/component_diagram.png}
+		\caption{A component diagram that describes both the software and hardware components of the system, and how they interact with each other.}
 		\label{fig:component_diagram}
 	}
 \end{figure}
-The system, in its totality, had to include multiple pieces of hardware to operate. The component diagram, shown in Figure \ref{fig:component_diagram}, helped to combine the different hardware considerations in tandem with the software. Furthermore, the diagram confirmed the presence of three separate areas of the project.
 
-The \textbf{Staging Area} would be where the actor would be filmed. The camera directly connects to the ImageProcessing machine via a usb cable for data transfer. The Staging Area input device will use a wireless connection to send and receive messages from the Charades game server that is hosted on the image processing machine.
+The system, in its totality, had to include multiple pieces of hardware in order to operate. The component diagram, shown in Figure \ref{fig:component_diagram}, helped to combine the different hardware considerations in tandem with the software. Furthermore, the diagram confirmed the presence of three separate major entities in the project.
 
-The \textbf{Image Processing machine} is a computer that acts as the server for the website as well as running the image processing application for the holograms. Due to the nature of the video feed processing in real-time, the computer will require a Graphical processing unit (GPU). The Image Processing application has input of the raw video feed from the camera in the Staging Area and will process the video and output the result.
-The Charades Game server is hosted on the Image processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
+The \textbf{Staging Area} would be where the actor would be filmed. The camera directly connects to the Image Processing machine via a USB cable for data transfer. The Staging Area input device will use a wireless connection to send and receive messages from the Charades Game server that is hosted on the Image Processing machine.
+
+The \textbf{Image Processing machine} is a computer that acts as the server for the website, as well as running the image processing application for the holograms. Due to the nature of the video feed processing in real-time, the computer will require a Graphical Processing Unit (GPU). The Image Processing application receives input of the raw video feed from the camera in the Staging Area and will process the video, and output the result. The Charades Game server is hosted on the Image Processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
+
+The \textbf{Viewing Area} ...
+
+
+\newpage
+
+
 \section{Overall Architecture}
 \subsection{Hologram creation system}
+
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.9]{Chapter2/vpa_class_diagram.png}
-		\caption{The UML class diagram for the hologram creation system. The diagram shows the vpa (video processing application) module and the enclosed subclasses and submodules.}
+		\caption{The UML class diagram for the hologram creation system. The diagram shows the vpa module and the enclosed subclasses and submodules.}
 		\label{fig:vpa_class_diagram}
 	}
 \end{figure}
@@ -58,41 +69,45 @@ The Charades Game server is hosted on the Image processing machine. This compone
 \begin{itemize}
 	\item \textbf{vpa}: This module holds all the code for hologram creation system. vpa stands for \textit{Video Processing Application} as the code in this module handles the processing of the video feed.
 
-	\item \textbf{run\_vpa}: This is a script and is the most simplistic in the module. This is the driver script for the VideoProcessor class and runs the required functions to create begin the video feed  capture and display the manipulated video feed in the output window.
+	\item \textbf{run\_vpa}: This is a script and is the most simplistic in the module. It is the driver script for the VideoProcessor class and runs the required functions to begin the video feed capture and display the manipulated video feed in the output window.
 
-	\item \textbf{parsers}: This module holds several functions that are used to ensure that values provided in the system are expected and correct. As Python is not a strongly typed language, the parsers are required to ensure that no type errors occur during execution of the application. The parser functions have been separated into a separate module to group them together. All functions in the parser module have input of a single object (where object is the super class of all Python variables) and will raise a Python ValueError if they do not meet the criteria of the function.
+	\item \textbf{parsers}: This module holds several functions that are used to ensure that values provided in the system are expected and correct. As Python is not a strongly typed language, the parsers are required to ensure that no type errors occur during execution of the application. The parser functions have been separated into a their own module to group them together. All functions in the parser module receive input of a single Object (where Object is the super class of all Python variables) and will raise a Python ValueError if they do not meet the criteria of the function.
 
-	\item \textbf{VideoProcessor}: This class handles the main functionality and logic of the application. The most import function in the VideoProcessor is the process\_and\_output\_video function. This function contains the main processing loop of the application. This loop will call the scale, rotate and position functions from the helper\_functions module. 
-	The VideoProcessor has been designed as a class rather than a collection of functions so that the video\_feed variable (which contains the video feed from the web cam) can be stored.  
+	\item \textbf{VideoProcessor}: This class handles the main functionality and logic of the application. The most important function in the VideoProcessor is the process\_and\_output\_video function. This function contains the main processing loop of the application. This loop will call the functions that handle the scaling, rotation and positioning of the video feed. These functions are located in the helper\_functions module.  
 
-	\item \textbf{helper\_functions}: This module was not present in the original design, but in order to improve the quality, readability and test coverage of the code, it was added to hold refactored code from the \textbf{VideoProcessor} class. In addition to simple helper functions such as obtaining the screen resolution, the helper\_functions module also aid with manipulations of the video feed. Functions used for calculating the location, cropping and rotation of the image are also in the helper\_functions module. 
+	\item \textbf{helper\_functions}: This module was not present in the original design, but in order to improve the quality, readability and test coverage of the code, it was added to hold refactored code from the \textbf{VideoProcessor} class. In addition to providing simple helper functions, such as obtaining the screen resolution and calculating the size of the display window relative to the centre of the screen, the helper\_functions module also aids with manipulation of the video feed. Functions used for calculating the location, cropping and rotation of the image are also in the helper\_functions module.
 
 \end{itemize}
 
+The VideoProcessor has been designed as a class rather than a collection of functions so that the video\_feed variable (which contains the video feed from the web cam) can be stored.
+
+\newpage
 
 \subsection{Charades Game}
 \subsubsection{Model Design}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.9]{Chapter2/charades_class_diagram.png}
-		\caption{The UML class diagram for the Charades game. The diagram shows the Model for the charades game implementation.}
+		\caption{The UML class diagram for the model of the Charades Game.}
 		\label{fig:charades_class_diagram}
 	}
 \end{figure}
 
-Figure \ref{fig:charades_class_diagram} shows the design for the Model used to represent data in the Charades game. For the Model, it was decided not to use a data and instead use a class representation for data storage. The reason behind this, is the  flow of the charades game is dependant on the state of the system, and a class based model provides a better way to model state versus a database alternative.
-
+Figure \ref{fig:charades_class_diagram} shows the design for the Model used to represent data in the Charades game. For the Model, it was decided not to use a database and instead use a class representation for data storage. The reasoning behind this is that the flow of the charades game is dependant on the state of the system, and a class based model provides a better way to model state versus a database alternative.\\
 The Model has been separated into four files:
+
 \begin{itemize}
-	\item \textbf{Game}: The Game class holds the state of the game at it's highest level of abstraction. As well as holding a list of the Viewers and Actors, the Game will also hold information regarding the current rounds correct guess, the type of the guess and the winning viewer number. All of these values are used to update the game state and inform the users of the current state of the game via the APIs.
+	\item \textbf{Game}: The Game class holds the state of the game at its highest level of abstraction. As well as holding a list of the Viewers and Actors, the Game also holds information regarding the whether or not a correct guess has been made, the type of the guess and the viewer\_number of the winner for the round. All of these values are used to update the game state and inform the users of the current state of the game via the APIs.
 	
-	\item \textbf{Viewer}: The Viewer is a simple class that holds the number of points accumulated by a viewer and the the viewer\_number of that viewer. When a viewer logs in, the viewer\_number is automatically generated and a Viewer object is generated and added to the Game object. In addition to the Viewer being created in the model, the viewer\_number is also stored client side in a session cookie. This viewer\_number is then queried when the client needs to display a viewers score. 
+	\item \textbf{Viewer}: The Viewer is a simple class that holds the number of points accumulated by a viewer, and the unique viewer\_number of that viewer. When a viewer logs in, the viewer\_number is automatically generated and assigned to a Viewer object which is added to the Game object. In addition to the Viewer being created in the model, the viewer\_number is also stored client side in a session cookie. This viewer\_number is then queried when the client needs to display a viewers score. 
 	
-	\item \textbf{Actor}: The model uses the concept of phrases and words for topics that an Actor will select to act out. In this scenario, a phrase is the whole topic that is being acted, for example "Shot put". However, a word is part of a phrase, for example "Shot" is a word in the phrase "Shot put". The Actor class holds the current phrase and word variables for the phrase that is being acted. In addition it has functions to set new words and phrases and complete words when they are guessed correctly.
+	\item \textbf{Actor}: The Actor class holds the current phrase and word variables for the phrase that is being acted. The model uses the concept of phrases and words for topics that an Actor will select to act out. In this scenario, a phrase is the whole topic that is being acted, for example "Shot put". However, a word is part of a phrase, for example "Shot" is a word in the phrase "Shot put". In addition it has functions to set new words and phrases and complete words when they are guessed correctly.
 	
-	\item \textbf{Phrases}: The Phrases module holds all the phrases that can be acted by the Actor in Python dictionaries. In addition, the module contains several helper functions designed to add checking phrases and phrase acquisition. This part of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
+	\item \textbf{Phrases}: The Phrases module holds all the phrases that can be acted by the Actor in Python lists. In addition, the module contains several helper functions designed to check phrases exist in the list of known phrases and to acquire a phrase, at random, from the list.
 	
 \end{itemize}
+
+This part of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model, remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
 
 \newpage
 
@@ -100,7 +115,7 @@ The Model has been separated into four files:
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter2/website_design.png}
-		\caption{The website design for the Charades game. The diagram shows the Template structure of the website as well as when pages are updated from the API and when polling of the API takes place.}
+		\caption{The website design for the Charades Game. The diagram shows the Template structure of the website, as well as when pages are updated from the API and when polling of the API takes place.}
 		\label{fig:website_design}
 	}
 \end{figure}
@@ -109,21 +124,23 @@ Figure \ref{fig:website_design} shows the design for the templates (html pages) 
 
 \begin{itemize}
 
-	\item \textbf{Website Core}: The Website core includes the login (index) and instructions page. The index.html page is where the user will provide the session information (This would be provided on the day that the system is being used, or set up in advance for an event) and the option to login in as a Viewer or Actor. The instructions.html provides a dynamic set of instructions depending on the type of the user (Actor or Viewer) and a continue button for the Actor to continue to the phrase\_selection page. In addition, as a viewer, the page will poll the phrase\_ready API and, when true, display a button for Viewers to click to advance to the next section of the website.
+	\item \textbf{Website Core}: The Website core includes the login (index) and instructions page. The index.html page is where the user will provide the session password (This would be provided on the day that the system is being used, or set up in advance for an event), and the option to login in as a Viewer or Actor. The instructions.html provides a dynamic set of instructions depending on the type of user (Actor or Viewer), and a 'continue' button for the Actor to continue to the phrase\_selection page. In addition, for a viewer, the page will poll the phrase\_ready API and, when true, display a button for viewers to click to advance to the next section of the website.
 	
-	\item \textbf{Actor}: The Actor section of the website handles phrase and word selection as well as a default page for the actor to view while they act out the current phrase. phrase\_selection.html provides the actor with a selection of five phrases and instructs them to select one. Once chosen, the actor advances to the acting.html page where the phrase is displayed and the actor is asked to choose a word from the phrase if that phrase has multiple words. Once the phrase and word have been selected, the phrase\_ready API will be updated to display True.
+	\item \textbf{Actor}: The Actor section of the website handles phrase and word selection, as well as a default page for the actor to view while the current phrase is being acted. The phrase\_selection.html page provides the actor with a selection of five phrases and instructs them to select one. Once chosen, the actor advances to the acting.html page where the phrase is displayed, and, if the phrase contains multiple words, the actor is asked to choose a word from the phrase. Once the phrase and word have been selected, the phrase\_ready API will be updated to display True.
 	
-	\item \textbf{Viewer}: The Viewer section of the website handles when the phrase or word is guessed correctly or incorrectly. guess.html is where the viewers attempt to guess the current word or phrase being acted. Information about the genre, number of words and current word is also displayed to the viewer on this page, as well as a text field for viewer to submit their guess (see Figure \ref{fig:guess_ui}). This page both polls and updates the guess\_correct API. When a correct guess has been made, the API is updated with either "Word" or "Phrase" depending on the guess type. As multiple users will be on this page, the page also polls the guess\_correct API to see if a correct guess has been made. When a correct guess has been made, both the viewer who guessed correctly and all other viewers are taken to the wait\_for\_phrase page. This page polls the phrase\_ready API and when a new phrase has been selected (API returns 'True') viewers are redirect back to the guess.html page to guess the next word or phrase.
+	\item \textbf{Viewer}: The Viewer section of the website handles correct or incorrect guesses of the words or phrases. The  guess.html page is where the viewers attempt to guess the current word or phrase being acted. Information about the genre, number of words and current word is also displayed to the viewer on this page, as well as a text field for viewers to submit their guesses (see Figure \ref{fig:guess_ui}). This page both polls and updates the guess\_correct API. When a correct guess has been made, the API is updated with either "Word" or "Phrase" depending on the guess type. As multiple users will be on this page, the page also polls the guess\_correct API to see if a correct guess has been made. When a correct guess has been made, both the viewer who guessed correctly and all other viewers are taken to the wait\_for\_phrase page. This page polls the phrase\_ready API and when a new phrase has been selected (the API returns 'True') viewers are redirected back to the guess.html page to guess the next word or phrase.
 	
-	\item \textbf{API}: The API consists of simple pages that are used when polling the game state for information. phrase\_ready.html displays 'True' when the phrase is in a guessable state (the phrase and word have been selected and the phrase or word have not been correctly guessed) and 'False' when not guessable. guess\_correct.html displays 'None' when no correct guesses have been made by the viewers, 'Word' when the word has been guessed correctly and 'Phrase' when the phrase has been correctly guessed.
+	\item \textbf{API}: The API consists of simple pages that are used when polling the game state for information. The phrase\_ready.html API displays 'True' when the phrase is in a guessable state (i.e. the phrase and word have been selected and the phrase or word have not been correctly guessed) and 'False' when not guessable. The guess\_correct.html API displays 'None' when no correct guesses have been made by the viewers, 'Word' when the word has been guessed correctly and 'Phrase' when the phrase has been correctly guessed.
 	
 \end{itemize}
+
+\newpage
 
 \subsection{UI Design}
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.7]{Chapter2/guess_ui.png}
-		\caption{The UI design for the guess.html page. This page shows a user with 25 points and the phrase "Shot put" is being acted. The word "Put" has already been guessed meaning the word "Shot" is represented by "\_ \_ \_ \_" as it has yet to be guessed.}
+		\caption{The UI design for the guess.html page. This page shows a user with 25 points and the phrase "Shot put" is being acted. The word "Put" has already been guessed, meaning the word "Shot" is represented by '\_ \_ \_ \_' as it has yet to be guessed.}
 		\label{fig:guess_ui}
 	}
 \end{figure}
@@ -141,14 +158,14 @@ Figure \ref{fig:guess_ui} shows the UI design for the viewers guess.html page (A
 	\item Provide a way for the viewers to submit a guess for the current word or the full phrase.
 \end{itemize}
 
-Whilst this criteria was never formalised at the point of design, given the knowledge of the system it was possible to infer this from the previous design documents (Figure \ref{fig:website_design}, \ref{fig:charades_class_diagram}). The goal for all pages on the website was to keep them simple were possible. Given the age of the target audience, the focus of the interface was on ease of use and simplicity. These values have been reflected by the minimal buttons and small amount of text.
+Whilst this criteria was never formalised at the point of design, given the knowledge of the system it was possible to infer this from the previous design documents (Figure \ref{fig:charades_class_diagram}, \ref{fig:website_design}). The goal for all pages on the website was to keep them simple were possible. Given the age of the target audience, the focus of the interface was on ease of use and simplicity. These values have been reflected by the minimal buttons and small amount of text.
 
 \section{Implementation tools}
 \subsection{Python}
-Python is a free, easy to learn and easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully object orientated (OO) language, provides OO support and this approach is encouraged by the community for larger projects. For this project, Python version 2.7.11 was used. Whilst this is becoming a legacy version of Python, it is still well supported and a pre-compiled OpenCV binary file for this version of Python is available from the OpenCV website. Furthermore, the developer had more experience with the 2.7.11 Python language than the newer 3.6 variant meaning that less training was required for the project to get under way.
+Python is a free, easy to learn and easy to read programming language. As a scripting language, it offers lightweight solutions to software problems without requiring long compile times. Python, whilst not a fully Object Orientated (OO) language, provides OO support and this approach is encouraged by the community for larger projects. For this project, Python version 2.7.11 was used. Whilst this is becoming a legacy version of Python, it is still well supported and a pre-compiled OpenCV binary file for this version of Python is available from the OpenCV website. Furthermore, the developer had more experience with the 2.7.11 Python language than the newer 3.6 variant meaning that less training was required for the project to get under way.
 
-\subsection{Pycharm}
-Pycharm is a Python Integrated development environment (IDE) used to aid with the development of programming projects written in Python. The application offers facilities for refactoring code, auto completion and creation of variable and function names, as well as on the fly testing and code execution. In addition, Pycharm supports a variety of community built plugins that help developers with style and following convention. For this project, the PEP8 style plugin was used to reduce the amount of errors and warnings raised in the Pylint linting tool (discussed in further detail in section 4.2.2.1).
+\subsection{PyCharm}
+PyCharm is a Python Integrated Development Environment (IDE) used to aid with the development of programming projects written in Python. The application offers facilities for refactoring code, auto completion and creation of variable and function names, as well as on the fly testing and code execution. In addition, PyCharm supports a variety of community built plugins that help developers with style and following convention. For this project, the PEP8 style plugin was used to reduce the amount of errors and warnings raised in the Pylint linting tool (discussed in further detail in section 4.2.2.1).
 
 \subsection{OpenCV}
 OpenCV is an open source software library that provides solutions to common computer vision problems. It is an ideal library for handling image manipulation and offers easy solutions to image display and rendering. OpenCV comes with precompiled binary interfaces for C++, Python, Java and MATLAB and is supported on Windows, Linux, Android and Mac OS \cite{open_cv_binaries}. Whilst OpenCVs application range from object and feature detection to real-time 3D model extraction, this library is only being used for the simpler case video feed capture and basic manipulation.

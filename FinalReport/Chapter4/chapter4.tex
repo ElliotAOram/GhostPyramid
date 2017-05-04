@@ -43,7 +43,7 @@ Pylint is a linting tool that follows the PEP8 standards \cite{pep8} for Python 
 \subsubsection{Test coverage} 
 An additional testing package, nosetest \cite{nosetest}, was used to run Python tests for this project. This package produces reports that are interpretable by Jenkins for both unit tests and test coverage. The test coverage displays graphically the proportion of the code that is run in tests. Although basic, this helps to highlight potential conditional statements, function and even lines that are not being tested. As the web based charades game was written in Django (which has its own testing framework), nosetest could only be used for the hologram creation software.
 
-An example of the test coverage output rendered by Jenkins is displayed below in Figure \ref{fig:jenkins_test_cover}. Figure \ref{fig:jenkins_test_cover} shows that whilst the majority of the code base is covered by testing, several lines are excluded. These lines had to be omitted from tests as their functionality was to perform the video processing loop. Whilst the functions that are called within the loop are sufficiently tested, the loop itself can not be tested easily as it creates an output window. The output window is only successfully closed via mouse click on the window close button (an operation that is not easily replicated within unit tests).
+An example of the test coverage output rendered by Jenkins is displayed below in Figure \ref{fig:jenkins_test_cover}. It shows that whilst the majority of the code base is covered by testing, several lines are excluded. These lines had to be omitted from tests as their functionality was to perform the video processing loop. Whilst the functions that are called within the loop are sufficiently tested, the loop itself can not be tested easily as it creates an output window. The output window is only successfully closed via mouse click on the window close button (an operation that is not easily replicated within unit tests).
 \begin{figure}[h!]
 	\centering{
 		\includegraphics[scale=0.75]{Chapter4/jenkins_test_coverage.PNG}
@@ -56,7 +56,8 @@ An example of the test coverage output rendered by Jenkins is displayed below in
 \subsection{Unit Tests}
 To ensure the functionality of the system, unit tests were created to test functions. The unit tests were written using the Python unit test framework provided by the Python language \cite{python_unittest}. The unit tests are designed to be atomic and test a single part of functionality per test. As such, more complex functions that are dependant on the state of the system, or have multiple return values, will have multiple tests associated with them, designed to exercise every line of the code. Unit tests were written in classes where one class will test only one Python class or module.
 
-The tests for the hologram creation software are stored in a different directory to the source code, meaning the functions can not be directly called from the unit tests. Python's solution to this is to import the source code modules from the other directory using the keyword \begin{verbatim}
+The tests for the hologram creation software are stored in a different directory to the source code, meaning the functions can not be directly called from the unit tests. Python's solution to this is to import the source code modules from the other directory using the keyword
+\begin{verbatim}
 import
 \end{verbatim}
 This, however, is only possible if the shared parent directory of both the tests and source code is a Python module itself. If this is not the case, a context file should be used to resolve the issue. The context file (Appendix C, section ...) is used to import the module by first setting the correct directory path for Python to be able to find it, then importing the module from the current working directory. The context file is then imported at the start of every test.
@@ -84,13 +85,13 @@ In addition to these tests, the website had to be tested to ensure that the URL 
 \subsubsection{Selenium start up time}
 For continuity between tests, much of the online documentation that was used in this project, such as \textit{"Selenium with Python : Using Selenium to write tests"} \cite{selenium_guide}, proposed running a new instance of the Selenium web browser for each test. The reason for doing this is that it will restart the web browser and remove any cached data or session information. When run locally on the developer machine, Selenium took on average 6 to 8 seconds to create a new instance of a web browser. Hence, with a growing number of Selenium test, the time taken to run the full test suite was no longer practical.
 
-To remedy this, it was decision was made to use only one Selenium web browser instance per class of tests \cite{django_live_server_test}. The Selenium instance was initialised in the class setUp function and closed in the class tearDown, and then the cached data was manually removed from the web browser instance. Whilst this does leave scope for having some cached data remain in the web browser between tests, this reduced the number of web browser reinitialisations to be equate to the number of test classes (8) as opposed to the number of test cases (27), hence saving over a third of the time when executing the tests.
+To remedy this, the decision was made to use only one Selenium web browser instance per class of tests \cite{django_live_server_test}. The Selenium instance was initialised in the class setUp function and closed in the class tearDown, and then the cached data was manually removed from the web browser instance. Whilst this does leave scope for having some cached data remain in the web browser between tests, this reduced the number of web browser reinitialisations to be equate to the number of test classes (8) as opposed to the number of test cases (27), hence saving over a third of the time when executing the tests.
 
 \subsubsection{Using Selenium with Django and Localhost}
 During the development of the project, the website was hosted on the local development machine using local host. In order to test the website with Selenium, a hosted version of the website must be accessible. For manual developer testing, Django offers the ability to run a server locally and host the website using the command: \begin{verbatim}
 python manage.py runserver 
 \end{verbatim}
-to start the server. The website is then accessible from http://localhost:8000 (by default). To allow Selenium tests to run successfully, a method of starting the server before tests were run needed to be implemented.
+to start the server. The website is then accessible from http://localhost:8000 (by default). To allow Selenium tests to run successfully, a method of starting the server before tests were run, needed to be implemented.
 
 A possible way of doing this was to run the above command to start the server before tests were run. Whilst this does resolve the problem, it forces the tests to be reliant on the correct port (default 8000) being used to access the website. This port can be specified upon starting the server, but this could produce conflicts in different development environments if, for example, the development machine had other services running on the same localhost  port.
 
@@ -98,7 +99,7 @@ A more permanent solution was discovered in the Django documentation \cite{djang
 \begin{verbatim}
 self.live_server_url
 \end{verbatim}
-This above code returns a string value that matches the correct port address on localhost (where the server is running). Using the LiveServerTestCase resolves both problems mentioned above as firstly, there is no longer a need to hard code the URL for the localhost server address and secondly, the server exists only for the life span of the test meaning there is no need to start a separate server manually before the tests are executed.
+This above code returns a string value that matches the correct port address on localhost. Using the LiveServerTestCase resolves both problems mentioned above as firstly, there is no longer a need to hard code the URL for the localhost server address and secondly, the server exists only for the life span of the test meaning there is no need to start a separate server manually before the tests are executed.
 
 \section{Manual Testing}
 \subsection{Charades Game}
@@ -113,19 +114,19 @@ In addition to testing the web site code with automated unit tests, during most 
 		\item Pressing the back button on a web browser does not cause errors for either the user or the system.
 	\end{itemize}
 	
-	\item Malicious behaviour: Tests were carried out to ensure that the website could not be compromised deliberately by a user. Some of the information passing in this website uses the HTTP GET protocol and subsequently, that information is stored in the client side URL. It is possible that a user with malicious intentions may attempt to taint the information provided in the URL to corrupt the system. As such, test were carried out to ensure that information in the URL was sanitised and expected.
+	\item Malicious behaviour: Tests were carried out to ensure that the website could not be compromised deliberately by a user. Some of the information passing in this website uses the HTTP GET protocol and subsequently, that information is stored in the client side URL. It is possible that a user with malicious intentions may attempt to taint the information provided in the URL to corrupt the system. As such, tests were carried out to ensure that information in the URL was sanitised and expected.
 \end{itemize}
 
 
-\subsection{Hologram creation program}
-Manual testing was carried out a smaller scale for the hologram creation program. As discussed in section 4.2.2.2, several lines of code within the main display loop could not be unit tested. To ensure the functionality of this code, manual testing was performed to ensure correct functionality. This was the only manual testing performed on the hologram creation program as there was no user input and output required.
+\subsection{Hologram creation software}
+Manual testing was carried out on a smaller scale for the hologram creation program. As discussed in section 4.2.2.2, several lines of code within the main display loop could not be unit tested. To ensure the functionality of this code, manual testing was performed to ensure correct functionality. This was the only manual testing performed on the hologram creation program as there was no user input and output required.
 
 
 \section{User Testing}
 User testing took place at the Aberystwyth Science week event in March 2017. The event lasted for three days and gave the opportunity to test the prototype of the hologram system with the target audience. A black tent was set up in the event hall and this housed the touch screen table being used as an external monitor for the holographic display. The web cam for the video feed input was set up outside the tent and used to record viewers. When new viewers entered the viewing area, initially a test video would be running and then, after explaining the technique, audience members were given the opportunity to be filmed to create a hologram that was displayed to their peers.
 
 \subsection{General findings}
-The stall at the event generated much intrigue amongst the audience. Many thoroughly enjoyed seeing their peers project holographically, but there was a clear lack of purpose for those being filmed other than waving to a camera. This helped to confirm the need for the charades system to be used alongside the hologram creation system.
+The stall at the event generated much intrigue amongst the audience. Many thoroughly enjoyed seeing their peers projected holographically, but there was a clear lack of purpose for those being filmed other than waving to a camera. This helped to confirm the need for the charades system to be used alongside the hologram creation system.
 
 \subsection{Limited time}
 Given the events size, the number of stalls and the limited time that each visiting school had at the event, a new consideration needed to be made regarding the amount of time required to play the game. Whilst the initial idea had been to swap users who were acting after every correct guess, this would invest a lot of the time that users had at the stall with swapping players rather than playing the game. To accommodate for this, the game flow was amended to have 3 phrases acted by the same actor and points accumulated by the viewers.

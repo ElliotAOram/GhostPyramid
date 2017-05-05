@@ -1,17 +1,9 @@
 \chapter{Implementation}
 
-The implementation should look at any issues you encountered as you tried to implement your design. During the work, you might have found that elements of your design were unnecessary or overly complex; perhaps third party libraries were available that simplified some of the functions that you intended to implement. If things were easier in some areas, then how did you adapt your project to take account of your findings?
-
-It is more likely that things were more complex than you first thought. In particular, were there any problems or difficulties that you found during implementation that you had to address? Did such problems simply delay you or were they more significant? 
-
-You can conclude this section by reviewing the end of the implementation stage against the planned requirements. 
-
 \section{Initial work}
 Development was carried out in weekly iterations starting from Monday 27th February 2017. To enable a smooth start to development, several tasks were completed before this, starting with setting up the development and testing environment.
 
-To develop the charades game, both python and OpenCV needed to be set up. Installing python on windows is done by downloading the windows installer from the python.org website and running it - following the instructions on the installation wizard. 
-...
-
+To develop the charades game, both python and OpenCV needed to be set up. Installing python on windows is done by downloading the windows installer from the python.org website and running it - following the instructions on the installation wizard. OpenCV requires the pre-requisites of NumPy (A mathematical library for Python) and SciPy (A scientific library for Python). Both of these were installed using the pip tool (A Package manager for Python). Once these were installed and verified to be working OpenCV was downloaded, extracted and the binary file added to the Python site-packages directory. For more information on setup and running the program, see the README.txt file packaged with the code base.
 
 \section{Iteration 1}
 \textbf{Date}: 27/02/2017 \\
@@ -22,7 +14,7 @@ To develop the charades game, both python and OpenCV needed to be set up. Instal
 Due to the diversity of the OpenCV library with regards to its platform deployment and versioning, the documentation for the library is fragmented making examples difficult to find. Most documentation is basic and the online API covers all programming languages. It was for this reason, that much of the first iteration was spent deciphering the way the library should be used. The online documentation did provide a tutorial for the implemention of capturing the output from a web cam \cite{video_capture_tutorial}. This tutorial was used as a starting point for the system (Feature 1).
 
 \subsection{Deep versus shallow copying}
-Originally, the feature list contained an additional feature to be implemented during this iteration. The feature was to create 4 copies of the video feed to display them on each side of the pyramid. Original spike work suggested that this could involve creating a deep copy of the VideoCapture output. The reason a deep copy would be required is that each instance of the video feed would need to be rotated independently of the others. If the default operation for copying a video frame in Python is a shallow copy, then both variables will share a pointer to a single object \cite{deep_shallow_copying}. If this is the case, then rotating the video frame will rotate all the instances rather than just one. Through further investigation, it was discovered that each frame of the video was of type numpy array. Furthermore, the output window, where the video feeds were being displayed, was also a numpy array. This removes the problem of having to make a deep copy of the array as the numbers from the array can be directly added to the output array rather than copying the frames individually.
+Originally, the feature list contained an additional feature to be implemented during this iteration. The feature was to create 4 copies of the video feed to display them on each side of the pyramid. Original spike work suggested that this could involve creating a deep copy of the VideoCapture output. The reason a deep copy would be required is that each instance of the video feed would need to be rotated independently of the others. If the default operation for copying a video frame in Python is a shallow copy, then both variables will share a pointer to a single object \cite{deep_shallow_copying}. If this is the case, then rotating the video frame will rotate all the instances rather than just one. Through further investigation, it was discovered that each frame of the video was of type NumPy array. Furthermore, the output window, where the video feeds were being displayed, was also a NumPy array. This removes the problem of having to make a deep copy of the array as the numbers from the array can be directly added to the output array rather than copying the frames individually.
 
 \newpage
 
@@ -94,7 +86,7 @@ Whilst running tests for page content was straightforward, attempting to test pa
 
 
 \subsection{Background subtraction multi-threading}
-Finally, this iteration revisited the background subtraction algorithm. Having already implemented the green screen algorithm, the algorithm or execution of the algorithm needed to be optimised to produce an acceptable frame rate. To do this, investigation in Python multi-threading took place. Each pixel in the input image needed to be checked and if it was above a certain value of green, changed to be black. This operation was performed on every pixel independently one after another. To improve the speed of execution, instead of checking the full array of the image in the main thread, the image was divided into 4 quadrants and each processed in a separate thread. Initially this was done in place in the array where each thread was given a start and end index to check. However, after implementing this solution, it was found to not have decreased the execution speed. This was the result of the array being locked while processing. To avoid multiple threads accessing the same numpy array and potential corrupting the data, the array is locked while one thread accesses it meaning that the next thread must wait for the first to finish. 
+Finally, this iteration revisited the background subtraction algorithm. Having already implemented the green screen algorithm, the algorithm or execution of the algorithm needed to be optimised to produce an acceptable frame rate. To do this, investigation in Python multi-threading took place. Each pixel in the input image needed to be checked and if it was above a certain value of green, changed to be black. This operation was performed on every pixel independently one after another. To improve the speed of execution, instead of checking the full array of the image in the main thread, the image was divided into 4 quadrants and each processed in a separate thread. Initially this was done in place in the array where each thread was given a start and end index to check. However, after implementing this solution, it was found to not have decreased the execution speed. This was the result of the array being locked while processing. To avoid multiple threads accessing the same NumPy array and potential corrupting the data, the array is locked while one thread accesses it meaning that the next thread must wait for the first to finish. 
 
 By creating new array objects that relate to each quadrant the lock problem was avoided, however only a slight decrease in execution time was found. More detailed investigation revealed that this was caused by the time taken to initialise new arrays with the data from each quadrant.
 
@@ -153,16 +145,36 @@ This decision was difficult as due to the events of the week, little progress ha
 \subsection{Django}
 As the hologram creation software already used the Python programming language, it was logical to use a Python framework for implementation of the website. Several Python web framework exist with the most popular being Django, Flask and Pyramid. The article \textit{"Django vs Flask vs Pyramid: Choosing a Python Web Framework"} written by Ryan Brown \cite{python_webframework_comparison}, was a useful resource in making a decision regarding the best framework to use. In the Article, Django is identified as the most popular of the three as well as being best suited to mid scale projects like the Charades system. Furthermore, Django uses to many familiar keywords and concepts to those ruby on rails which is a technology that the developer had used prior. Finally, an excellent tutorial for the Django web framework by Nigel George, \textit{"Masting Django: Core"} \cite{django_book} is available for free online. 
 
-\subsection{Building the website}
-As described in \textit{"Mastering Django: Core} \cite{django_book}, the initial web site set up was fast and straightforward. This process was made simpler by not having any requirement for a database and having models written as Python classes. However, using Python class meant that there was an additional requirement for tests to ensure the model functioned correctly. This would not have been required of a database they are tested by the database supplier (for example SQL) before release. The tests for the Python class models were written as Python unit tests. As the model did not rely on the Django implementation, classes could be considered independent from the rest of the system and tested in isolation. 
+\subsection{Model}
+As described in \textit{"Mastering Django: Core} \cite{django_book}, the initial web site set up was fast and straightforward. This process was made simpler by not having any requirement for a database and having models written as Python classes. However, using Python class meant that there was an additional requirement for tests to ensure the model functioned correctly. This would not have been required of a database as they are tested by the database supplier (for example SQL) before release. The tests for the Python class models were written as Python unit tests. As the model did not rely on the Django web framework, classes could be considered independent from the rest of the system and tested in isolation.
 
-** Talk about MTV locations - where to find stuff ** Perhaps change above to MTV over building the website **
+The model can be found in the directory ...
 
-Discussion points:
-* Scrap App
-* Investigation into Django
-* Selenium testing
-* Feature 5, 6, 7
+\subsection{Template}
+The templates in Django are written in html and can use embedded Python code to execute additional commands or access variables. The variables are pushed to the template through the controller and can then be accessed by surround them in double curly brackets:
+\begin{verbatim}
+{{ variable_name }}
+\end{verbatim}
+
+Embedding python code also proved powerful for flow control and conditional statements. An example of both of these being used can be found in Appendix C section \textit{Embedded Python}.
+
+The template code can be found in the charades\/templates directory.
+
+\subsection{View}
+The view code is the controller for the website and acts as the link between the model (data) and the template (what is shown to the client). The views.py file is where this code is stored and consists of multiple view functions. The view functions must have an input of a request (which is a HTTP request header) and must return a the request along with some rendered data (the template code). It is at the point where the request is returned that additional data can be provided to the template in the form of a python dictionary.
+
+The HTTP request is handled by the urls.py file which holds the routing information between the URL and the controller. Figure \ref{fig:django_routing} visually represents how these interactions take place.
+
+The view code can be found in the charades\/charades\/views.py file.
+
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.3]{Chapter3/django_routing.png}
+		\caption{Show the interactions between the client, the urls.py (routing) file, the template, the view and the model in the Django web framework.}
+		\label{fig:django_routing}
+	}
+\end{figure}
+
 
 \newpage
 
@@ -175,7 +187,7 @@ Discussion points:
 To disable access from those outside an event (such as the Aberystwyth Science Week), a session password was added to the landing page of the website. When a user chooses a type (actor or viewer), they are also required to provide the session password to access the system. By default the session password is stored in the view code as \textit{"BSW18"} but this can be changed easily. If mobile devices capable of accessing the system were provided for an event where the system was in use, the organisers would be able to type in the session password before the arrival of any visitors. Alternatively, (if guests were to use their own devices) the session password could be displayed on a sign at near the viewing area enabling users to log in themselves.
 
 \subsection{Cookies}
-When a valid session password has been provided, the password is then stored client side in a cookie. In addition, the cookie also stores the type of user (actor or viewer) and, if the user is a viewer, the unique number used to identify them. This unique number is called the viewer\_number and is generated by the system when a new viewer joins. The number can then be used to lookup the viewers score:
+When a valid session password has been provided, the password is then stored client side in a cookie. The Django online documentation \cite{django_cookies} provided a tutorial which aided greatly in the implementation of a session cookie. on implementing  In addition, the cookie also stores the type of user (actor or viewer) and, if the user is a viewer, the unique number used to identify them. This unique number is called the viewer\_number and is generated by the system when a new viewer joins. The number can then be used to lookup the viewers score:
 
 \begin{verbatim}
 	viewer_number = request.session['viewer_number']
@@ -185,8 +197,6 @@ When a valid session password has been provided, the password is then stored cli
 \end{verbatim}
 
 The above code is from the waiting\_for\_actor function in the \/charades\/charades\/views.py file. The above code returns the current score of the viewer accessing the waiting\_for\_actor.html page. The code first finds the viewer number from the session variable (cookie), and then calls the lookup\_viewer function in the Game class, using the viewer\_number as input. This will return the Viewer object relating to the viewer\_number provided. Finally this object can be used to see how many points the user has accumulated.
-
-** CITE SESSION COOKIES IMPLEMENTATION SOMEWHERE ** 
 
 \subsection{Redirects}
 \subsubsection{State based redirects}
@@ -216,18 +226,24 @@ An alternative consideration was made to use the new Django Channels technology.
 An Application Programming Interface (API) was created as a way to programmatically assess the current state of the system. As with any Django page, when a request is sent from a client (for example the user types the page URL into the address bar) the page is loaded and any data that is embedded in the template will be updated automatically. In the case of an API, simple data that represents a fact in the system can be displayed. In the case of phrase\_ready.html, this page, when loaded, is given data from the controller. The controller function (See Appendix C, Section \textit{phrase\_ready API}) checks the current state of the system, and produces a True or False value as to whether the phrase is in a guessable state. The state of the system will change depending on the user interaction with the system. For example, if a phrase has not yet been selected by the actor, the phrase\_ready API will display False. Once a phrase has been selected, the controller will receive the data from the client request, update the current phrase in the system and then, when the API is polled (loaded) it will have the new value of True.
 
 \subsection{Polling}
-As Django does not provide a built in methods of pushing data to the client (as discussed above), the client most poll the API to establish if the state of the system has changed. This is done using the JavaScript setInterval() function \cite{js_setinterval}. This function takes a parameter of another function and a time interval given in milliseconds. When that number of milliseconds has passed, the provided function will be executed. To poll the API the project used a function that was designed to retrieve information from the API pages using an HTTP GET request. This function (detailed in Appendix C, section ...) was the primary input to the set interval function. When the data is received from the API, conditional statements within the function decide what should happen. In most cases this is a page refresh and then the controller will supply new data to the page.
+As Django does not provide a built in methods of pushing data to the client (as discussed above), the client most poll the API to establish if the state of the system has changed. This is done using the JavaScript setInterval() function \cite{js_setinterval}. This function takes a parameter of another function and a time interval given in milliseconds. When that number of milliseconds has passed, the provided function will be executed. To poll the API the project used a function that was designed to retrieve information from the API pages using an HTTP GET request. This function (detailed in Appendix C, section \textit{Polling function}) was the primary input to the set interval function. When the data is received from the API, conditional statements within the function decide what should happen. In most cases this is a page refresh and then the controller will supply new data to the page.
 
 Depending on the polling function, the API is normally polled every second with some cases having larger polling intervals if  an instantaneous answer is not required. This method of communication does have one small caveat, if two users were to guess the word within one second of each other, it is possible that both viewers would receive points. The reason for this interaction is that when a viewer guesses a phrase correctly, the API is updated and then all the viewers (on the guess.html page) are redirected to the waiting\_for\_actor.html page. During the time the other viewers are polling the API it is possible that a guess could still be submitted and, if correct, the controller would increment the score of the viewer who guessed correctly. This would result in the above interaction where two or more player potentially score points if they guess within a second of each other. Statistically, a full second window for another viewer to guess is the worst case scenario as it is likely that a viewer makes a correct guess mid way through a polling cycle. This would result in a 0.5 second window which was deemed acceptable.
-
 
 \newpage
 
 \section{Iteration 8}
 \textbf{Date}: 10/04/2017 \\
 \textbf{Features}: 15, 17 \\
-\textbf{Overview}:
+\textbf{Overview}: The final iteration covered two main tasks. The first was to decide on a end game condition and scoring, and the second to perform some refactoring of the of the Charades Game to improve readability and maintainability.
 
-Discussion points:
-* Feature 14, 15, 17
-* game conditions
+\subsection{End game conditions and scoring}
+In order to ensure that the game was completed in a timely manor and the outcome was fair the scoring system and rules had to be decided upon. The rules, as previously mentioned were changed to include a scoring system as well as multiple rounds. The game lasts for a duration of three rounds, where a round is a single phrase being guessed. Although the main purpose of the game is to be an aid to showcase the hologram system, for the younger target audience, having a friendly competition would prove more interesting for them. The phrase dictionary consists one or two word phrases, as such the whole phrase is worth 20 points, and a single word is worth 10. At the end of a round a new actor is chosen based on either a volunteer on the highest scoring viewer.
+
+\subsection{Refactoring}
+The controller (views.py) for the Charades Game had been continually added to throughout the development period. It contained all the functions for executing control code in a single file, and had some code duplication. To improve this, the code was refactored to firstly ensure that duplicated code was removed and secondly to make the controller easy to read. This was an important step as, providing this system would be used in the future, it would most likely require adaptation to remain current. Refactoring the code base also gave the advantage of allowing more tests to be added to the simpler helper functions which improved the overall test coverage of the system.
+
+\newpage
+
+\section{Implementation review}
+You can conclude this section by reviewing the end of the implementation stage against the planned requirements. 

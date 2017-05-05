@@ -186,9 +186,11 @@ When a valid session password has been provided, the password is then stored cli
 
 The above code is from the waiting\_for\_actor function in the \/charades\/charades\/views.py file. The above code returns the current score of the viewer accessing the waiting\_for\_actor.html page. The code first finds the viewer number from the session variable (cookie), and then calls the lookup\_viewer function in the Game class, using the viewer\_number as input. This will return the Viewer object relating to the viewer\_number provided. Finally this object can be used to see how many points the user has accumulated.
 
+** CITE SESSION COOKIES IMPLEMENTATION SOMEWHERE ** 
+
 \subsection{Redirects}
 \subsubsection{State based redirects}
-Each page of the website (excluding the landing page) queries the model in some form. It is possible that, without proper handling, either intentionally or not, a user can access a page that the system state does not yet allow for. An example of this is if a viewer attempted to access the guess.html page (where they are asked to guess the current word or phrase) before the actor has chosen a phrase. Accessing this page at this time could cause errors to be thrown and potentially corrupt the game state. To stop this from happening, state based redirects have been added to the website controller. These are functions that, instead of returning the page content that would normally be provided from the requested URL, redirect the user to a different URL. The different URL will then handle the request appropriately. In the above case of accessing the guess.html page before it is ready, the viewer will be redirected to the instructions page which displays a "Please wait" message as shown in Figure ... .
+Each page of the website (excluding the landing page) queries a part of the model. It is possible that, without proper handling, either intentionally or not, a user can access a page that the system state does not yet allow for. An example of this is if a viewer attempted to access the guess.html page (where they are asked to guess the current word or phrase) before the actor has chosen a phrase. Accessing this page at this time could cause errors to be thrown and potentially corrupt the game state. To stop this from happening, state based redirects have been added to the website controller. These are functions that, instead of returning the page content that would normally be provided from the requested URL, redirect the user to a different URL. The different URL will then handle the request appropriately. In the above case of accessing the guess.html page before it is ready, the viewer will be redirected to the instructions page which displays a "Please wait" message as shown in Figure ... .
 
 ** ADD FIGURE FOR REDIRECT ON GUESS.HTML ** 
 
@@ -204,17 +206,20 @@ Similarly, users can attempt to access webpages that are only designed for a dif
 \textbf{Overview}:
 
 \subsection{Real time updates}
-Describe why it was needed
+The charades game has multiple users logged in at the same time and has several scenarios where interactions need to take place in real-time. An example of a real time interaction, is that when a phrase is guessed correctly by a viewer, the actor must be informed and prompted to select a different word.
+
+When the Django framework was created, it was designed to handle static website that were more common of those seen 5 or 10 years ago. In this respect, at its core Django is built around answering requests from the client, but does not have any methods to push data to the client by default. However, many technologies provide solutions to real time communications for the web and can be implemented in Django. The approach chosen for this project was to use an API and a polling system to mimic the pushing of data from the server side to the client. 
+
+An alternative consideration was made to use the new Django Channels technology. Django Channels provide a way to opening a bi-directional connection between the server and the client, allowing data to be pushed both ways (client to server and server to client)\cite{django_channels}. This technology utilises the new WebSocket protocol. Whilst this technology would provide a solution to the aforementioned problem, implementing the technology is a complex tasks than a polling system. It is however and better and more long term solution but the additional time it would have taken to implement would have set the project back further.
 
 \subsection{API}
-Describe implementation
+An Application Programming Interface (API) was created as a way to programmatically assess the current state of the system. As with any Django page, when a request is sent from a client (for example the user types the page URL into the address bar) the page is loaded and any data that is embedded in the template will be updated automatically. In the case of an API, simple data that represents a fact in the system can be displayed. In the case of phrase\_ready.html, this page, when loaded, is given data from the controller. The controller function (See Appendix C, Section \textit{phrase\_ready API}) checks the current state of the system, and produces a True or False value as to whether the phrase is in a guessable state. The state of the system will change depending on the user interaction with the system. For example, if a phrase has not yet been selected by the actor, the phrase\_ready API will display False. Once a phrase has been selected, the controller will receive the data from the client request, update the current phrase in the system and then, when the API is polled (loaded) it will have the new value of True.
 
 \subsection{Polling}
-Descibe polling implementation
+As Django does not provide a built in methods of pushing data to the client (as discussed above), the client most poll the API to establish if the state of the system has changed. This is done using the JavaScript setInterval() function \cite{js_setinterval}. This function takes a parameter of another function and a time interval given in milliseconds. When that number of milliseconds has passed, the provided function will be executed. To poll the API the project used a function that was designed to retrieve information from the API pages using an HTTP GET request. This function (detailed in Appendix C, section ...) was the primary input to the set interval function. When the data is received from the API, conditional statements within the function decide what should happen. In most cases this is a page refresh and then the controller will supply new data to the page.
 
-Discussion points:
-* Feature 11, 12, 13
-* polling
+Depending on the polling function, the API is normally polled every second with some cases having larger polling intervals if  an instantaneous answer is not required. This method of communication does have one small caveat, if two users were to guess the word within one second of each other, it is possible that both viewers would receive points. The reason for this interaction is that when a viewer guesses a phrase correctly, the API is updated and then all the viewers (on the guess.html page) are redirected to the waiting\_for\_actor.html page. During the time the other viewers are polling the API it is possible that a guess could still be submitted and, if correct, the controller would increment the score of the viewer who guessed correctly. This would result in the above interaction where two or more player potentially score points if they guess within a second of each other. Statistically, a full second window for another viewer to guess is the worst case scenario as it is likely that a viewer makes a correct guess mid way through a polling cycle. This would result in a 0.5 second window which was deemed acceptable.
+
 
 \newpage
 

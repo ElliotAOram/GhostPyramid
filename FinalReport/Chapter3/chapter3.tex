@@ -140,7 +140,7 @@ Despite this, on re-evaluation of the project requirements and the final use cas
 
 A web app solves the above problems as it is already hosted on the internet which will allow for implicit communication between device accessing the system. Furthermore, the web app will be platform independent as the system code is executed server side and users interact with it through a web client.
 
-Deciding to make this decision was difficult as due to the events of the week, little progress had been made on the android application. Starting again with a web application would mean further setbacks, but at the time the decision was made that it would lead to a better product.
+This decision was difficult as due to the events of the week, little progress had been made on the android application. Starting again with a web application would mean further setbacks, but at the time the decision was made that it would lead to a better product.
 
 \newpage
 
@@ -151,9 +151,12 @@ Deciding to make this decision was difficult as due to the events of the week, l
 \textbf{Overview}: This iterations first task was to adjust the features list schedule due to the decision to change to a web app from an Android app. Therefore, this iteration dealt with the roll over issues from the previous iterations, and Feature 9 and 10 (which were originally planned for this iteration) were redistributed among future iterations.
 
 \subsection{Django}
-As the hologram creation software already used the Python programming language it was logical to use a Python framework for implementation of the website. 
+As the hologram creation software already used the Python programming language, it was logical to use a Python framework for implementation of the website. Several Python web framework exist with the most popular being Django, Flask and Pyramid. The article \textit{"Django vs Flask vs Pyramid: Choosing a Python Web Framework"} written by Ryan Brown \cite{python_webframework_comparison}, was a useful resource in making a decision regarding the best framework to use. In the Article, Django is identified as the most popular of the three as well as being best suited to mid scale projects like the Charades system. Furthermore, Django uses to many familiar keywords and concepts to those ruby on rails which is a technology that the developer had used prior. Finally, an excellent tutorial for the Django web framework by Nigel George, \textit{"Masting Django: Core"} \cite{django_book} is available for free online. 
 
-\subsection{}
+\subsection{Building the website}
+As described in \textit{"Mastering Django: Core} \cite{django_book}, the initial web site set up was fast and straightforward. This process was made simpler by not having any requirement for a database and having models written as Python classes. However, using Python class meant that there was an additional requirement for tests to ensure the model functioned correctly. This would not have been required of a database they are tested by the database supplier (for example SQL) before release. The tests for the Python class models were written as Python unit tests. As the model did not rely on the Django implementation, classes could be considered independent from the rest of the system and tested in isolation. 
+
+** Talk about MTV locations - where to find stuff ** Perhaps change above to MTV over building the website **
 
 Discussion points:
 * Scrap App
@@ -166,18 +169,48 @@ Discussion points:
 \section{Iteration 6}
 \textbf{Date}: 27/03/2017 \\
 \textbf{Features}: 9, 10, 11 \\
-\textbf{Overview}:
+\textbf{Overview}: This iteration covered access and security for the Charades Game and dealt with functions to ensure that only those at an event would be able to log on. Furthermore, to improve the security of malicious users, redirects were put in place to stop access to certain pages depending on the game state.
 
-Discussion points:
-* Feature 8, 9, 10
-* Session id
+\subsection{Session password}
+To disable access from those outside an event (such as the Aberystwyth Science Week), a session password was added to the landing page of the website. When a user chooses a type (actor or viewer), they are also required to provide the session password to access the system. By default the session password is stored in the view code as \textit{"BSW18"} but this can be changed easily. If mobile devices capable of accessing the system were provided for an event where the system was in use, the organisers would be able to type in the session password before the arrival of any visitors. Alternatively, (if guests were to use their own devices) the session password could be displayed on a sign at near the viewing area enabling users to log in themselves.
 
+\subsection{Cookies}
+When a valid session password has been provided, the password is then stored client side in a cookie. In addition, the cookie also stores the type of user (actor or viewer) and, if the user is a viewer, the unique number used to identify them. This unique number is called the viewer\_number and is generated by the system when a new viewer joins. The number can then be used to lookup the viewers score:
+
+\begin{verbatim}
+	viewer_number = request.session['viewer_number']
+	...
+	viewer = GAME.lookup_viewer(viewer_number)
+	points = viewer.points
+\end{verbatim}
+
+The above code is from the waiting\_for\_actor function in the \/charades\/charades\/views.py file. The above code returns the current score of the viewer accessing the waiting\_for\_actor.html page. The code first finds the viewer number from the session variable (cookie), and then calls the lookup\_viewer function in the Game class, using the viewer\_number as input. This will return the Viewer object relating to the viewer\_number provided. Finally this object can be used to see how many points the user has accumulated.
+
+\subsection{Redirects}
+\subsubsection{State based redirects}
+Each page of the website (excluding the landing page) queries the model in some form. It is possible that, without proper handling, either intentionally or not, a user can access a page that the system state does not yet allow for. An example of this is if a viewer attempted to access the guess.html page (where they are asked to guess the current word or phrase) before the actor has chosen a phrase. Accessing this page at this time could cause errors to be thrown and potentially corrupt the game state. To stop this from happening, state based redirects have been added to the website controller. These are functions that, instead of returning the page content that would normally be provided from the requested URL, redirect the user to a different URL. The different URL will then handle the request appropriately. In the above case of accessing the guess.html page before it is ready, the viewer will be redirected to the instructions page which displays a "Please wait" message as shown in Figure ... .
+
+** ADD FIGURE FOR REDIRECT ON GUESS.HTML ** 
+
+\subsubsection{User type redirects}
+Similarly, users can attempt to access webpages that are only designed for a different type of user. An example of this is that the phrase\_selection.html page is designed for the actor to select a phrase to be acted. Once selected this data is then passed to the model and the viewers are able to guess the word or phrase. It should not be possible for a viewer to access the select\_phrase.html at any time, therefore user type redirects have been added to the controller to ensure this is not possible. The user type redirects are designed to check the type of user attempting to access the content by searching for the 'user\_type' entry in the session variable. If the incorrect user\_type, or no user\_type at all, is found in the session variable, the client will be redirected to the landing page, and an error message will be displayed as shown in Figure ... .
+
+** ADD FIGURE FOR REDIRECT ON YOU'RE NOT AN ACTOR **
 \newpage
 
 \section{Iteration 7}
 \textbf{Date}: 03/04/2017 \\
 \textbf{Features}: 12, 13, 14 \\
 \textbf{Overview}:
+
+\subsection{Real time updates}
+Describe why it was needed
+
+\subsection{API}
+Describe implementation
+
+\subsection{Polling}
+Descibe polling implementation
 
 Discussion points:
 * Feature 11, 12, 13

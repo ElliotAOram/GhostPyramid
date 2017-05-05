@@ -148,7 +148,7 @@ As the hologram creation software already used the Python programming language, 
 \subsection{Model}
 As described in \textit{"Mastering Django: Core} \cite{django_book}, the initial web site set up was fast and straightforward. This process was made simpler by not having any requirement for a database and having models written as Python classes. However, using Python class meant that there was an additional requirement for tests to ensure the model functioned correctly. This would not have been required of a database as they are tested by the database supplier (for example SQL) before release. The tests for the Python class models were written as Python unit tests. As the model did not rely on the Django web framework, classes could be considered independent from the rest of the system and tested in isolation.
 
-The model can be found in the directory ...
+The model can be found in the directory \/charades\/charades\/ directory. The model consists of actor.py, game.py, viewer.py phrases.py and strings.py.
 
 \subsection{Template}
 The templates in Django are written in html and can use embedded Python code to execute additional commands or access variables. The variables are pushed to the template through the controller and can then be accessed by surround them in double curly brackets:
@@ -158,18 +158,18 @@ The templates in Django are written in html and can use embedded Python code to 
 
 Embedding python code also proved powerful for flow control and conditional statements. An example of both of these being used can be found in Appendix C section \textit{Embedded Python}.
 
-The template code can be found in the charades\/templates directory.
+The template code can be found in the \/charades\/templates directory.
 
 \subsection{View}
 The view code is the controller for the website and acts as the link between the model (data) and the template (what is shown to the client). The views.py file is where this code is stored and consists of multiple view functions. The view functions must have an input of a request (which is a HTTP request header) and must return a the request along with some rendered data (the template code). It is at the point where the request is returned that additional data can be provided to the template in the form of a python dictionary.
 
 The HTTP request is handled by the urls.py file which holds the routing information between the URL and the controller. Figure \ref{fig:django_routing} visually represents how these interactions take place.
 
-The view code can be found in the charades\/charades\/views.py file.
+The view code can be found in the \/charades\/charades\/views.py file.
 
 \begin{figure}[h!]
 	\centering{
-		\includegraphics[scale=0.3]{Chapter3/django_routing.png}
+		\includegraphics[scale=0.9]{Chapter3/django_routing.png}
 		\caption{Show the interactions between the client, the urls.py (routing) file, the template, the view and the model in the Django web framework.}
 		\label{fig:django_routing}
 	}
@@ -208,12 +208,13 @@ Each page of the website (excluding the landing page) queries a part of the mode
 Similarly, users can attempt to access webpages that are only designed for a different type of user. An example of this is that the phrase\_selection.html page is designed for the actor to select a phrase to be acted. Once selected this data is then passed to the model and the viewers are able to guess the word or phrase. It should not be possible for a viewer to access the select\_phrase.html at any time, therefore user type redirects have been added to the controller to ensure this is not possible. The user type redirects are designed to check the type of user attempting to access the content by searching for the 'user\_type' entry in the session variable. If the incorrect user\_type, or no user\_type at all, is found in the session variable, the client will be redirected to the landing page, and an error message will be displayed as shown in Figure ... .
 
 ** ADD FIGURE FOR REDIRECT ON YOU'RE NOT AN ACTOR **
+
 \newpage
 
 \section{Iteration 7}
 \textbf{Date}: 03/04/2017 \\
 \textbf{Features}: 12, 13, 14 \\
-\textbf{Overview}:
+\textbf{Overview}: This iteration focused on allowing communication between user in real (or near to real) time. As well as implementing a solution to this, several other possible solutions were investigated and evaluated. 
 
 \subsection{Real time updates}
 The charades game has multiple users logged in at the same time and has several scenarios where interactions need to take place in real-time. An example of a real time interaction, is that when a phrase is guessed correctly by a viewer, the actor must be informed and prompted to select a different word.
@@ -246,4 +247,10 @@ The controller (views.py) for the Charades Game had been continually added to th
 \newpage
 
 \section{Implementation review}
-You can conclude this section by reviewing the end of the implementation stage against the planned requirements. 
+The major objectives set out at the beginning of the project have all been met with varying degrees of success. Whilst the main objectives regarding the actual system use cases itself have all been met, some of the other areas of the system could be improved relative to the criteria of the objects. 
+
+The system should have been designed with a greater focus on the ease of use in mind. Whilst not tested explicitly on the target audience, with more effort put in to UI design, the system could have been easier to use. As a direct result of this, there is an instructions page for both sets of users built into the system, however, if the web app requires written instructions, then it could be argued that the system is could be simplified.
+
+Whilst the hologram system is thoroughly tested, there could be room for additional automated testing of the Charades Game. In particular, the view (controller) could be tested in an automated way rather than the manual testing it underwent.
+
+However, the rest of the objective have been met well especially given the large setback in the middle of the project regarding the change from android app to web app.

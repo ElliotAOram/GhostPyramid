@@ -73,7 +73,3 @@ Viewer
   
 The above process will happen 3 times before the game completes. After the game completes,
 the data will be reset.
-
-To reset the webpage (clear all the data manually) visit the localhost:8000/reset/ URL 
-and give the password 'secret'.
-

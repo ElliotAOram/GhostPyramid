@@ -241,7 +241,7 @@ def game_complete(request):
         is_actor = False
     return render(request, 'game_complete.html', {'points' : points, 
                                                   'is_actor' : is_actor})
-    
+
 
 def reset(request):
     """

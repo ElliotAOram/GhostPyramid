@@ -1,0 +1,55 @@
+\chapter{Third-Party Code and Libraries}
+\section{OpenCV}
+
+OpenCV is an open source computer vision library designed to aid in building computer vision systems. The library is original written in C++, but can also be compiled for C, Java, Python and MATLAB. OpenCV offers a wide range of functions and algorithms as well as a way to capture and represent a web cam feed in Python (and other supported languages).
+
+OpenCV version 2.4.8 was used for this project. More information on OpenCV can be found on their website \cite{opencv}.
+
+\section{NumPy}
+
+NumPy is a mathematics library for Python and is a requirement for OpenCV. NumPy was used in this project for matrices that represented the image data obtained from the web cam. 
+
+NumPy version 1.8.2 was used for this project. More information can be found on the NumPy web page \cite{numpy}.
+
+\section{SciPy}
+ 
+SciPy is a scientific Python library that is require for some of the operations in OpenCV. Whilst this project does not explicitly use the library, for continuity this library is also mentioned as it is a dependency for OpenCV, and must be installed to ensure correct functionality. 
+
+SciPy version 0.13.3 was used for the project. More information about SciPy can be found on their website \cite{scipy}.
+
+
+\section{Django}
+
+A web frame work for creating Model View Controller style web applications using the Python programming language. Django works on a request based system where HTTP requests are routed to the controller which will then query the Model and View to create a rendered web page. This is then display in the client-side browser. 
+
+Django version 1.8.3 was used as the web framework to implement the Charades Game within this project. For more information on Django, see the Django developer website \cite{django_dev}.
+
+\section{jQuery}
+
+jQuery is a JavaScript library designed to help traverse and manipulate HTML content. This was used for the polling of the API in the Charades Game.
+
+JQuery version 3.2.0 was used for this project. More information can be found on the JQuery web page \cite{jquery}.
+
+\section{Selenium}
+
+Selenium is a browser automation tool normally used for testing websites. Selenium offers the ability to mimic button clicks, text input and most (if not all) other website interactions. 
+
+Selenium version 3.4.1 was used for this project. More information can be found on the Selenium web page \cite{selenium}.
+
+\section{ChromeDriver}
+
+ChromeDriver is a tool for automated testing in a Chrome browser environment. It was used in tandem with Selenium during this project for testing the Charades Game. 
+
+ChromeDriver version 2.29 was used for this project. More information can be found on the ChromeDriver web page \cite{chromedriver}.
+
+\section{Django-Jenkins}
+
+django-jenkins is a plugin that captures the output of Django style unit and system tests and parses the output into a format that can be comprehended by Jenkins. This is a Django plugin that was developed by GitHub user kmmbvnr. This plugin is only a server side requirement so will be commented out from the final code base before final hand in of the technical work. Please see the README.txt file bundled with the source code to find out how to enable this functionality.
+
+django-jenkins version 0.110.0 was used for this project. More information on the plugin can be found on the GitHub page\cite{django-jenkins}.
+
+\section{Jenkins}
+
+Jenkins is a continuous integration tool that was used to manage and run tests over the duration of the project. 
+
+More information can be found on the Jenkins web page \cite{jenkins}.

@@ -1,0 +1,18 @@
+{% include "includes/head.html" %}
+<script>
+setTimeout(
+function(){
+    window.location.replace('/reset/');
+}, 10000);
+</script>
+<body>
+    <div class="main">
+        {% if is_actor %}
+        <p> Congratulations! Great Acting! </p>
+        {% else %}
+        <p> You scored {{points}}! </p>
+        {% endif %}
+        <p>Thanks for playing!!</p>
+    </div>
+</body>
+</html>

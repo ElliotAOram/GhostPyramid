@@ -13,7 +13,7 @@ class Game(object):
     current_correct_guess = None
     current_correct_guess_type = None
     winning_viewer_number = None
-    completed_phrases = 0
+    completed_phrases = []
 
     def __init__(self):
         self.actor = None
@@ -21,7 +21,7 @@ class Game(object):
         self.current_correct_guess = None
         self.current_correct_guess_type = None
         self.winning_viewer_number = None
-        self.completed_phrases = 0
+        self.completed_phrases = []
 
     def add_actor(self, actor):
         """

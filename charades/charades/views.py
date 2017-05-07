@@ -13,6 +13,7 @@ from phrases import get_phrases_from_type, check_phrase
 GAME = None
 
 def index(request):
+    # Generate warning message from GET
     warning = ''
     if 'no_actor' in request.GET:
         warning = actor_none()
@@ -26,6 +27,7 @@ def index(request):
         warning = incorrect_user()
     if 'not_accessible' in request.GET:
         warning = not_accessible()
+    # Render page
     return render(request, 'index.html', {'warning' : warning})
 
 def instructions(request):
@@ -50,6 +52,7 @@ def instructions(request):
         phrase_ready = GAME.actor.phrase_ready()
 
     if 'user_type' in request.GET:
+        # If user logs in as Actor
         user = request.GET['user_type']
         if user == 'Actor':
             instructions_str = actor_instructions()
@@ -59,6 +62,7 @@ def instructions(request):
             request.session['user_type'] = 'Actor'
             outbound_url = reverse('select_phrase')
             is_actor = True
+        # If user logs in as viewer
         elif user == 'Viewer':
             instructions_str = viewer_instructions()
             if 'viewer_number' not in request.session:
@@ -68,7 +72,7 @@ def instructions(request):
                 outbound_url = reverse('guess')
             else:
                 outbound_url = reverse('guess')
-
+    #render page
     return render(request, 'instructions.html', {'instructions' : instructions_str,
                                                  'outbound_url' : outbound_url,
                                                  'is_actor': is_actor,
@@ -78,41 +82,57 @@ def guess(request):
     """
     The controller for the viewer guess.html page
     """
+    # Check redirects
     if 'Actor' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
     if GAME.actor is None or GAME.actor.phrase_ready() == False:
             return redirect('/?invalid_state=True' )
+
+
     user_guess = ''
     incorrect = ''
     if 'guess' in request.GET:
         user_guess = request.GET['guess']
     if 'guess_type' in request.GET:
+        # If the user guessed the word
         if request.GET['guess_type'] == 'Guess Word':
+            # If the guess was correct
             if user_guess.upper() == GAME.actor.current_word.upper():
                 GAME.set_guess_type(False)
                 GAME.set_guess(user_guess)
+                # Find user and give them points
                 GAME.winning_viewer_number = request.session['viewer_number']
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(10)
                 GAME.actor.complete_word()
+                # If the word is the final word in the phrase
                 if len(GAME.actor.completed_words) == len(GAME.actor.current_phrase_word_list):
+                    # Complete phrase and update API
                     GAME.set_guess_type(True)
+                    GAME.completed_phrases.append(GAME.actor.current_phrase)
                     GAME.actor.phrase_complete()
-                    GAME.completed_phrases += 1
                 return redirect('/waiting_for_actor/')
             else:
                 incorrect = incorrect_guess()
+
+
+        # If user guessed the phrase
         if request.GET['guess_type'] == 'Guess Phrase':
+            # If phrase guessed was correct
             if user_guess.upper() == GAME.actor.current_phrase.upper():
                 GAME.set_guess_type(True)
                 GAME.set_guess(user_guess)
+                # Find user and give them points
                 GAME.winning_viewer_number = request.session['viewer_number']
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(20)
+                # Complete phrase and update API
+                GAME.completed_phrases.append(GAME.actor.current_phrase)
                 GAME.actor.phrase_complete()
-                GAME.completed_phrases += 1
                 return redirect('/waiting_for_actor/')
             else:
                 incorrect = incorrect_guess()
     outbound_url = reverse('guess')
+    
+    #render page
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
                                           'total_words' : len(GAME.actor.current_phrase_word_list),
@@ -127,26 +147,47 @@ def select_phrase(request):
     Gets random phrases from the phrases module using
     get_phrases_from_type
     """
+    # Check redirects
     if GAME.actor is None:
         return redirect('/?no_actor=True')
     if 'Viewer' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
-    if GAME.completed_phrases >= 3:
+    if len(GAME.completed_phrases) >= 3:
         return redirect('/game_complete')
+
+
     new_phrase_msg = ''
     if 'new_phrase' in request.GET:
         new_phrase_msg = new_phrase()
-    return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
+
+    phrases = get_phrases_from_type(5, 'ANY')
+    # If the generated phrase list contains a phrase that has already been generated
+    all_new = False
+    replaced_phrases = 0
+    while all_new == False:
+        for phrase in phrases:
+            for completed_phrase in GAME.completed_phrases:
+                if phrase.upper() == completed_phrase.upper():
+                    replaced_phrases += 1
+                    phrase = get_phrases_from_type(1, 'ANY')
+        if replaced_phrases == 0:
+            all_new = True
+
+    # Render page
+    return render(request, 'select_phrase.html', {'phrases' : phrases,
                                                   'new_phrase' : new_phrase_msg})
 
 def acting(request):
     """
     The default page for the actor while acting out a word/phrase
     """
+    # Check redirects
     if GAME.actor is None:
         return redirect('/?no_actor=True')
     if 'Viewer' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
+
+
     words_changable = False
     instructions_str = 'Act the Word!'
     if 'new_phrase' in request.GET:
@@ -204,10 +245,13 @@ def waiting_for_actor(request):
     Controller for waiting_for_actor.html
     Unique for each viewer
     """
+    # Check redirects
     if 'Actor' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
-    if GAME.completed_phrases >= 3:
+    if len(GAME.completed_phrases) >= 3:
         return redirect('/game_complete')
+    
+    # Get viewer information
     viewer_number = request.session['viewer_number']
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:
@@ -220,6 +264,8 @@ def waiting_for_actor(request):
     if GAME.current_correct_guess_type == 'Word' and \
        len(GAME.actor.completed_words) < len(GAME.actor.current_phrase_word_list):
         next_selection = 'Word'
+
+    # Render page
     return render(request, 'waiting_for_actor.html',
                   {'person' : person,
                    'guess_type' : GAME.current_correct_guess_type,
@@ -233,12 +279,14 @@ def game_complete(request):
     The end page for the game
     """
     is_actor = True
-    if GAME.completed_phrases < 3:
+    if len(GAME.completed_phrases) < 3:
         return ('/?not_accessible=True')
     points = 0
     if 'Viewer' in request.session['user_type']:
         points = GAME.lookup_viewer(request.session['viewer_number']).points
         is_actor = False
+
+    # Render page
     return render(request, 'game_complete.html', {'points' : points, 
                                                   'is_actor' : is_actor})
 
@@ -253,6 +301,7 @@ def reset(request):
         del request.session['user_type']
     if 'viewer_number' in request.session:
         del request.session['viewer_number']
+    # Redirect to index
     return redirect('/')
 
 

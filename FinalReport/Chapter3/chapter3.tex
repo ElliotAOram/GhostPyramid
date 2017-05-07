@@ -199,14 +199,27 @@ The above code is from the waiting\_for\_actor function in the \/charades\/chara
 
 \subsection{Redirects}
 \subsubsection{State based redirects}
-Each page of the website (excluding the landing page) queries a part of the model. It is possible that, without proper handling, either intentionally or not, a user can access a page that the system state does not yet access to as it is missing data required to render the page. An example of this is if a viewer attempted to access the guess.html page (where they are asked to guess the current word or phrase) before the actor has chosen a phrase. Accessing this page at this time could cause errors to be thrown and potentially corrupt the game state. To stop this from happening, state based redirects have been added to the website controller. These are functions that, instead of returning the page content that would normally be provided from the requested URL, redirect the user to a different URL. The different URL will then handle the request appropriately. In the above case of accessing the guess.html page before it is ready, the viewer will be redirected to the instructions page which displays a "Please wait" message as shown in Figure ... .
+Each page of the website (excluding the landing page) queries a part of the model. It is possible that, without proper handling, either intentionally or not, a user can access a page that the system state does not yet access to as it is missing data required to render the page. An example of this is if a viewer attempted to access the guess.html page (where they are asked to guess the current word or phrase) before the actor has chosen a phrase. Accessing this page at this time could cause errors to be thrown and potentially corrupt the game state. To stop this from happening, state based redirects have been added to the website controller. These are functions that, instead of returning the page content that would normally be provided from the requested URL, redirect the user to a different URL. The different URL will then handle the request appropriately. In the above case of accessing the guess.html page before it is ready, the viewer will be redirected to the instructions page which displays a "Please wait" message as shown in Figure \ref{fig:state_redirect}.
 
-** ADD FIGURE FOR REDIRECT ON GUESS.HTML ** 
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.45]{Chapter3/state_redirect.png}
+		\caption{Shows the outcome of a state based redirect in the Charades Game.}
+		\label{fig:state_redirect}
+	}
+\end{figure}
+\newpage
 
 \subsubsection{User type redirects}
-Similarly, users can attempt to access webpages that are only designed for a different type of user. An example of this is that the phrase\_selection.html page is designed for the actor to select a phrase to be acted. Once selected this data is then passed to the model and the viewers are able to guess the word or phrase. It should not be possible for a viewer to access the select\_phrase.html at any time, therefore user type redirects have been added to the controller to ensure this is not possible. The user type redirects are designed to check the type of user attempting to access the content by searching for the 'user\_type' entry in the session variable. If the incorrect user\_type, or no user\_type at all, is found in the session variable, the client will be redirected to the landing page, and an error message will be displayed as shown in Figure ... .
+Similarly, users can attempt to access webpages that are only designed for a different type of user. An example of this is that the phrase\_selection.html page is designed for the actor to select a phrase to be acted. Once selected this data is then passed to the model and the viewers are able to guess the word or phrase. It should not be possible for a viewer to access the select\_phrase.html at any time, therefore user type redirects have been added to the controller to ensure this is not possible. The user type redirects are designed to check the type of user attempting to access the content by searching for the 'user\_type' entry in the session variable. If the incorrect user\_type, or no user\_type at all, is found in the session variable, the client will be redirected to the landing page, and an error message will be displayed as shown in Figure \ref{fig:user_type_redirect}.
 
-** ADD FIGURE FOR REDIRECT ON YOU'RE NOT AN ACTOR **
+\begin{figure}[h!]
+	\centering{
+		\includegraphics[scale=0.45]{Chapter3/user_type_redirect.png}
+		\caption{Shows the outcome of a user type redirect in the Charades Game.}
+		\label{fig:user_type_redirect}
+	}
+\end{figure}
 
 \newpage
 

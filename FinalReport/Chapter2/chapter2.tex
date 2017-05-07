@@ -49,8 +49,7 @@ The \textbf{Staging Area} would be where the actor would be filmed. The camera d
 
 The \textbf{Image Processing machine} is a computer that acts as the server for the website, as well as running the image processing application for the holograms. Due to the nature of the video feed processing in real-time, the computer will require a Graphical Processing Unit (GPU). The Image Processing application receives input of the raw video feed from the camera in the Staging Area and will process the video, and output the result. The Charades Game server is hosted on the Image Processing machine. This component will handle the flow between the users in the Viewing Area and the Actor in the Staging Area.
 
-The \textbf{Viewing Area} ...
-
+The \textbf{Viewing Area} is the area where the Pepper's Ghost Pyramid and the monitor displaying the output of the hologram system are housed. The area will be a dark tent in order to produce the best quality (most visible) hologram.
 
 \newpage
 
@@ -71,7 +70,7 @@ The \textbf{Viewing Area} ...
 
 	\item \textbf{run\_vpa}: This is a script and is the most simplistic in the module. It is the driver script for the VideoProcessor class and runs the required functions to begin the video feed capture and display the manipulated video feed in the output window.
 
-	\item \textbf{parsers}: This module holds several functions that are used to ensure that values provided in the system are expected and correct. As Python is not a strongly typed language, the parsers are required to ensure that no type errors occur during execution of the application. The parser functions have been separated into a their own module to group them together. All functions in the parser module receive input of a single Object (where Object is the super class of all Python variables) and will raise a Python ValueError if they do not meet the criteria of the function.
+	\item \textbf{parsers}: This module holds several functions that are used to ensure that values provided in the system are expected and correct. As Python is not a strongly typed language, the parsers are required to ensure that no type errors occur during execution of the application. The parser functions have been separated into their own module to group them together. All functions in the parser module receive input of a single Object (where Object is the super class of all Python variables) and will raise a Python ValueError if they do not meet the criteria of the function.
 
 	\item \textbf{VideoProcessor}: This class handles the main functionality and logic of the application. The most important function in the VideoProcessor is the process\_and\_output\_video function. This function contains the main processing loop of the application. This loop will call the functions that handle the scaling, rotation and positioning of the video feed. These functions are located in the helper\_functions module.  
 
@@ -107,7 +106,7 @@ The Model has been separated into four files:
 	
 \end{itemize}
 
-This part of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model, remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
+The phrase section of the model could have been improved by using a database representation. This data, unlike that of the other classes in the model, remains static and could therefore be more suited to using a simple database to hold the information. However, a possible caveat for this is the addition of another technology to the model. Whilst this technology would be simple and is well supported, it would add some additional complexity compared to using the same method as the class representation.
 
 \newpage
 
@@ -145,7 +144,7 @@ Figure \ref{fig:website_design} shows the design for the templates (html pages) 
 	}
 \end{figure}
 
-Figure \ref{fig:guess_ui} shows the UI design for the viewers guess.html page (All other UI diagrams are available in Appendix ...). The purpose of the UI diagrams was to ensure that all the functionality required for user interaction on a given page was met. In the case of Figure \ref{fig:guess_ui}, the page had to do the following:
+Figure \ref{fig:guess_ui} shows the UI design for the viewers guess.html page (All other UI diagrams are available in Appendix D). The purpose of the UI diagrams was to ensure that all the functionality required for user interaction on a given page was met. In the case of Figure \ref{fig:guess_ui}, the page had to do the following:
 \begin{itemize}
 	\item Display the Genre information
 	
@@ -182,7 +181,7 @@ Django is a free and open source web framework for the Python programming langua
 \end{itemize}
 
 \subsection{Visio}
-...
+Microsoft Visio is a software package designed to aid in the creation of diagrams. It was used extensively in this project to produce all the design diagrams seen above. For more information see the Microsoft Visio product information page \cite{visio}
 
 \subsection{Git and GitHub}
 To maintain version control the project used git and GitHub. Git was used to help organise code as well as being a method to back up the development that had been carried out. With regards to organisation, this refers to setting milestones to measure progress, creating stable release branches for storing working versions of the code and creating pull requests to allow features to be reviewed before merging. In addition, a default template for GitHub issues and pull requests was created which added check lists to the issue and pull request descriptions. The templates helped to ensure that all required elements of the feature were considered and checked.

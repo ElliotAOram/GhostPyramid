@@ -28,7 +28,7 @@ The code shown below is embedded Python code taken from the acting.html template
 
 \section{phrase\_ready API}
 
-The Charades Game API function that displays if the phrase is currently in a guessable state within the system. The function is from the charades\/charades\/views.py and is discussed in Chapter 3: Iteration 7.
+The Charades Game API function that displays if the phrase is currently in a guessable state within the system. The function is from the 'charades/charades/views.py' and is discussed in Chapter 3: Iteration 7.
 
 \begin{verbatim}
 def phrase_ready_api(request):
@@ -50,7 +50,7 @@ def phrase_ready_api(request):
 
 \section{Polling function}
 
-The JavaScript and JQuery function used to retrieve data from the guess\_correct API. The function is from the file charades\/templates\/guess.html and discussed in Chapter 3: Iteration 7.
+The JavaScript and JQuery function used to retrieve data from the guess\_correct API. The function is from the file '/charades/templates/guess.html' and discussed in Chapter 3: Iteration 7.
 
 \begin{verbatim}
 <script
@@ -66,4 +66,53 @@ setInterval(function(){
     poll();
 }, 1000);
 </script>
+\end{verbatim}
+
+\section{Unit test}
+
+The below code shows the success, edge and failure states that are tested by unit tests. Here 0 is the edge case, 10 is the success case and -1 the failure.
+This code is taken from the '/python/tests/test\_parsers.py' file.
+
+\begin{verbatim}
+class TestPositiveParser(unittest.TestCase):
+    """
+    @class TestPositiveParser :: Tests that ensure the input parser
+    							 only accepts postive integers
+    
+    """
+    ###---------------Success cases---------------###
+    def test_zero(self):
+        self.assertTrue(vpa.parse_positive_int(0))
+
+    def test_positive(self):
+        self.assertTrue(vpa.parse_positive_int(10))
+
+    ###-------------Failure cases-----------------###
+
+    def test_negative(self):
+        self.assertRaises(ValueError,
+                          vpa.parse_positive_int,
+                          -1)
+
+\end{verbatim}
+
+\section{context file}
+
+The context.py file is used to set the correct file path to import source code for the project. This allows project code to be executed in the tests. This code is from the file "/python/tests/context.py"
+
+\begin{verbatim}
+"""Allows tests to find the VideoProcessor module for testing
+   This is required as the modules are in different directories"""
+#pylint: disable=wrong-import-position,unused-import
+#   Above pylint disables are required as this is a context file and
+#   is only used by other files to set namespace and resovle modules.
+
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(
+			os.path.dirname(__file__), '..')))
+
+import vpa
+
+#http://docs.python-guide.org/en/latest/writing/structure/
 \end{verbatim}

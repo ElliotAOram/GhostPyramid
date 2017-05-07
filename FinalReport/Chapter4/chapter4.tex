@@ -16,7 +16,7 @@ The project used TDD as part of the process for software implementation. As well
 
 \end{itemize}
 
-An example function and corresponding test cases displaying the above approach to testing can be found in Appendix C, section (...).
+An example function and corresponding test cases displaying the above approach to testing can be found in Appendix C, section \textit{Unit test}.
 
 Unit tests were organised into classes where each test class would exercise a single class or module of code. Similarly, system tests were designed to test a single Django template. All test classes are held in test files prefixed with \textit{test\_} and these can be found in the \textit{python/tests} and \textit{charades/charades/test} directories. The requirement for adding code to the master branch is that all unit and system tests (past and present) must pass, and the static analysis tools must produce no errors.
 
@@ -60,7 +60,7 @@ The tests for the hologram creation software are stored in a different directory
 \begin{verbatim}
 import
 \end{verbatim}
-This, however, is only possible if the shared parent directory of both the tests and source code is a Python module itself. If this is not the case, a context file should be used to resolve the issue. The context file (Appendix C, section ...) is used to import the module by first setting the correct directory path for Python to be able to find it, then importing the module from the current working directory. The context file is then imported at the start of every test.
+This, however, is only possible if the shared parent directory of both the tests and source code is a Python module itself. If this is not the case, a context file should be used to resolve the issue. The context file (Appendix C, section \textit{Context file}) is used to import the module by first setting the correct directory path for Python to be able to find it, then importing the module from the current working directory. The context file is then imported at the start of every test.
 
 Figure \ref{fig:jenkins_unit_test} shows the graph created by Jenkins and nosetest that represents the pass and failure state of each unit test for every build. The graph shows an upwards tread as the number of tests being created in the project increase with the creation of additional features. To be accepted into the master branch of the GitHub repository, all tests must pass.
 

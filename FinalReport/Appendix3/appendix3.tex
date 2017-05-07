@@ -26,6 +26,8 @@ The code shown below is embedded Python code taken from the acting.html template
 </h1>
 \end{verbatim}
 
+\newpage
+
 \section{phrase\_ready API}
 
 The Charades Game API function that displays if the phrase is currently in a guessable state within the system. The function is from the 'charades/charades/views.py' and is discussed in Chapter 3: Iteration 7.
@@ -43,9 +45,6 @@ def phrase_ready_api(request):
     		      'phrase_ready.html',
     		      {'phrase_ready' : phrase_ready})
 \end{verbatim}
-
-
-\newpage
 
 
 \section{Polling function}
@@ -67,6 +66,8 @@ setInterval(function(){
 }, 1000);
 </script>
 \end{verbatim}
+
+\newpage
 
 \section{Unit test}
 

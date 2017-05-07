@@ -2,6 +2,10 @@
 import ctypes
 from cv2 import getRotationMatrix2D, warpAffine
 from parsers import parse_positive_int, parse_non_zero_int
+from sys import platform
+
+if sys.platform == "linux":
+    import gtk, pygtk
 
 RESOLUTIONS = [(1920, 1080), (1280, 720), (960, 540),
                (640, 480), (320, 240), (424, 240), (320, 180)] # May add more to support mobile
@@ -11,9 +15,16 @@ def get_screen_resolution():
     Returns the screen width and height as a tuple.
     @return     :: (screen_width, screen_height)
     """
-    #http://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
-    user32 = ctypes.windll.user32
-    return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
+    if sys.platform == "win32":
+        #http://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
+        user32 = ctypes.windll.user32
+        return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
+    elif sys.platform == "linux"
+        window = gtk.Window()
+        screen = window.get_screen()
+        return (screen.get_width(), screen.get_height())
+    else:
+        return (1920, 1080)
 
 
 def calc_display_area_props(width, height):

@@ -40,3 +40,6 @@ def invalid_state():
 
 def incorrect_user():
     return "You do not have permission to access that page."
+
+def not_accessible():
+    return "That page is currently not accessible." 

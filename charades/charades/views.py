@@ -24,6 +24,8 @@ def index(request):
         warning = invalid_state()
     if 'incorrect_user_type' in request.GET:
         warning = incorrect_user()
+    if 'not_accessible' in request.GET:
+        warning = not_accessible()
     return render(request, 'index.html', {'warning' : warning})
 
 def instructions(request):
@@ -95,6 +97,7 @@ def guess(request):
                 if len(GAME.actor.completed_words) == len(GAME.actor.current_phrase_word_list):
                     GAME.set_guess_type(True)
                     GAME.actor.phrase_complete()
+                    GAME.completed_phrases += 1
                 return redirect('/waiting_for_actor/')
             else:
                 incorrect = incorrect_guess()
@@ -105,6 +108,7 @@ def guess(request):
                 GAME.winning_viewer_number = request.session['viewer_number']
                 GAME.lookup_viewer(request.session['viewer_number']).increment_points(20)
                 GAME.actor.phrase_complete()
+                GAME.completed_phrases += 1
                 return redirect('/waiting_for_actor/')
             else:
                 incorrect = incorrect_guess()
@@ -127,10 +131,11 @@ def select_phrase(request):
         return redirect('/?no_actor=True')
     if 'Viewer' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
+    if GAME.completed_phrases >= 3:
+        return redirect('/game_complete')
     new_phrase_msg = ''
     if 'new_phrase' in request.GET:
         new_phrase_msg = new_phrase()
-        #GAME.actor.phrase_complete() # reset current_phrase ect.
     return render(request, 'select_phrase.html', {'phrases' : get_phrases_from_type(5, 'ANY'),
                                                   'new_phrase' : new_phrase_msg})
 
@@ -201,11 +206,14 @@ def waiting_for_actor(request):
     """
     if 'Actor' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
+    if GAME.completed_phrases >= 3:
+        return redirect('/game_complete')
     viewer_number = request.session['viewer_number']
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:
         person = 'You'
     viewer = GAME.lookup_viewer(viewer_number)
+    viewer.increment_points(5) # Ensures no one ends up with no points!
     position = GAME.get_viewer_position(viewer_number)
     points = viewer.points
     next_selection = 'Phrase'
@@ -220,6 +228,20 @@ def waiting_for_actor(request):
                    'points' : points,
                    'next_selection' : next_selection})
 
+def game_complete(request):
+    """
+    The end page for the game
+    """
+    is_actor = True
+    if GAME.completed_phrases < 3:
+        return ('/?not_accessible=True')
+    points = 0
+    if 'Viewer' in request.session['user_type']:
+        points = GAME.lookup_viewer(request.session['viewer_number']).points
+        is_actor = False
+    return render(request, 'game_complete.html', {'points' : points, 
+                                                  'is_actor' : is_actor})
+    
 
 def reset(request):
     """

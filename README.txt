@@ -47,7 +47,8 @@ To run the code:
 ============================================================
 
 * Log into the website using the session id "BSW18" and clicking the 'Actor' button.
-* Open a second browser (or tab) and navigate to the localhost:8000 URL.
+* Open a second different browser (e.g. Chrome and Mozilla - to avoid a conflict
+  with the session variables) and navigate to the localhost:8000 URL.
 * Log into the website using the session id "BSW18" and clicking the 'Viewer' button.
 
 Actor

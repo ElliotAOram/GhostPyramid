@@ -17,7 +17,7 @@ from django.contrib import admin
 
 from charades.views import index, instructions, select_phrase, acting, guess, \
                            reset, phrase_ready_api, waiting_for_actor, \
-                           guess_correct_api
+                           guess_correct_api, game_complete
 
 #pylint: disable=invalid-name
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^guess/$', guess, name='guess'),
     url(r'^reset/$', reset),
     url(r'^waiting_for_actor/$', waiting_for_actor, name='waiting_for_actor'),
+    url(r'^game_complete/$', game_complete),
 
     ### API ###
     url(r'^api/phrase_ready/$', phrase_ready_api, name='phrase_ready'),

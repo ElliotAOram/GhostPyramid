@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
-                    new_phrase, new_word, incorrect_guess, select_word
+                    new_phrase, new_word, incorrect_guess, select_word, \
+                    invalid_state, incorrect_user
 from actor import Actor
 from game import Game
 from phrases import get_phrases_from_type, check_phrase
@@ -19,6 +20,10 @@ def index(request):
         warning = invalid_session()
     if 'actor_already' in request.GET:
         warning = actor_already_defined()
+    if 'invalid_state' in request.GET:
+        warning = invalid_state()
+    if 'incorrect_user_type' in request.GET:
+        warning = incorrect_user()
     return render(request, 'index.html', {'warning' : warning})
 
 def instructions(request):
@@ -71,6 +76,10 @@ def guess(request):
     """
     The controller for the viewer guess.html page
     """
+    if 'Actor' in request.session['user_type']:
+        return redirect('/?incorrect_user_type=True')
+    if GAME.actor is None or GAME.actor.phrase_ready() == False:
+            return redirect('/?invalid_state=True' )
     user_guess = ''
     incorrect = ''
     if 'guess' in request.GET:
@@ -116,6 +125,8 @@ def select_phrase(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
+    if 'Viewer' in request.session['user_type']:
+        return redirect('/?incorrect_user_type=True')
     new_phrase_msg = ''
     if 'new_phrase' in request.GET:
         new_phrase_msg = new_phrase()
@@ -129,6 +140,8 @@ def acting(request):
     """
     if GAME.actor is None:
         return redirect('/?no_actor=True')
+    if 'Viewer' in request.session['user_type']:
+        return redirect('/?incorrect_user_type=True')
     words_changable = False
     instructions_str = 'Act the Word!'
     if 'new_phrase' in request.GET:
@@ -186,6 +199,8 @@ def waiting_for_actor(request):
     Controller for waiting_for_actor.html
     Unique for each viewer
     """
+    if 'Actor' in request.session['user_type']:
+        return redirect('/?incorrect_user_type=True')
     viewer_number = request.session['viewer_number']
     person = 'Someone else'
     if GAME.winning_viewer_number == viewer_number:

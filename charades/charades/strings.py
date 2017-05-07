@@ -34,3 +34,9 @@ def incorrect_guess():
 
 def select_word():
     return "Select a word using the buttons below and then start to Act it out!"
+
+def invalid_state():
+    return "That page can not be reached at this point in time. Please try again."
+
+def incorrect_user():
+    return "You do not have permission to access that page."

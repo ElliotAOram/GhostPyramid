@@ -19,7 +19,7 @@ def get_screen_resolution():
         #http://stackoverflow.com/questions/3129322/how-do-i-get-monitor-resolution-in-python
         user32 = ctypes.windll.user32
         return (user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
-    elif sys.platform == "linux"
+    elif sys.platform == "linux":
         window = gtk.Window()
         screen = window.get_screen()
         return (screen.get_width(), screen.get_height())

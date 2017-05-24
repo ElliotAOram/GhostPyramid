@@ -1,7 +1,7 @@
 """Controls the data that is passed to the webpages"""
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
-from strings import actor_instructions, viewer_instructions, \
+from model.strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
                     new_phrase, new_word, incorrect_guess, select_word, \
                     invalid_state, incorrect_user

@@ -1,7 +1,7 @@
 """Tests for the instructions.html and associated view"""
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from charades import strings
+from charades.model import strings
 
 class InstructionsTests(StaticLiveServerTestCase):
     """

@@ -1,7 +1,7 @@
 """Testing module for game class"""
 import unittest
-from charades.actor import Actor
-from charades.game import Game
+from charades.model.actor import Actor
+from charades.model.game import Game
 
 #pylint: disable=too-many-public-methods
 class TestGame(unittest.TestCase):

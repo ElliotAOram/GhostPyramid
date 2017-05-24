@@ -1,6 +1,6 @@
 """Testing module for viewer class"""
 import unittest
-from charades.viewer import Viewer
+from charades.model.viewer import Viewer
 
 class TestViewer(unittest.TestCase):
     """

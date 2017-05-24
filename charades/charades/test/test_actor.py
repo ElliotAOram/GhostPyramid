@@ -1,6 +1,6 @@
 """Testing module for actor class"""
 import unittest
-from charades.actor import Actor
+from charades.model.actor import Actor
 
 class TestActor(unittest.TestCase):
     """

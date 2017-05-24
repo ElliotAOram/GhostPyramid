@@ -38,7 +38,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text,
                          'You guessed the Phrase Shot Put correctly!')
         self.assertEqual(self.browser.find_element_by_id('points_position').text,
-                         'You are 1st:\n20 points')
+                         'You are 1st:\n25 points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Phrase')
 
@@ -53,7 +53,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text,
                          'You guessed the Word Shot correctly!')
         self.assertEqual(self.browser.find_element_by_id('points_position').text,
-                         'You are 1st:\n10 points')
+                         'You are 1st:\n15 points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
                          'Waiting for the actor to select a new Word')
 

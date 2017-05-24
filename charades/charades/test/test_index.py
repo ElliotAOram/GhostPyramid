@@ -1,7 +1,7 @@
 """Tests for the index.html and associated view"""
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from charades.strings import actor_none, invalid_session
+from charades.model.strings import actor_none, invalid_session
 
 
 #https://pypi.python.org/pypi/selenium

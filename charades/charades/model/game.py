@@ -32,8 +32,7 @@ class Game(object):
         if self.actor is None:
             self.actor = actor
             return True
-        else:
-            return False
+        return False
 
     def add_viewer(self):
         """
@@ -44,8 +43,7 @@ class Game(object):
             viewer_num = len(self.viewers) + 1
             self.viewers.append(Viewer(viewer_num))
             return viewer_num
-        else:
-            return False
+        return False
 
     def lookup_viewer(self, viewer_num):
         """
@@ -85,8 +83,7 @@ class Game(object):
             }[number]
         if position <= 3:
             return position_string(position)
-        else:
-            return str(position) + 'th'
+        return str(position) + 'th'
 
     def set_guess_type(self, is_phrase):
         """

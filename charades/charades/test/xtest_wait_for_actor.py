@@ -31,7 +31,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         """
         Test that the expected generic elements are on the guess.html page
         """
-        #TODO: Client side cookie rpolem causing wrong score. Need to fix
+        #TODO: Client side cookie problem causing wrong score. Need to fix
         """
         self.browser.find_element_by_id('guess_field').send_keys("Shot Put")
         self.browser.find_element_by_id('guess_phrase').click()
@@ -39,6 +39,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         self.assertTrue('waiting_for_actor' in self.browser.current_url)
         self.assertEqual(self.browser.find_element_by_id('correct_guess').text,
                          'You guessed the Phrase Shot Put correctly!')
+        self.assertEqual(self.browser.find_element_by_id('points_position').text,
         self.assertEqual(self.browser.find_element_by_id('points_position').text,
                          'You are 1st:\n25 points')
         self.assertEqual(self.browser.find_element_by_id('waiting').text,
@@ -49,7 +50,7 @@ class TestWaitForActor(StaticLiveServerTestCase):
         """
         Test that the expected generic elements are on the guess.html page
         """
-        #TODO: Client side cookie rpolem causing wrong score. Need to fix
+        #TODO: Client side cookie problem causing wrong score. Need to fix
         """
         self.browser.find_element_by_id('guess_field').send_keys("Shot")
         self.browser.find_element_by_id('guess_word').click()

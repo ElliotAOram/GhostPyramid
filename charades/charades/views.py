@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from model.strings import actor_instructions, viewer_instructions, \
                     actor_none, invalid_session, actor_already_defined, \
                     new_phrase, new_word, incorrect_guess, select_word, \
-                    invalid_state, incorrect_user
+                    invalid_state, incorrect_user, not_accessible
 from model.actor import Actor
 from model.game import Game
 from model.phrases import get_phrases_from_type, check_phrase
@@ -13,6 +13,9 @@ from model.phrases import get_phrases_from_type, check_phrase
 GAME = None
 
 def index(request):
+    """
+    Index controller. deals with redirects strings
+    """
     # Generate warning message from GET
     warning = ''
     if 'no_actor' in request.GET:
@@ -85,7 +88,7 @@ def guess(request):
     # Check redirects
     if 'Actor' in request.session['user_type']:
         return redirect('/?incorrect_user_type=True')
-    if GAME.actor is None or GAME.actor.phrase_ready() == False:
+    if GAME.actor is None or GAME.actor.phrase_ready() is False:
             return redirect('/?invalid_state=True' )
 
 
@@ -131,7 +134,7 @@ def guess(request):
             else:
                 incorrect = incorrect_guess()
     outbound_url = reverse('guess')
-    
+
     #render page
     return render(request, 'guess.html', {'viewer_number' : request.session['viewer_number'],
                                           'type' : GAME.actor.phrase_genre,
@@ -164,7 +167,7 @@ def select_phrase(request):
     # If the generated phrase list contains a phrase that has already been generated
     all_new = False
     replaced_phrases = 0
-    while all_new == False:
+    while all_new is False:
         for phrase in phrases:
             for completed_phrase in GAME.completed_phrases:
                 if phrase.upper() == completed_phrase.upper():
@@ -250,7 +253,7 @@ def waiting_for_actor(request):
         return redirect('/?incorrect_user_type=True')
     if len(GAME.completed_phrases) >= 3:
         return redirect('/game_complete')
-    
+
     # Get viewer information
     viewer_number = request.session['viewer_number']
     person = 'Someone else'
@@ -280,14 +283,14 @@ def game_complete(request):
     """
     is_actor = True
     if len(GAME.completed_phrases) < 3:
-        return ('/?not_accessible=True')
+        return '/?not_accessible=True'
     points = 0
     if 'Viewer' in request.session['user_type']:
         points = GAME.lookup_viewer(request.session['viewer_number']).points
         is_actor = False
 
     # Render page
-    return render(request, 'game_complete.html', {'points' : points, 
+    return render(request, 'game_complete.html', {'points' : points,
                                                   'is_actor' : is_actor})
 
 

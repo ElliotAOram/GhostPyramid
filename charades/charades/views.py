@@ -7,7 +7,7 @@ from model.strings import actor_instructions, viewer_instructions, \
                     invalid_state, incorrect_user
 from model.actor import Actor
 from model.game import Game
-from phrases import get_phrases_from_type, check_phrase
+from model.phrases import get_phrases_from_type, check_phrase
 
 #pylint: disable=invalid-name, global-statement
 GAME = None

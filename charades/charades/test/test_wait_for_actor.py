@@ -1,6 +1,7 @@
 """Tests for the guess.html and associated view"""
 
 from selenium import webdriver
+from selenium.webdriver import Firefox
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 class TestWaitForActor(StaticLiveServerTestCase):
@@ -11,10 +12,10 @@ class TestWaitForActor(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         """
-        Start chrome instance of webdriver
+        Start firefox instance of webdriver
         """
         super(TestWaitForActor, cls).setUpClass()
-        cls.browser = webdriver.Chrome()
+        cls.browser = Firefox()
         cls.browser.implicitly_wait(10)
 
     def setUp(self):
